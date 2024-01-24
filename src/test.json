@@ -1,0 +1,255 @@
+{
+    "nodes": [
+        {
+            "id": "ffuf-multi-1",
+            "type": "mindExexNode",
+            "position": {
+                "x": 375.36248779296875,
+                "y": 118.4000015258789
+            },
+            "data": {
+                "label": "ffuf-multi",
+                "tool": {
+                    "name": "ffuf-multi-1",
+                    "type": "tool",
+                    "category": "",
+                    "command": "ffuf -u HOST/WORD -w in/httprobe-1/output.txt:HOST -w in/http-input-1/common.txt:WORD -r -ac -t 80 -o out/ffuf-multi-1/output.txt",
+                    "parameters": [
+                        {
+                            "name": "auto-calibration-keyword",
+                            "type": "string",
+                            "default": "fuzz",
+                            "command": "-ack",
+                            "description": " Autocalibration keyword (default: FUZZ)"
+                        },
+                        {
+                            "name": "auto-calibration-strategy",
+                            "type": "string",
+                            "default": "basic",
+                            "command": "-acs",
+                            "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)"
+                        },
+                        {
+                            "name": "calibrate-filtering-options",
+                            "type": "boolen",
+                            "default": false,
+                            "command": "-ac",
+                            "description": " Automatically calibrate filtering options (default: false) "
+                        }
+                    ]
+                }
+            },
+            "width": 80,
+            "height": 100,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 375.36248779296875,
+                "y": 118.4000015258789
+            },
+            "dragging": false
+        },
+        {
+            "id": "rex-1",
+            "type": "mindExexNode",
+            "position": {
+                "x": 382.36248779296875,
+                "y": 312.4000015258789
+            },
+            "data": {
+                "label": "rex",
+                "tool": {
+                    "name": "rex-1",
+                    "type": "tool",
+                    "category": "static code analysis",
+                    "command": "cat in/sort-uniq-1/output.txt | httprobe -c 80 | tee out/httprobe-1/output.txt",
+                    "parameters": [
+                        {
+                            "name": "directory-to-scan",
+                            "type": "folder",
+                            "default": "",
+                            "command": "-d",
+                            "description": "  Directory with files and folders to scan for secrets"
+                        },
+                        {
+                            "name": "gh-token",
+                            "type": "string",
+                            "default": "basic",
+                            "command": "-t",
+                            "description": " GitHub token for scanning private repositories"
+                        },
+                        {
+                            "name": "github-repo",
+                            "type": "string",
+                            "default": false,
+                            "command": "-g",
+                            "description": "GitHub repository to scan for secrets"
+                        }
+                    ]
+                }
+            },
+            "width": 80,
+            "height": 100,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 382.36248779296875,
+                "y": 312.4000015258789
+            },
+            "dragging": false
+        },
+        {
+            "id": "ffuf-multi-2",
+            "type": "mindExexNode",
+            "position": {
+                "x": 622.3624877929688,
+                "y": 210.4000015258789
+            },
+            "data": {
+                "label": "ffuf-multi",
+                "tool": {
+                    "name": "ffuf-multi-2",
+                    "type": "tool",
+                    "category": "",
+                    "command": "ffuf -u HOST/WORD -w in/httprobe-1/output.txt:HOST -w in/http-input-1/common.txt:WORD -r -ac -t 80 -o out/ffuf-multi-1/output.txt",
+                    "parameters": [
+                        {
+                            "name": "auto-calibration-keyword",
+                            "type": "string",
+                            "default": "fuzz",
+                            "command": "-ack",
+                            "description": " Autocalibration keyword (default: FUZZ)"
+                        },
+                        {
+                            "name": "auto-calibration-strategy",
+                            "type": "string",
+                            "default": "basic",
+                            "command": "-acs",
+                            "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)"
+                        },
+                        {
+                            "name": "calibrate-filtering-options",
+                            "type": "boolen",
+                            "default": false,
+                            "command": "-ac",
+                            "description": " Automatically calibrate filtering options (default: false) "
+                        }
+                    ]
+                }
+            },
+            "width": 80,
+            "height": 100,
+            "selected": true,
+            "positionAbsolute": {
+                "x": 622.3624877929688,
+                "y": 210.4000015258789
+            },
+            "dragging": false
+        },
+        {
+            "id": "string-1",
+            "type": "inputNode",
+            "position": {
+                "x": 155.36248779296875,
+                "y": 176.4000015258789
+            },
+            "data": {
+                "label": "String",
+                "tool": {
+                    "name": "string-1",
+                    "parameters": [
+                        {
+                            "name": "string",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "width": 40,
+            "height": 60
+        },
+        {
+            "id": "boolen-1",
+            "type": "inputNode",
+            "position": {
+                "x": 163.36248779296875,
+                "y": 310.4000015258789
+            },
+            "data": {
+                "label": "Boolen",
+                "tool": {
+                    "name": "boolen-1",
+                    "parameters": [
+                        {
+                            "name": "boolen",
+                            "type": "boolen"
+                        }
+                    ]
+                }
+            },
+            "width": 43,
+            "height": 60,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 163.36248779296875,
+                "y": 310.4000015258789
+            },
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "style": {
+                "stroke": "#2F2F2F",
+                "strokeWidth": 2
+            },
+            "source": "string-1",
+            "sourceHandle": "string",
+            "target": "ffuf-multi-1",
+            "targetHandle": "auto-calibration-strategy",
+            "id": "reactflow__edge-string-1string-ffuf-multi-1auto-calibration-strategy"
+        },
+        {
+            "style": {
+                "stroke": "#2F2F2F",
+                "strokeWidth": 2
+            },
+            "source": "boolen-1",
+            "sourceHandle": "boolen",
+            "target": "ffuf-multi-1",
+            "targetHandle": "calibrate-filtering-options",
+            "id": "reactflow__edge-boolen-1boolen-ffuf-multi-1calibrate-filtering-options"
+        },
+        {
+            "style": {
+                "stroke": "#2F2F2F",
+                "strokeWidth": 2
+            },
+            "source": "boolen-1",
+            "sourceHandle": "boolen",
+            "target": "rex-1",
+            "targetHandle": "gh-token",
+            "id": "reactflow__edge-boolen-1boolen-rex-1gh-token"
+        },
+        {
+            "style": {
+                "stroke": "#2F2F2F",
+                "strokeWidth": 2
+            },
+            "source": "ffuf-multi-1",
+            "sourceHandle": "file",
+            "target": "ffuf-multi-2",
+            "targetHandle": "auto-calibration-strategy",
+            "id": "reactflow__edge-ffuf-multi-1file-ffuf-multi-2auto-calibration-strategy"
+        },
+        {
+            "style": {
+                "stroke": "#2F2F2F",
+                "strokeWidth": 2
+            },
+            "source": "rex-1",
+            "sourceHandle": "file",
+            "target": "ffuf-multi-2",
+            "targetHandle": "calibrate-filtering-options",
+            "id": "reactflow__edge-rex-1file-ffuf-multi-2calibrate-filtering-options"
+        }
+    ]
+}
