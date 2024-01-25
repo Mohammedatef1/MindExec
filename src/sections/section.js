@@ -12,5 +12,6 @@ import MindMap from "./MindMap";
 import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
+import Landing from "./Landing";
 
-export { CustomerReviews, Footer, Hero, PopularProducts, Services, SpecialOffer, Subescribe, SuperQuality, RightFrme, LeftFrame, MindMap,Login,Signup,Home };
+export { CustomerReviews, Footer, Hero, PopularProducts, Services, SpecialOffer, Subescribe, SuperQuality, RightFrme, LeftFrame, MindMap,Login,Signup,Home,Landing };

@@ -19,7 +19,14 @@ const Editor = () => (
 
 const App = () => (
   <AppProvider>
-    <Home/>
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Home}/>
+        <Route path="/login" component={Login}/>
+        <Route path="/signup" component={Signup}/>
+        <Route path="/editor" component={Editor} />
+      </Switch>
+    </Router>
   </AppProvider>
 );
 export default App;
