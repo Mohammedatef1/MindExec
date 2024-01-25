@@ -1,5 +1,7 @@
 import { useState } from "react";
 import MindExecLogo from "../components/MindExecLogo";
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
   const [activeSec, setActiveSec] = useState("home");
@@ -286,13 +288,13 @@ const Home = () => {
               <tbody className="p-2 text-center">
                 <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
                   <td className="py-2 mb-2">1</td>
-                  <td className="py-2 mb-2 text-white">Test Mind</td>
+                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Test Mind</Link></td>
                   <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
                   <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
                 </tr>
                 <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
                   <td className="py-2 mb-2">1</td>
-                  <td className="py-2 mb-2 text-white">Test Mind</td>
+                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Test Mind</Link></td>
                   <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
                   <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
                 </tr>

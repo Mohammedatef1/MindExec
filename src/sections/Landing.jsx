@@ -1,5 +1,6 @@
 import MindExecLogo from "../components/MindExecLogo";
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
 
@@ -39,12 +40,12 @@ const Landing = () => {
           <a href="/faq">FAQ</a>
         </div>
         <div className="flex justify-between gap-8 items-center z-20 text-[#dedede]">
-          <a href="/login">Log In</a>
-          <a
-            href="/signup"
+          <Link to="/login">Log In</Link>
+          <Link
+            to="/signup"
             className="px-6 py-3 rounded-lg border-gradient-primary">
             Sign Up
-          </a>
+          </Link>
         </div>
       </nav>
       <div className="pt-[150px] mb-[352px] text-[#dedede] relative">
@@ -58,7 +59,7 @@ const Landing = () => {
           {developerName === 'Bug Bounty Hunter'&&<h2 className={`text-4xl font-[700] custom-text glitch-color`}>{developerName}</h2>}
           {developerName === 'DevSecOps Engineer'&&<h2 className={`text-4xl font-[700] custom-text glitch-color`}>{developerName}</h2>}
           <p className="mt-4 mb-8 text-[16px] max-w-[75%]">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
-          <button className="px-6 py-3 font=[Inter] rounded-lg bg-red-primary">Get Started</button>
+          <Link to='/login'><button className="px-6 py-3 font=[Inter] rounded-lg bg-red-primary">Get Started</button></Link>
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -101,21 +102,22 @@ const Landing = () => {
           </defs>
         </svg>
       </div>
-      <section className="w-[80%] rounded-md p-[53px] mx-auto bg-[#ffffff14] relative overflow-hidden">
-        <div className="z-50">
-          <p className="text-[#700] text-xl z-20 font-[700]">Workflow Automation</p>
+      <section className="w-[80%] z-0 rounded-md p-[53px] mx-auto bg-[#ffffff14] relative overflow-hidden">
+        <div className="z-10">
+          <p className="text-[#700] text-xl font-[700]">Workflow Automation</p>
           <h2 className="text-4xl text-[#dedede] font-[700] mt-[18px]">
             Build, Edit,
             <br /> and Run Workflows
           </h2>
           <p className="max-w-[630px] text-[#dedede] text-md mb-7 mt-[18px]">Evolve from the terminal to a specialised IDE for offensive security. Use Trickest’s library of tool nodes, import your own scripts, or drop in your favourite open-source tools – all in one place.</p>
         </div>
+       
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="280"
           height="287"
           viewBox="0 0 280 287"
-          className="absolute top-0 left-0 z-0"
+          className="absolute top-0 left-0 z-[-1]"
           fill="none">
           <g filter="url(#filter0_f_474_1013)">
             <path
@@ -150,6 +152,7 @@ const Landing = () => {
             </filter>
           </defs>
         </svg>
+        
       </section>
     </div>
   );

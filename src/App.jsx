@@ -1,6 +1,6 @@
 import Nav from "./components/Nav";
 // eslint-disable-next-line no-unused-vars
-import { Home, LeftFrame, Login, MindMap, RightFrme, Signup } from "./sections/section";
+import { Home, LeftFrame, Login, MindMap, RightFrme, Signup,Landing} from "./sections/section";
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -19,9 +19,10 @@ const Editor = () => (
 
 const App = () => (
   <AppProvider>
-    <Router>
+    <Router basename='/MindExec'>
       <Switch>
-        <Route path="/" exact component={Home}/>
+        <Route path="/" exact component={Landing}/>
+        <Route path="/home" component={Home}/>
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={Signup}/>
         <Route path="/editor" component={Editor} />

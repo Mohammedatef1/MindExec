@@ -1,4 +1,5 @@
 import GoogleLogo from "../components/GoogleLogo";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -92,7 +93,8 @@ const Login = () => {
                 type="password"
               />
             </div>
-            <button className="h-[54px] w-[440px] rounded-lg  text-gray-primary flex items-center justify-center bg-red-primary mb-8">Log in</button>
+            <Link to='/home'>
+            <button className="h-[54px] w-[440px] rounded-lg  text-gray-primary flex items-center justify-center bg-red-primary mb-8">Log in</button></Link>
             <p className="text-[16px]">
               Doesn&apos;t have an account ? <span className="text-red-primary">Sign up</span>
             </p>

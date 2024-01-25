@@ -134,7 +134,7 @@ const LeftFrame = () => {
                         <GripDots />
                         <ToolIcon className="scale-75" />
                         <p>{tool.name}</p>
-                        <FontAwesomeIcon icon={faCircleInfo} className="ms-auto" />
+                        <FontAwesomeIcon icon={faCircleInfo} className="ms-auto text-[#dedede]" />
                       </li>
                     ))}
                   </ul>
