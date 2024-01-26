@@ -8,6 +8,8 @@ import { loadMindMap, saveMindMap } from "./Storage";
 //import "./styles.css";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faPlay,faFloppyDisk,faUpload} from "@fortawesome/free-solid-svg-icons";
 //import { debounce } from 'lodash';
 
 import InputNode from "./InputNode";
@@ -2348,18 +2350,18 @@ http://www.glassdoor.com/Best-Place`;
                       }, 2000);
                     }
                   }}
-                  className="bg-red-500 p-2">
-                  run
+                  className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
+                  <FontAwesomeIcon className="text-[#dedede]" icon={faPlay} />
                 </button>
                 <button
                   onClick={handleSaveClick}
-                  className="bg-red-500 p-2">
-                  save
+                  className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
+                  <FontAwesomeIcon className="text-[#dedede]" icon={faFloppyDisk} />
                 </button>
                 <button
                   onClick={handleLoadClick}
-                  className="bg-red-500 p-2">
-                  load
+                  className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
+                  <FontAwesomeIcon className="text-[#dedede]" icon={faUpload} />
                 </button>
                 <button
                   onClick={loadSavedMap}

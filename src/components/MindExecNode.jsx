@@ -2,7 +2,7 @@ import { useState,useContext } from "react";
 import { Handle, Position } from "reactflow";
 import AppContext from "../AppContext";
 const MindExexNode = ({ isConnectable, data }) => {
-  const [isHoverd, setIsHoved] = useState(false);
+  const [isHoverd, setIsHoved] = useState(true);
 
   const ctx = useContext(AppContext);
 

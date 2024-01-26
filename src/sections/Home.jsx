@@ -1,6 +1,8 @@
 import { useState } from "react";
 import MindExecLogo from "../components/MindExecLogo";
 import { Link } from 'react-router-dom';
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const Home = () => {
@@ -146,7 +148,7 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        <div className="w-full p-6 bg-[#060606] flex gap-6">
+        {activeSec== 'home' &&<div className="w-full p-6 bg-[#060606] flex gap-6">
           <div className="w-3/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center ">
             <div className="mt-11 relative w-full">
               <p className="text-gray-200 text-center">Latest Runs</p>
@@ -301,7 +303,47 @@ const Home = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        </div>}
+        {activeSec== 'workflow' &&<div className="w-full p-6 bg-[#060606] flex gap-6">
+         
+          <div className="w-full border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
+            <div className="mt-11 mb-12 relative w-full">
+              <p className="text-gray-200 text-center">Recent Workflow</p>
+              <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+            </div>
+            
+            <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
+              <thead className="text-white decoration-none">
+                <tr>
+                  <th className="py-2 text-transparent">logo</th>
+                  <th className="py-2 ">Workflow Name</th>
+                  <th className="py-2 ">Edited</th>
+                  <th className="py-2 ">Runs</th>
+                  <th className="py-2 ">Created by</th>
+                  <th className="py-2 ">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="p-2 text-center">
+                <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                  <td className="py-2 mb-2">1</td>
+                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Fuzz web app for vulnerabilities</Link></td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]"><Link to='/editor' target="_blank"><FontAwesomeIcon icon={faPenToSquare} /></Link></td>
+                </tr>
+                <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                  <td className="py-2 mb-2">2</td>
+                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Simple Content Discovery</Link></td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
+                  <td className="py-2 mb-2 text-[#A0A0A0]"><Link to='/editor'  target="_blank"><FontAwesomeIcon icon={faPenToSquare} /></Link></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>}
       </div>
     </div>
   );

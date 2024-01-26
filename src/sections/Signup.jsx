@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import GoogleLogo from "../components/GoogleLogo";
 
 const Signup = () => {
@@ -10,6 +10,17 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState({});
   const [emailIsChecked, setEmailIshecked] = useState(false);
+
+  const history = useHistory();
+
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleClick = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      history.push("/home");
+    }, 1000);
+  };
 
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
@@ -188,12 +199,15 @@ const Signup = () => {
               />
               {!passwordIsValid.isValid && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{passwordIsValid.message}</label>}
             </div>
-            <Link to="/home">
-              <button className="h-[54px] w-[440px] rounded-lg  text-gray-primary flex items-center justify-center bg-red-primary mb-8">Sign up</button>
+            <Link
+              >
+              <button onClick={handleClick}
+              disabled={isNavigating} className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isNavigating? 'bg-[#77000075] text-[#dedede82] ':'bg-red-primary text-gray-primary'} mb-8`}>Sign up</button>
             </Link>
+            <Link to='login'>
             <p className="text-[16px]">
               Already have an account ? <span className="text-red-primary">Log in</span>
-            </p>
+            </p></Link>
           </form>
         </div>
       </div>

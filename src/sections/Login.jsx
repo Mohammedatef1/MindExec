@@ -1,7 +1,19 @@
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import GoogleLogo from "../components/GoogleLogo";
-import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const history = useHistory();
+
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleClick = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      history.push("/home");
+    }, 1000);
+  };
+
   return (
     <div className="flex w-full">
       <div className="w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
@@ -93,11 +105,14 @@ const Login = () => {
                 type="password"
               />
             </div>
-            <Link to='/home'>
-            <button className="h-[54px] w-[440px] rounded-lg  text-gray-primary flex items-center justify-center bg-red-primary mb-8">Log in</button></Link>
-            <p className="text-[16px]">
-              Doesn&apos;t have an account ? <span className="text-red-primary">Sign up</span>
-            </p>
+            <Link
+              >
+              <button onClick={handleClick}
+              disabled={isNavigating} className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isNavigating? 'bg-[#77000075] text-[#dedede82] ':'bg-red-primary text-gray-primary'} mb-8`}>Log in</button>
+            </Link>
+            <Link to='signup'><p className="text-[16px]">
+              Doesn&apos;t have an account ? <span className="text-red-primary">sign up</span>
+            </p></Link>
           </form>
         </div>
       </div>
