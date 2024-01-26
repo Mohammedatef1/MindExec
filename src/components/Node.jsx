@@ -1610,7 +1610,7 @@ const MindNode = () => {
         http://www.glassdoor.com/1
         https://www.glassdoor.com/1-3-employees-job-2015-receive-pay-raise-glassdoor-employment-confidence-survey-`;
       ctx.reactFlowInstance.getNode("gau-1").data.tool.duration = "00:00:57";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 60000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("katana-1").data.tool.status = "succeeded";
@@ -1619,7 +1619,7 @@ const MindNode = () => {
         [INF] Started headless crawling for => https://glassdoor.com`;
       ctx.reactFlowInstance.getNode("katana-1").data.tool.stdout = `https://glassdoor.com`;
       ctx.reactFlowInstance.getNode("katana-1").data.tool.duration = "00:00:29";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 32000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("sort-uniq-1").data.tool.status = "succeeded";
@@ -1765,7 +1765,7 @@ const MindNode = () => {
         http://glassdoor.com:80/Best-Places-to-Work-Seattle-LST_KQ0,19_IL.20,27_IM781.htm
         http://glassdoor.com`;
       ctx.reactFlowInstance.getNode("sort-uniq-1").data.tool.duration = "00:00:25";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 80000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("urldedupe-1").data.tool.status = "succeeded";
@@ -1861,7 +1861,7 @@ http://www.glassdoor.com/Best-Places-to-Work-LST_KQ0,19.htm?utm_medium=email&utm
 http://www.glassdoor.com/Best-Places-to-Work-LST_KQ0,19.htm?utm_source=%5C
 http://www.glassdoor.com/Best-Place`;
       ctx.reactFlowInstance.getNode("urldedupe-1").data.tool.duration = "00:00:16";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 88000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("generate-line-patches-1").data.tool.status = "succeeded";
@@ -1913,7 +1913,7 @@ http://www.glassdoor.com/Best-Place`;
       4201,4401
       4401,4601`;
       ctx.reactFlowInstance.getNode("generate-line-patches-1").data.tool.duration = "00:00:01";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 89000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("file-spliter-1").data.tool.status = "succeeded";
@@ -1921,7 +1921,7 @@ http://www.glassdoor.com/Best-Place`;
       ctx.reactFlowInstance.getNode("file-spliter-1").data.tool.stderr = `Spliters has no stderr.`;
       ctx.reactFlowInstance.getNode("file-spliter-1").data.tool.stdout = `Spliters has no stdout.`;
       ctx.reactFlowInstance.getNode("file-spliter-1").data.tool.duration = "00:00:01";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 90000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("batch-output-1").data.tool.status = "succeeded";
@@ -2149,12 +2149,12 @@ http://www.glassdoor.com/Best-Place`;
       http://www.glassdoor.com/api/api.htm?version=1&action=employer-combo&t.s=w-m&t.p=514&format=265x400&employer=Veterans+Affairs%2C+Inspector+General&activeTab=R&t.a=i&responseType=embed&referrer=http%3A%2F%2Fweb.archive.org%2Fsave%2Fhttp%3A%2F%2Fjobs.govloop.com%2F216865%2Fattorney-advisor-special-assistant-to-the-inspector-general%2F
       http://www.glassdoor.com/api/api.htm?version=1&action=employer-combo&t.s=w-m&t.p=6463&css=http%3A%2F%2Fmedia.advance.net%2Fstatic%2Fclassifieds%2Fjobs%2Fcommon%2Fcss%2Fglassdoor-widget.css&format=300x400-chart&activeTab=S&employer=NOLA+Media+Group&location=New+Orleans%2C+LA&t.a=i&responseType=embed&referrer=http%3A%2F%2Fweb.archive.org%2Fsave%2Fhttp%3A%2F%2Fjobs.nola.com%2Fjobs%2Fdirector-of-sales-new-orleans-la-82169888-d`;
       ctx.reactFlowInstance.getNode("batch-output-1").data.tool.duration = "00:00:01";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
     }, 91000);
     setTimeout(() => {
-      ctx.reactFlowInstance.getNode("nueclei-1").data.tool.status = "succeeded";
-      ctx.reactFlowInstance.getNode("nueclei-1").data.tool.output = `No output found`;
-      ctx.reactFlowInstance.getNode("nueclei-1").data.tool.stderr = `		projectdiscovery.io
+      ctx.reactFlowInstance.getNode("nuclei-1").data.tool.status = "succeeded";
+      ctx.reactFlowInstance.getNode("nuclei-1").data.tool.output = `No output found`;
+      ctx.reactFlowInstance.getNode("nuclei-1").data.tool.stderr = `		projectdiscovery.io
       [INF] nuclei-templates are not installed, installing...
       [INF] Successfully installed nuclei-templates at /root/nuclei-templates
       [INF] Current nuclei version: v3.1.7 (latest)
@@ -2273,9 +2273,9 @@ http://www.glassdoor.com/Best-Place`;
       [0:08:50] | Templates: 19 | Hosts: 402 | RPS: 141 | Matched: 0 | Errors: 0 | Requests: 74854/79596 (94%)
       [INF] No results found. Better luck next time!
       [0:08:53] | Templates: 19 | Hosts: 402 | RPS: 140 | Matched: 0 | Errors: 0 | Requests: 74854/79596 (94%)`;
-      ctx.reactFlowInstance.getNode("nueclei-1").data.tool.stdout = `No stdout output found`;
-      ctx.reactFlowInstance.getNode("nueclei-1").data.tool.duration = "00:09:01";
-      ctx.setTest= Math.random();
+      ctx.reactFlowInstance.getNode("nuclei-1").data.tool.stdout = `No stdout output found`;
+      ctx.reactFlowInstance.getNode("nuclei-1").data.tool.duration = "00:09:01";
+      ctx.setTest(Math.random());
     }, 100000);
     setTimeout(() => {
       ctx.reactFlowInstance.getNode("recursively-cat-all-1").data.tool.status = "succeeded";
@@ -2283,7 +2283,7 @@ http://www.glassdoor.com/Best-Place`;
       ctx.reactFlowInstance.getNode("recursively-cat-all-1").data.tool.stderr = `No stderr output found`;
       ctx.reactFlowInstance.getNode("recursively-cat-all-1").data.tool.stdout = `[sqli-error-based:oracle] [http] [critical] https://www.glassdoor.com/blog/guide/how-to-write-a-resume/?utm_source=newsletter"&utm_medium=email"&utm_campaign=0122_us_newsletter"&utm_content=20220127_resume_tips" ["ORA-17062"]`;
       ctx.reactFlowInstance.getNode("recursively-cat-all-1").data.tool.duration = "00:00:05";
-      ctx.setTest= Math.random();
+      ctx.setTest(Math.random());
       ctx.setRunStart(false);
     }, 105000);
   };
