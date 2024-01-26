@@ -16,6 +16,8 @@ const AppProvider = ({ children }) => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [reactFlowInstance, setReactFlowInstance,onInstanceChange] = useState(null);
+  const [builder, setBuilder] = useState(true);
+  const [runStart, setRunStart] = useState(false);
 
   const [test, setTest] = useState(false);
 
@@ -72,7 +74,7 @@ const AppProvider = ({ children }) => {
   });
 }
 
-  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode,setSelectedNode,reactFlowInstance,setReactFlowInstance ,onInstanceChange ,test,setTest,selectedEdge,setSelectedEdge,generateCommands}}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode,setSelectedNode,reactFlowInstance,setReactFlowInstance ,onInstanceChange ,test,setTest,selectedEdge,setSelectedEdge,generateCommands ,builder,setBuilder ,runStart , setRunStart}}>{children}</AppContext.Provider>;
 };
 
 export default AppProvider;

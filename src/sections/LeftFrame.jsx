@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useState,useRef } from "react";
 import AppContext from "../AppContext";
-import { tools } from "../assets/Data";
+import { tools,spliter,scripts } from "../assets/Data";
 
 import "../components/index.css";
 
 const LeftFrame = () => {
   const [library, setLibrary] = useState(true);
+
+  const ctx = useContext(AppContext);
 
   const onDragStart = (event, nodeType, label, tool) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
@@ -64,7 +66,7 @@ const LeftFrame = () => {
   };
 
   return (
-    <div className="w-1/5 bg-primary1 h-full">
+    <div className={`${ctx.builder? 'w-1/5': 'w-0'} bg-primary1 h-full`}>
       <div className=" bg-black mt-16 mx-6 rounded-[4px]  ">
         <button
           onClick={() => {
@@ -103,7 +105,7 @@ const LeftFrame = () => {
           </div>
           <div
             id="options"
-            className="mt-10">
+            className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
             <div
               className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${openedSection === "scripts" ? "bg-black" : ""} text-[#dedede] uppercase flex items-center justify-between`}
               onClick={toggleDropdownScripts}>
@@ -123,7 +125,7 @@ const LeftFrame = () => {
                   id="scripts"
                   className={`bg-black px-4 origin-top overflow-hidden`}>
                   <ul className="text-white">
-                    {tools.map((tool) => (
+                    {scripts.map((tool) => (
                       <li
                         key={tool.name}
                         data-min={5}
@@ -159,9 +161,20 @@ const LeftFrame = () => {
                   transition={transition}
                   className={`bg-black px-6 origin-top overflow-hidden`}>
                   <ul className="text-white">
-                    <li className="py-2 pt-4">Spliter 1</li>
-                    <li className="py-2">Spliter 2</li>
-                    <li className="py-2 pb-4">Spliter 3</li>
+                  {spliter.map((tool) => (
+                      <li
+                        key={tool.name}
+                        data-min={5}
+                        id="script 1"
+                        className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                        onDragStart={(event) => handleDragStart(event, tool)}
+                        draggable>
+                        <GripDots />
+                        <ToolIcon className="scale-75" />
+                        <p>{tool.name}</p>
+                        <FontAwesomeIcon icon={faCircleInfo} className="ms-auto text-[#dedede]" />
+                      </li>
+                    ))}
                   </ul>
                 </motion.div>
               )}
@@ -185,9 +198,20 @@ const LeftFrame = () => {
                   transition={transition}
                   className="bg-black px-6 origin-top overflow-hidden">
                   <ul className="text-white">
-                    <li className="py-2 pt-4">Tool 1</li>
-                    <li className="py-2">Tool 2</li>
-                    <li className="py-2 pb-4">Tool 3</li>
+                  {tools.map((tool) => (
+                      <li
+                        key={tool.name}
+                        data-min={5}
+                        id="script 1"
+                        className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                        onDragStart={(event) => handleDragStart(event, tool)}
+                        draggable>
+                        <GripDots />
+                        <ToolIcon className="scale-75" />
+                        <p>{tool.name}</p>
+                        <FontAwesomeIcon icon={faCircleInfo} className="ms-auto text-[#dedede]" />
+                      </li>
+                    ))}
                   </ul>
                 </motion.div>
               )}

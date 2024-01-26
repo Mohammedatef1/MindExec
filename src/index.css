@@ -103,6 +103,46 @@ body {
   background: linear-gradient(154deg, #171717 0%, #060606 100%);
 }
 
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #464646;
+  border-radius: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-circle {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #700; /* Change color as needed */
+  border-top: 5px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 @layer components {
   .max-container {
     max-width: 1440px;

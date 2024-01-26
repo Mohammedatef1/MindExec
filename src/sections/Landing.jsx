@@ -29,7 +29,7 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="h-[300vh] w-screen text-white bg-[#060606]">
+    <div className="h-[300vh] max-w-screen text-white bg-[#060606]">
       <nav className="px-[7%] pt-[44px] flex justify-between items-center font-[Inter] z-10">
         <div className="flex justify-between items-center">
           <MindExecLogo />

@@ -40,7 +40,7 @@ const RightFrme = () => {
       console.log(parameterName);
       ctx.setTest(Math.random());
     },
-    [ctx] 
+    [ctx]
   );
 
   const menuVars = {
@@ -60,7 +60,7 @@ const RightFrme = () => {
       .filter((edge) => edge.source === ctx.selectedNode.id)
       .forEach((edge) => {
         const command = ctx.reactFlowInstance.getNode(edge.target).data.tool.parameters.find((e) => e.name === edge.targetHandle).command;
-        
+
         ctx.reactFlowInstance.getNode(edge.target).data.tool.command[command] = e.target.value;
       });
   };
@@ -139,7 +139,7 @@ const RightFrme = () => {
         </div>
       )}
 
-      {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && (
+      {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && ctx.builder && (
         <div className="transition-curtain mt-8">
           <div className=" bg-black mx-6 rounded-[4px]">
             <button
@@ -245,6 +245,82 @@ const RightFrme = () => {
                 <li className="p-4 my-1 bg-zinc-800 transition-primary hover:bg-zinc-950 rounded-md cursor-move">File</li>
                 <li className="p-4 my-1 bg-zinc-800 transition-primary hover:bg-zinc-950 rounded-md cursor-move">Folder</li>
               </ul>
+            </div>
+          )}
+        </div>
+      )}
+      {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && !ctx.builder && (
+        <div data-test={ctx.test} className="transition-curtain mt-8">
+          <div className="px-4">
+            {ctx.selectedNode.data.tool.status == 'succeeded' &&<span className="uppercase py-1 px-4 rounded-lg text-[#00dfaf] bg-[#122633]">succeeded</span>}
+            {ctx.selectedNode.data.tool.status == 'proccessing...' &&<span className="uppercase py-1 px-4 rounded-lg text-[#ff920e] bg-[#241a22]">proccessing...</span>}
+            <p className="mt-4 text-xl text-white ">{ctx.selectedNode.data.label}</p>
+            <p className=" text-sm text-[#dedede]">{ctx.selectedNode.id}</p>
+            {ctx.selectedNode.data.tool.status == 'succeeded' && <div className="w-full mx-auto text-[#17ccfd] bg-[#122633] py-2 mt-8 border-2 border-[#17ccfd] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
+            {ctx.selectedNode.data.tool.status == 'proccessing...' &&<div className="w-full mx-auto text-[#ff920e] bg-[#241a22] py-2 mt-8 border-2 border-[#ff920e] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
+            <p className="mt-4 text-lg text-[#678eb4]">
+              Duration <span className="ps-1 text-[#dedede]">{ctx.selectedNode.data.tool.duration}</span>
+            </p>
+          </div>
+          {parameters && (
+            <div className="transition-curtain">
+              <div
+                id="options"
+                className="mt-10">
+                <div
+                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
+                  onClick={() => {
+                    setParametersIsOpen(!parametersIsOpen);
+                  }}>
+                  <h2>Parameters</h2>
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      setParametersIsOpen(!parametersIsOpen);
+                    }}
+                    className="text-white ps-3"
+                    icon={faAngleDown}
+                  />
+                </div>
+                <AnimatePresence>
+                  {parametersIsOpen && (
+                    <motion.div
+                      variants={menuVars}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      transition={transition}
+                      id="scripts"
+                      className={`bg-black px-6 overflow-hidden`}>
+                      <ul className="text-white">
+                        {ctx.selectedNode.data.tool.parameters.map((parameter) => (
+                          <li
+                            key={parameter.name}
+                            id="script 1"
+                            className="py-2 first:pt-4 last:pb-4">
+                            {parameter.name}
+                            <div className="float-right scale-75">
+                              <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-[1px]">
+                                <input
+                                  type="checkbox"
+                                  name="autoSaver"
+                                  className="sr-only"
+                                  checked={parameter.active}
+                                  onChange={() => {
+                                    toggle(parameter.name);
+                                  }}
+                                />
+                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${parameter.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
+                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${parameter.active ? "translate-x-6" : ""} ${parameter.active ? "bg-blue-500" : "bg-white"}`}></span>
+                                </span>
+                              </label>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           )}
         </div>

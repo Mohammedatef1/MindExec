@@ -8,7 +8,7 @@ const MindExexNode = ({ isConnectable, data }) => {
 
   const colorController = (parameterType) => {
       switch (parameterType) {
-        case "string": return "#483285";
+        case "string": return "#df99ff";
         case "folder": return "#FEA82F";
         case "boolean": return "#4abffe";
         case "file": return "#faa666";
