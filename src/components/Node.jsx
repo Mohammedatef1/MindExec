@@ -9,7 +9,7 @@ import { loadMindMap, saveMindMap } from "./Storage";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPlay,faFloppyDisk,faUpload} from "@fortawesome/free-solid-svg-icons";
+import {faPlay,faFloppyDisk,faUpload ,faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 //import { debounce } from 'lodash';
 
 import InputNode from "./InputNode";
@@ -3695,8 +3695,8 @@ const MindNode = () => {
                 </button>
                 <button
                   onClick={loadSavedMap}
-                  className="bg-red-500 p-2">
-                  load test map
+                  className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
+                  <FontAwesomeIcon className="text-[#dedede]" icon={faFileArrowUp} />
                 </button>
               </div>
 
