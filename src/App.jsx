@@ -2,7 +2,7 @@ import Nav from "./components/Nav";
 // eslint-disable-next-line no-unused-vars
 import { Home, Landing, LeftFrame, Login, MindMap, RightFrme, Signup } from "./sections/section";
 
-import { Route, HashRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import AppProvider from "./AppProvider";
 
@@ -24,28 +24,28 @@ const App = () => (
         <Route
           path="/"
           exact
-          className='transition-curtain'
+          className="transition-curtain"
           component={Landing}
         />
         <Route
           path="/home"
           component={Home}
-          className='transition-curtain'
+          className="transition-curtain"
         />
         <Route
           path="/login"
           component={Login}
-          className='transition-curtain'
+          className="transition-curtain"
         />
         <Route
           path="/signup"
           component={Signup}
-          className='transition-curtain'
+          className="transition-curtain"
         />
         <Route
           path="/editor"
           component={Editor}
-          className='transition-curtain'
+          className="transition-curtain"
         />
       </Switch>
     </Router>
