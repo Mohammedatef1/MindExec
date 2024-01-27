@@ -1,8 +1,8 @@
 import Nav from "./components/Nav";
 // eslint-disable-next-line no-unused-vars
-import { Home, LeftFrame, Login, MindMap, RightFrme, Signup,Landing} from "./sections/section";
+import { Home, Landing, LeftFrame, Login, MindMap, RightFrme, Signup } from "./sections/section";
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, HashRouter as Router, Switch } from "react-router-dom";
 
 import AppProvider from "./AppProvider";
 
@@ -19,13 +19,29 @@ const Editor = () => (
 
 const App = () => (
   <AppProvider>
-    <Router basename='/MindExec'>
+    <Router basename="/MindExec">
       <Switch>
-        <Route path="/" exact component={Landing}/>
-        <Route path="/home" component={Home}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/signup" component={Signup}/>
-        <Route path="/editor" component={Editor} />
+        <Route
+          path="/"
+          exact
+          component={Landing}
+        />
+        <Route
+          path="/home"
+          component={Home}
+        />
+        <Route
+          path="/login"
+          component={Login}
+        />
+        <Route
+          path="/signup"
+          component={Signup}
+        />
+        <Route
+          path="/editor"
+          component={Editor}
+        />
       </Switch>
     </Router>
   </AppProvider>
