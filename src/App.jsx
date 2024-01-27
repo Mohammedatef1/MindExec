@@ -24,23 +24,28 @@ const App = () => (
         <Route
           path="/"
           exact
+          className='transition-curtain'
           component={Landing}
         />
         <Route
           path="/home"
           component={Home}
+          className='transition-curtain'
         />
         <Route
           path="/login"
           component={Login}
+          className='transition-curtain'
         />
         <Route
           path="/signup"
           component={Signup}
+          className='transition-curtain'
         />
         <Route
           path="/editor"
           component={Editor}
+          className='transition-curtain'
         />
       </Switch>
     </Router>

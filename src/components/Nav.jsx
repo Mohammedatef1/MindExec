@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import AppContext from "../AppContext";
 import MindExecLogo from "./MindExecLogo";
+import {Link} from 'react-router-dom'
 
 function Nav() {
   const ctx = useContext(AppContext);
@@ -11,7 +12,7 @@ function Nav() {
     <header className="border-b-2 border-red-900 w-full">
       <nav className="flex items-center text-white-400 bg-primary1">
         <div className="w-1/5 p-4 flex items-center justify-around">
-          <MindExecLogo />
+          <Link to='/'><MindExecLogo /></Link>
           <div className="flex items-center justify-center ps-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +47,7 @@ function Nav() {
                 fill="#0E0E0E"
               />
             </svg>
-            <p className="text-white font-bold text-md ms-2 me-4">Test Mind</p>{" "}
+            <p className="text-white font-bold text-md ms-2 me-4">Fuzz web app</p>{" "}
           </div>
         </div>
         <div className="w-3/5 flex justify-center mt-auto">

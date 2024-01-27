@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import GoogleLogo from "../components/GoogleLogo";
 
 const Signup = () => {
@@ -14,11 +14,17 @@ const Signup = () => {
   const history = useHistory();
 
   const [isNavigating, setIsNavigating] = useState(false);
+  const [createdAcc, setCreatedAcc] = useState(false);
 
   const handleClick = () => {
     setIsNavigating(true);
     setTimeout(() => {
-      history.push("/home");
+      setIsNavigating(false);
+      setCreatedAcc(true);
+      setTimeout(() => {
+        setCreatedAcc(false);
+        history.push('/')
+      }, 3000);
     }, 1000);
   };
 
@@ -83,7 +89,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full relative">
+      {createdAcc&& <div className="absolute transition-curtain left-1/2 transform top-10 rounded-lg -translate-x-1/2 px-5 py-3 bg-green-300 text-black text-lg">Account has been created!</div>}
       <div className="w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scannig
@@ -199,15 +206,19 @@ const Signup = () => {
               />
               {!passwordIsValid.isValid && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{passwordIsValid.message}</label>}
             </div>
-            <Link
-              >
-              <button onClick={handleClick}
-              disabled={isNavigating} className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isNavigating? 'bg-[#77000075] text-[#dedede82] ':'bg-red-primary text-gray-primary'} mb-8`}>Sign up</button>
+            <Link>
+              <button
+                onClick={handleClick}
+                disabled={isNavigating}
+                className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isNavigating ? "bg-[#77000075] text-[#dedede82] " : "bg-red-primary text-gray-primary"} mb-8`}>
+                Sign up
+              </button>
             </Link>
-            <Link to='login'>
-            <p className="text-[16px]">
-              Already have an account ? <span className="text-red-primary">Log in</span>
-            </p></Link>
+            <Link to="login">
+              <p className="text-[16px]">
+                Already have an account ? <span className="text-red-primary">Log in</span>
+              </p>
+            </Link>
           </form>
         </div>
       </div>
