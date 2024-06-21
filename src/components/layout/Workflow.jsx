@@ -2,18 +2,17 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import ReactFlow, { Controls, ReactFlowProvider, addEdge } from "reactflow";
 import "reactflow/dist/style.css";
-import AppContext from "../AppContext";
+import AppContext from "../../AppContext";
 //import SideBar from "./SideBar";
-import { loadMindMap, saveMindMap } from "./Storage";
-//import "./styles.css";
+import { faFileArrowUp, faFloppyDisk, faPlay, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPlay,faFloppyDisk,faUpload ,faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { loadMindMap, saveMindMap } from "../Storage";
 //import { debounce } from 'lodash';
 
-import InputNode from "./InputNode";
-import MindExecNode from "./MindExecNode";
+import InputNode from "../ui/InputNode";
+import MindExecNode from "../ui/MindExecNode";
 
 const nodeTypes = {
   mindExecNode: MindExecNode,
@@ -3665,7 +3664,7 @@ const MindNode = () => {
             onConnectStart={onConnectStart}>
             <Controls
               position="top-left"
-              className="text-white z-0 bg-white rounded-md hover:rounded-md flex flex-row-reverse controls"
+              className="text-white z-20 bg-white rounded-md hover:rounded-md flex flex-row-reverse controls"
             />
             <div className="w-full h-full relative">
               <div className="z-20 absolute flex gap-3 top-3 left-1/2 transform -translate-x-1/2 ">
@@ -3681,22 +3680,34 @@ const MindNode = () => {
                     }
                   }}
                   className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
-                  <FontAwesomeIcon className="text-[#dedede]" icon={faPlay} />
+                  <FontAwesomeIcon
+                    className="text-[#dedede]"
+                    icon={faPlay}
+                  />
                 </button>
                 <button
                   onClick={handleSaveClick}
                   className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
-                  <FontAwesomeIcon className="text-[#dedede]" icon={faFloppyDisk} />
+                  <FontAwesomeIcon
+                    className="text-[#dedede]"
+                    icon={faFloppyDisk}
+                  />
                 </button>
                 <button
                   onClick={handleLoadClick}
                   className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
-                  <FontAwesomeIcon className="text-[#dedede]" icon={faUpload} />
+                  <FontAwesomeIcon
+                    className="text-[#dedede]"
+                    icon={faUpload}
+                  />
                 </button>
                 <button
                   onClick={loadSavedMap}
                   className="bg-primary1 border-[1px] border-gray-700 w-9 h-9">
-                  <FontAwesomeIcon className="text-[#dedede]" icon={faFileArrowUp} />
+                  <FontAwesomeIcon
+                    className="text-[#dedede]"
+                    icon={faFileArrowUp}
+                  />
                 </button>
               </div>
 

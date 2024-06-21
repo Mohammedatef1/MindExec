@@ -1,12 +1,23 @@
-import { useState } from "react";
-import MindExecLogo from "../components/MindExecLogo";
-import { Link } from 'react-router-dom';
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../client";
+import MindExecLogo from "../components/icons/MindExecLogo";
 
-
-const Home = () => {
+const Dashboard = () => {
   const [activeSec, setActiveSec] = useState("home");
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      navigate("/login", { replace: true });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="bg-primary1">
@@ -32,7 +43,8 @@ const Home = () => {
               r="3"
               fill="#770000"
             />
-          </svg>  
+          </svg>
+          <button onClick={signOut}>Log out</button>
           <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">os</p>
           <p className="text-[18px]">ossama yasser</p>
         </div>
@@ -148,205 +160,228 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        {activeSec== 'home' &&<div className="w-full p-6 bg-[#060606] flex gap-6">
-          <div className="w-3/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center ">
-            <div className="mt-11 relative w-full">
-              <p className="text-gray-200 text-center">Latest Runs</p>
-              <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
-            </div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="189"
-              height="188"
-              viewBox="0 0 189 188"
-              className="my-6"
-              fill="none">
-              <g filter="url(#filter0_d_351_141)">
-                <path
-                  d="M99.5298 20.3824L168.16 89.2147C170.884 91.9467 170.884 96.3676 168.16 99.0996L99.8211 167.64C97.0952 170.374 92.6706 170.385 89.9313 167.664L20.8976 99.1016C18.1488 96.3717 18.1401 91.9284 20.8781 89.1877L89.6206 20.3775C92.3568 17.6387 96.7964 17.6409 99.5298 20.3824Z"
-                  fill="#0E0E0E"
-                  stroke="#770000"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M154.351 91.2989L97.3912 34.1715C95.8292 32.605 93.2923 32.6037 91.7288 34.1687L34.6687 91.285C33.1041 92.8511 33.1091 95.3902 34.6798 96.9502L91.9743 153.853C93.5396 155.408 96.068 155.402 97.6256 153.84L154.351 96.9474C155.907 95.3863 155.907 92.86 154.351 91.2989Z"
-                  fill="#770000"
-                />
-                <g filter="url(#filter1_d_351_141)">
+        {activeSec == "home" && (
+          <div className="w-full p-6 bg-[#060606] flex gap-6">
+            <div className="w-3/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center ">
+              <div className="mt-11 relative w-full">
+                <p className="text-gray-200 text-center">Latest Runs</p>
+                <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="189"
+                height="188"
+                viewBox="0 0 189 188"
+                className="my-6"
+                fill="none">
+                <g filter="url(#filter0_d_351_141)">
                   <path
-                    d="M110.027 94.0022L86.876 79.8588C85.5433 79.0446 83.8333 80.0038 83.8333 81.5655V106.822C83.8333 108.294 85.3711 109.262 86.6988 108.625L109.85 97.5119C111.28 96.8258 111.38 94.8287 110.027 94.0022Z"
-                    fill="#DEDEDE"
+                    d="M99.5298 20.3824L168.16 89.2147C170.884 91.9467 170.884 96.3676 168.16 99.0996L99.8211 167.64C97.0952 170.374 92.6706 170.385 89.9313 167.664L20.8976 99.1016C18.1488 96.3717 18.1401 91.9284 20.8781 89.1877L89.6206 20.3775C92.3568 17.6387 96.7964 17.6409 99.5298 20.3824Z"
+                    fill="#0E0E0E"
+                    stroke="#770000"
+                    strokeWidth="2"
                   />
+                  <path
+                    d="M154.351 91.2989L97.3912 34.1715C95.8292 32.605 93.2923 32.6037 91.7288 34.1687L34.6687 91.285C33.1041 92.8511 33.1091 95.3902 34.6798 96.9502L91.9743 153.853C93.5396 155.408 96.068 155.402 97.6256 153.84L154.351 96.9474C155.907 95.3863 155.907 92.86 154.351 91.2989Z"
+                    fill="#770000"
+                  />
+                  <g filter="url(#filter1_d_351_141)">
+                    <path
+                      d="M110.027 94.0022L86.876 79.8588C85.5433 79.0446 83.8333 80.0038 83.8333 81.5655V106.822C83.8333 108.294 85.3711 109.262 86.6988 108.625L109.85 97.5119C111.28 96.8258 111.38 94.8287 110.027 94.0022Z"
+                      fill="#DEDEDE"
+                    />
+                  </g>
                 </g>
-              </g>
-              <defs>
-                <filter
-                  id="filter0_d_351_141"
-                  x="0.830322"
-                  y="0.324829"
-                  width="187.373"
-                  height="187.373"
-                  filterUnits="userSpaceOnUse"
-                  colorInterpolationFilters="sRGB">
-                  <feFlood
-                    floodOpacity="0"
-                    result="BackgroundImageFix"
-                  />
-                  <feColorMatrix
-                    in="SourceAlpha"
-                    type="matrix"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha"
-                  />
-                  <feMorphology
-                    radius="1"
-                    operator="dilate"
-                    in="SourceAlpha"
-                    result="effect1_dropShadow_351_141"
-                  />
-                  <feOffset />
-                  <feGaussianBlur stdDeviation="8" />
-                  <feComposite
-                    in2="hardAlpha"
-                    operator="out"
-                  />
-                  <feColorMatrix
-                    type="matrix"
-                    values="0 0 0 0 0.466667 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in2="BackgroundImageFix"
-                    result="effect1_dropShadow_351_141"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in="SourceGraphic"
-                    in2="effect1_dropShadow_351_141"
-                    result="shape"
-                  />
-                </filter>
-                <filter
-                  id="filter1_d_351_141"
-                  x="67.8333"
-                  y="63.5624"
-                  width="59.1514"
-                  height="61.2616"
-                  filterUnits="userSpaceOnUse"
-                  colorInterpolationFilters="sRGB">
-                  <feFlood
-                    floodOpacity="0"
-                    result="BackgroundImageFix"
-                  />
-                  <feColorMatrix
-                    in="SourceAlpha"
-                    type="matrix"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha"
-                  />
-                  <feOffset />
-                  <feGaussianBlur stdDeviation="8" />
-                  <feComposite
-                    in2="hardAlpha"
-                    operator="out"
-                  />
-                  <feColorMatrix
-                    type="matrix"
-                    values="0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0.5 0"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in2="BackgroundImageFix"
-                    result="effect1_dropShadow_351_141"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in="SourceGraphic"
-                    in2="effect1_dropShadow_351_141"
-                    result="shape"
-                  />
-                </filter>
-              </defs>
-            </svg>
-            <h2 className="text-white text-xl mb-4">Start your Automation Journey </h2>
-            <p className="text-[#A0A0A0] mb-8 text-center w-4/5 text-sm leading-[17px]">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
-            <button className="px-6 py-3  rounded-lg text-xl text-[#DEDEDE] bg-[#700]">Explore Workflows</button>
-          </div>
-          <div className="w-2/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
-            <div className="mt-11 mb-12 relative w-full">
-              <p className="text-gray-200 text-center">Recent Workflow</p>
-              <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+                <defs>
+                  <filter
+                    id="filter0_d_351_141"
+                    x="0.830322"
+                    y="0.324829"
+                    width="187.373"
+                    height="187.373"
+                    filterUnits="userSpaceOnUse"
+                    colorInterpolationFilters="sRGB">
+                    <feFlood
+                      floodOpacity="0"
+                      result="BackgroundImageFix"
+                    />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      type="matrix"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                      result="hardAlpha"
+                    />
+                    <feMorphology
+                      radius="1"
+                      operator="dilate"
+                      in="SourceAlpha"
+                      result="effect1_dropShadow_351_141"
+                    />
+                    <feOffset />
+                    <feGaussianBlur stdDeviation="8" />
+                    <feComposite
+                      in2="hardAlpha"
+                      operator="out"
+                    />
+                    <feColorMatrix
+                      type="matrix"
+                      values="0 0 0 0 0.466667 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in2="BackgroundImageFix"
+                      result="effect1_dropShadow_351_141"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in="SourceGraphic"
+                      in2="effect1_dropShadow_351_141"
+                      result="shape"
+                    />
+                  </filter>
+                  <filter
+                    id="filter1_d_351_141"
+                    x="67.8333"
+                    y="63.5624"
+                    width="59.1514"
+                    height="61.2616"
+                    filterUnits="userSpaceOnUse"
+                    colorInterpolationFilters="sRGB">
+                    <feFlood
+                      floodOpacity="0"
+                      result="BackgroundImageFix"
+                    />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      type="matrix"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                      result="hardAlpha"
+                    />
+                    <feOffset />
+                    <feGaussianBlur stdDeviation="8" />
+                    <feComposite
+                      in2="hardAlpha"
+                      operator="out"
+                    />
+                    <feColorMatrix
+                      type="matrix"
+                      values="0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0.5 0"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in2="BackgroundImageFix"
+                      result="effect1_dropShadow_351_141"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in="SourceGraphic"
+                      in2="effect1_dropShadow_351_141"
+                      result="shape"
+                    />
+                  </filter>
+                </defs>
+              </svg>
+              <h2 className="text-white text-xl mb-4">Start your Automation Journey </h2>
+              <p className="text-[#A0A0A0] mb-8 text-center w-4/5 text-sm leading-[17px]">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
+              <button className="px-6 py-3  rounded-lg text-xl text-[#DEDEDE] bg-[#700]">Explore Workflows</button>
             </div>
-            
-            <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
-              <thead className="text-white decoration-none">
-                <tr>
-                  <th className="py-2 text-transparent">logo</th>
-                  <th className="py-2 ">Workflow Name</th>
-                  <th className="py-2 ">Edited</th>
-                  <th className="py-2 ">Runs</th>
-                </tr>
-              </thead>
-              <tbody className="p-2 text-center">
-                <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
-                  <td className="py-2 mb-2">1</td>
-                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Fuzz web app for vulnerabilities</Link></td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
-                </tr>
-                <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
-                  <td className="py-2 mb-2">1</td>
-                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Simple Content Discovery</Link></td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>}
-        {activeSec== 'workflow' &&<div className="w-full p-6 bg-[#060606] flex gap-6">
-         
-          <div className="w-full border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
-            <div className="mt-11 mb-12 relative w-full">
-              <p className="text-gray-200 text-center">Recent Workflow</p>
-              <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+            <div className="w-2/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
+              <div className="mt-11 mb-12 relative w-full">
+                <p className="text-gray-200 text-center">Recent Workflow</p>
+                <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+              </div>
+
+              <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
+                <thead className="text-white decoration-none">
+                  <tr>
+                    <th className="py-2 text-transparent">logo</th>
+                    <th className="py-2 ">Workflow Name</th>
+                    <th className="py-2 ">Edited</th>
+                    <th className="py-2 ">Runs</th>
+                  </tr>
+                </thead>
+                <tbody className="p-2 text-center">
+                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                    <td className="py-2 mb-2">1</td>
+                    <td className="py-2 mb-2 text-white">
+                      <Link to="/editor">Fuzz web app for vulnerabilities</Link>
+                    </td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
+                  </tr>
+                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                    <td className="py-2 mb-2">1</td>
+                    <td className="py-2 mb-2 text-white">
+                      <Link to="/editor">Simple Content Discovery</Link>
+                    </td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            
-            <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
-              <thead className="text-white decoration-none">
-                <tr>
-                  <th className="py-2 text-transparent">logo</th>
-                  <th className="py-2 ">Workflow Name</th>
-                  <th className="py-2 ">Edited</th>
-                  <th className="py-2 ">Runs</th>
-                  <th className="py-2 ">Created by</th>
-                  <th className="py-2 ">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="p-2 text-center">
-                <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
-                  <td className="py-2 mb-2">1</td>
-                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Fuzz web app for vulnerabilities</Link></td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]"><Link to='/editor' target="_blank"><FontAwesomeIcon icon={faPenToSquare} /></Link></td>
-                </tr>
-                <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
-                  <td className="py-2 mb-2">2</td>
-                  <td className="py-2 mb-2 text-white"><Link to='/editor'>Simple Content Discovery</Link></td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
-                  <td className="py-2 mb-2 text-[#A0A0A0]"><Link to='/editor'  target="_blank"><FontAwesomeIcon icon={faPenToSquare} /></Link></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
-        </div>}
+        )}
+        {activeSec == "workflow" && (
+          <div className="w-full p-6 bg-[#060606] flex gap-6">
+            <div className="w-full border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
+              <div className="mt-11 mb-12 relative w-full">
+                <p className="text-gray-200 text-center">Recent Workflow</p>
+                <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+              </div>
+
+              <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
+                <thead className="text-white decoration-none">
+                  <tr>
+                    <th className="py-2 text-transparent">logo</th>
+                    <th className="py-2 ">Workflow Name</th>
+                    <th className="py-2 ">Edited</th>
+                    <th className="py-2 ">Runs</th>
+                    <th className="py-2 ">Created by</th>
+                    <th className="py-2 ">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="p-2 text-center">
+                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                    <td className="py-2 mb-2">1</td>
+                    <td className="py-2 mb-2 text-white">
+                      <Link to="/editor">Fuzz web app for vulnerabilities</Link>
+                    </td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">
+                      <Link
+                        to="/editor"
+                        target="_blank">
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                    <td className="py-2 mb-2">2</td>
+                    <td className="py-2 mb-2 text-white">
+                      <Link to="/editor">Simple Content Discovery</Link>
+                    </td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">
+                      <Link
+                        to="/editor"
+                        target="_blank">
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default Home;
+export default Dashboard;

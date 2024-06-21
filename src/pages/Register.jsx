@@ -1,96 +1,102 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import GoogleLogo from "../components/GoogleLogo";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { Link, redirect } from "react-router-dom";
+import { supabase } from "../client";
+import GoogleLogo from "../components/icons/GoogleLogo";
 
 const Signup = () => {
-  const [password, setPassword] = useState("");
-  const [passwordIsValid, setPasswordIsValid] = useState({});
-  const [passwordIsChecked, setPasswordIshecked] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const [email, setEmail] = useState("");
-  const [emailIsValid, setEmailIsValid] = useState({});
-  const [emailIsChecked, setEmailIshecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const history = useHistory();
+  const onSubmit = async (formData) => {
+    setIsLoading(true);
 
-  const [isNavigating, setIsNavigating] = useState(false);
-  const [createdAcc, setCreatedAcc] = useState(false);
+    const promise = supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        data: {
+          full_name: formData.fullname,
+        },
+      },
+    });
 
-  const handleClick = () => {
-    setIsNavigating(true);
-    setTimeout(() => {
-      setIsNavigating(false);
-      setCreatedAcc(true);
-      setTimeout(() => {
-        setCreatedAcc(false);
-        history.push('/')
-      }, 3000);
-    }, 1000);
-  };
+    toast.promise(
+      promise.then(({ data, error }) => {
+        if (error) {
+          throw error;
+        }
+        return data;
+      }),
+      {
+        loading: "Creating Account...",
+        success: "Account created successfully. Please check your email to verify your account.",
+        error: (err) => `Error: ${err.message || "Creating account failed."}`,
+      }
+    );
 
-  const passwordChangeHandler = (e) => {
-    setPassword(e.target.value);
+    try {
+      const { data, error } = await promise;
 
-    console.log(validatePassword(e.target.value));
-    if (passwordIsChecked) {
-      setPasswordIsValid(validatePassword(e.target.value));
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        console.log(data);
+        redirect("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
-
-    //console.log(validateEmail(e.target.value));
-    if (emailIsChecked) {
-      setEmailIsValid(validateEmail(e.target.value));
-    }
+  const onError = (e) => {
+    console.log(errors, e);
   };
 
   const validatePassword = (password) => {
-    // Check minimum length
-    if (password.length < 8) {
-      return { isValid: false, message: "Password must be at least 8 characters long." };
-    }
+    const minLength = password.length >= 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
 
-    // Check for at least one uppercase letter
-    if (!/[A-Z]/.test(password)) {
-      return { isValid: false, message: "Password must contain at least one uppercase letter." };
+    if (!minLength) {
+      return "Password must be at least 8 characters long";
     }
-
-    // Check for at least one lowercase letter
-    if (!/[a-z]/.test(password)) {
-      return { isValid: false, message: "Password must contain at least one lowercase letter." };
+    if (!hasUpperCase) {
+      return "Password must contain at least one uppercase letter";
     }
-
-    // Check for at least one digit
-    if (!/\d/.test(password)) {
-      return { isValid: false, message: "Password must contain at least one digit." };
+    if (!hasLowerCase) {
+      return "Password must contain at least one lowercase letter";
     }
-
-    // Check for at least one special character
-    if (!/[!@#$%^&*(),.?":{}|<>`]/.test(password)) {
-      return { isValid: false, message: 'Password must contain at least one special character (!@#$%^&*(),.?":{}|<>).' };
+    if (!hasNumber) {
+      return "Password must contain at least one number";
     }
-
-    // Password meets all criteria
-    return { isValid: true, message: "Password is valid." };
+    return true;
   };
 
   const validateEmail = (email) => {
     // Regular expression for a valid email address
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[A-Z]{2,4}$/i;
 
     // Check if the email matches the regular expression
     if (emailRegex.test(email)) {
-      return { isValid: true, message: "Email is valid." };
+      return true;
     } else {
-      return { isValid: false, message: "Invalid email address." };
+      return "Invalid email address.";
     }
   };
 
   return (
     <div className="flex w-full relative">
-      {createdAcc&& <div className="absolute transition-curtain left-1/2 transform top-10 rounded-lg -translate-x-1/2 px-5 py-3 bg-green-300 text-black text-lg">Account has been created!</div>}
       <div className="w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scannig
@@ -144,9 +150,7 @@ const Signup = () => {
           <h2 className="text-[40px] text-gray-primary font-bold mb-10">Create Your MindExec. Account</h2>
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}>
+            onSubmit={handleSubmit(onSubmit, onError)}>
             <button className="h-[54px] w-[440px] rounded-lg border-gray-200 border-2 text-gray-primary flex gap-[5px] items-center justify-center mb-8">
               <GoogleLogo />
               <span className="text-xl">Sign up with Google</span>
@@ -158,15 +162,18 @@ const Signup = () => {
             </div>
             <div className="mb-4">
               <label
-                htmlFor="username"
+                htmlFor="fullname"
                 className=" text-left block mb-2">
-                Username
+                Full Name
               </label>
               <input
-                id="username"
+                disabled={isLoading}
+                {...register("fullname", { required: "Full Name is required" })}
+                id="fullname"
                 className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
                 type="text"
               />
+              {errors.fullname && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.fullname.message}</label>}
             </div>
             <div className="mb-4">
               <label
@@ -175,17 +182,13 @@ const Signup = () => {
                 Email
               </label>
               <input
+                disabled={isLoading}
+                {...register("email", { required: "Email is required", validate: validateEmail })}
                 id="email"
                 className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
                 type="email"
-                value={email}
-                onChange={emailChangeHandler}
-                onBlur={() => {
-                  setEmailIshecked(true);
-                  setEmailIsValid(validateEmail(email));
-                }}
               />
-              {!emailIsValid.isValid && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{emailIsValid.message}</label>}
+              {errors.email && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.email.message}</label>}
             </div>
             <div className="mb-6">
               <label
@@ -194,27 +197,23 @@ const Signup = () => {
                 Password
               </label>
               <input
+                disabled={isLoading}
+                {...register("password", { required: "Password is required", validate: validatePassword })}
                 id="password"
                 className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
                 type="password"
-                onChange={passwordChangeHandler}
-                value={password}
-                onBlur={() => {
-                  setPasswordIshecked(true);
-                  setPasswordIsValid(validatePassword(password));
-                }}
               />
-              {!passwordIsValid.isValid && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{passwordIsValid.message}</label>}
+              {errors.password && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.password.message}</label>}
             </div>
-            <Link>
-              <button
-                onClick={handleClick}
-                disabled={isNavigating}
-                className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isNavigating ? "bg-[#77000075] text-[#dedede82] " : "bg-red-primary text-gray-primary"} mb-8`}>
-                Sign up
-              </button>
-            </Link>
-            <Link to="login">
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isLoading ? "bg-[#77000075] text-[#dedede82] " : "bg-red-primary text-gray-primary"} mb-8`}>
+              Sign up
+            </button>
+
+            <Link to="/login">
               <p className="text-[16px]">
                 Already have an account ? <span className="text-red-primary">Log in</span>
               </p>

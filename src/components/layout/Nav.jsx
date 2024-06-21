@@ -1,9 +1,9 @@
 import { faBell, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import AppContext from "../AppContext";
-import MindExecLogo from "./MindExecLogo";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import AppContext from "../../AppContext";
+import MindExecLogo from "../icons/MindExecLogo";
 
 function Nav() {
   const ctx = useContext(AppContext);
@@ -12,7 +12,9 @@ function Nav() {
     <header className="border-b-2 border-red-900 w-full">
       <nav className="flex items-center text-white-400 bg-primary1">
         <div className="w-1/5 p-4 flex items-center justify-around">
-          <Link to='/'><MindExecLogo /></Link>
+          <Link to="/">
+            <MindExecLogo />
+          </Link>
           <div className="flex items-center justify-center ps-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,9 +66,13 @@ function Nav() {
             }}
             className={`uppercase border-2 rounded-tl-[4px]  active border-black px-12 py-2  ${!ctx.builder ? "text-white bg-black" : "text-gray-200 flex "} flex items-center gap-2 justify-between relative`}>
             <label>runs</label>
-            {ctx.runStart && <div className="loading-container transition-curtain absolute right-3 inline">
-              <div style={{width:'25px',height:'25px'}} className="loading-circle"></div>
-            </div>}
+            {ctx.runStart && (
+              <div className="loading-container transition-curtain absolute right-3 inline">
+                <div
+                  style={{ width: "25px", height: "25px" }}
+                  className="loading-circle"></div>
+              </div>
+            )}
           </button>
         </div>
         <div className="w-1/5 p-4 flex items-center justify-end gap-6">

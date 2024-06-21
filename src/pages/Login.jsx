@@ -1,17 +1,74 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import GoogleLogo from "../components/GoogleLogo";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../client";
+import GoogleLogo from "../components/icons/GoogleLogo";
 
 const Login = () => {
-  const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = () => {
-    setIsNavigating(true);
-    setTimeout(() => {
-      history.push("/home");
-    }, 1000);
+  const navigate = useNavigate();
+
+  const onSubmit = async (formData) => {
+    setIsLoading(true);
+
+    const promise = supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    toast.promise(
+      promise.then(({ data, error }) => {
+        if (error) {
+          throw error;
+        }
+        return data;
+      }),
+      {
+        loading: "Logging in...",
+        success: "Login successfully.",
+        error: (err) => `Error: ${err.message || "Login failed."}`,
+      }
+    );
+
+    try {
+      const { data, error } = await promise;
+
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        console.log(data);
+        navigate("/dashboard", { replace: true });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onError = (e) => {
+    console.log(errors, e);
+  };
+
+  const validateEmail = (email) => {
+    // Regular expression for a valid email address
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[A-Z]{2,4}$/i;
+
+    // Check if the email matches the regular expression
+    if (emailRegex.test(email)) {
+      return true;
+    } else {
+      return "Invalid email address.";
+    }
   };
 
   return (
@@ -69,9 +126,7 @@ const Login = () => {
           <h2 className="text-[40px] text-gray-primary font-bold mb-10">Create Your MindExec. Account</h2>
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}>
+            onSubmit={handleSubmit(onSubmit, onError)}>
             <button className="h-[54px] w-[440px] rounded-lg border-gray-200 border-2 text-gray-primary flex gap-[5px] items-center justify-center mb-8">
               <GoogleLogo />
               <span className="text-xl">Log in with Google</span>
@@ -81,17 +136,21 @@ const Login = () => {
               <span>or</span>
               <div className="border-b-2 border-gray-200 w-6/12 h-1"></div>
             </div>
+
             <div className="mb-4">
               <label
-                htmlFor="username"
+                htmlFor="email"
                 className=" text-left block mb-2">
-                Username or Email
+                Email
               </label>
               <input
-                id="username"
+                disabled={isLoading}
+                {...register("email", { required: "Email is required", validate: validateEmail })}
+                id="email"
                 className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
-                type="text"
+                type="email"
               />
+              {errors.email && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.email.message}</label>}
             </div>
             <div className="mb-6">
               <label
@@ -100,19 +159,27 @@ const Login = () => {
                 Password
               </label>
               <input
+                disabled={isLoading}
+                {...register("password", { required: "Password is required" })}
                 id="password"
                 className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
                 type="password"
               />
+              {errors.password && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.password.message}</label>}
             </div>
-            <Link
-              >
-              <button onClick={handleClick}
-              disabled={isNavigating} className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isNavigating? 'bg-[#77000075] text-[#dedede82] ':'bg-red-primary text-gray-primary'} mb-8`}>Log in</button>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isLoading ? "bg-[#77000075] text-[#dedede82] " : "bg-red-primary text-gray-primary"} mb-8`}>
+              Log in
+            </button>
+
+            <Link to="/register">
+              <p className="text-[16px]">
+                Dosnot have an account? <span className="text-red-primary">Create one!</span>
+              </p>
             </Link>
-            <Link to='signup'><p className="text-[16px]">
-              Doesn&apos;t have an account ? <span className="text-red-primary">sign up</span>
-            </p></Link>
           </form>
         </div>
       </div>

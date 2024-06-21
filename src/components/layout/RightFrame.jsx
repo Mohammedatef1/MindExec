@@ -2,7 +2,7 @@ import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useContext, useEffect, useState } from "react";
-import AppContext from "../AppContext";
+import AppContext from "../../AppContext";
 
 const RightFrme = () => {
   const [parameters, setParameters] = useState(true);
@@ -80,7 +80,7 @@ const RightFrme = () => {
   };
 
   return (
-    <div className="w-1/5 bg-primary1 h-full ">
+    <div className="w-1/5 bg-primary1 h-full transition-none">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
           <h2 className="font-bold uppercase text-white mb-4 ">Map Details</h2>
@@ -250,14 +250,16 @@ const RightFrme = () => {
         </div>
       )}
       {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && !ctx.builder && (
-        <div data-test={ctx.test} className="transition-curtain mt-8">
+        <div
+          data-test={ctx.test}
+          className="transition-curtain mt-8">
           <div className="px-4">
-            {ctx.selectedNode.data.tool.status == 'succeeded' &&<span className="uppercase py-1 px-4 rounded-lg text-[#00dfaf] bg-[#122633]">succeeded</span>}
-            {ctx.selectedNode.data.tool.status == 'proccessing...' &&<span className="uppercase py-1 px-4 rounded-lg text-[#ff920e] bg-[#241a22]">proccessing...</span>}
+            {ctx.selectedNode.data.tool.status == "succeeded" && <span className="uppercase py-1 px-4 rounded-lg text-[#00dfaf] bg-[#122633]">succeeded</span>}
+            {ctx.selectedNode.data.tool.status == "proccessing..." && <span className="uppercase py-1 px-4 rounded-lg text-[#ff920e] bg-[#241a22]">proccessing...</span>}
             <p className="mt-4 text-xl text-white ">{ctx.selectedNode.data.label}</p>
             <p className=" text-sm text-[#dedede]">{ctx.selectedNode.id}</p>
-            {ctx.selectedNode.data.tool.status == 'succeeded' && <div className="w-full mx-auto text-[#17ccfd] bg-[#122633] py-2 mt-8 border-2 border-[#17ccfd] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
-            {ctx.selectedNode.data.tool.status == 'proccessing...' &&<div className="w-full mx-auto text-[#ff920e] bg-[#241a22] py-2 mt-8 border-2 border-[#ff920e] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
+            {ctx.selectedNode.data.tool.status == "succeeded" && <div className="w-full mx-auto text-[#17ccfd] bg-[#122633] py-2 mt-8 border-2 border-[#17ccfd] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
+            {ctx.selectedNode.data.tool.status == "proccessing..." && <div className="w-full mx-auto text-[#ff920e] bg-[#241a22] py-2 mt-8 border-2 border-[#ff920e] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
             <p className="mt-4 text-lg text-[#678eb4]">
               Duration <span className="ps-1 text-[#dedede]">{ctx.selectedNode.data.tool.duration}</span>
             </p>

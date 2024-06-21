@@ -1,27 +1,32 @@
-import { useContext, useState,useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Handle, Position } from "reactflow";
-import AppContext from "../AppContext";
+import AppContext from "../../AppContext";
 
 const InputNode = ({ isConnectable, data }) => {
   const [isHoverd, setIsHoved] = useState(false);
-  const [color , setColor] = useState("black");
+  const [color, setColor] = useState("black");
 
   const ctx = useContext(AppContext);
 
   useEffect(() => {
     setColor(colorController(data.tool.parameters[0].type));
-    console.log('excuted')
-  }, [data.tool.parameters])
+    console.log("excuted");
+  }, [data.tool.parameters]);
 
   const colorController = (parameterType) => {
     switch (parameterType) {
-      case "string": return "#df99ff";
-      case "folder": return "#FEA82F";
-      case "boolean": return "#4abffe";
-      case "file": return "#faa666";
-      default: return "black";
+      case "string":
+        return "#df99ff";
+      case "folder":
+        return "#FEA82F";
+      case "boolean":
+        return "#4abffe";
+      case "file":
+        return "#faa666";
+      default:
+        return "black";
     }
-}
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -37,8 +42,7 @@ const InputNode = ({ isConnectable, data }) => {
           width="40"
           height="40"
           viewBox="0 0 40 40"
-          fill="none"
-          >
+          fill="none">
           <path
             d="M22.1413 3.54422L36.4759 17.9211C37.6433 19.092 37.6433 20.9866 36.4759 22.1575L22.2085 36.4669C21.0403 37.6386 19.144 37.6432 17.9701 36.4773L3.55112 22.1568C2.3731 20.9868 2.36937 19.0825 3.5428 17.9079L17.8945 3.54214C19.0671 2.36836 20.9698 2.36929 22.1413 3.54422Z"
             fill="#0E0E0E"
@@ -69,7 +73,7 @@ const InputNode = ({ isConnectable, data }) => {
       </div>
       <p
         data-testrender={ctx.test}
-        style={{ color: color}}
+        style={{ color: color }}
         className=" absolute bottom-[-16px]  max-w-[80px] truncate text-center text-[10px]">
         {data.label}
       </p>
@@ -81,7 +85,7 @@ const InputNode = ({ isConnectable, data }) => {
             id={parameter.name}
             className="transition-primary"
             position={Position.Right}
-            style={{ width: 11, height: 11, position: "unset", borderRadius: "999px", border: `solid 2px ${color}`, background: isHoverd ? `${color}`: "black" }}
+            style={{ width: 11, height: 11, position: "unset", borderRadius: "999px", border: `solid 2px ${color}`, background: isHoverd ? `${color}` : "black" }}
             onConnect={(params) => {
               console.log("handle onConnect", params);
               console.log(parameter.name);

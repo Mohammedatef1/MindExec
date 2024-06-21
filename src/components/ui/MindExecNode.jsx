@@ -1,52 +1,58 @@
-import { useState,useContext } from "react";
+import { useContext, useState } from "react";
 import { Handle, Position } from "reactflow";
-import AppContext from "../AppContext";
+import AppContext from "../../AppContext";
 const MindExexNode = ({ isConnectable, data }) => {
-  const [isHoverd, setIsHoved] = useState(true);
+  const [isHoverd, setIsHoved] = useState(false);
 
   const ctx = useContext(AppContext);
 
   const colorController = (parameterType) => {
-      switch (parameterType) {
-        case "string": return "#df99ff";
-        case "folder": return "#FEA82F";
-        case "boolean": return "#4abffe";
-        case "file": return "#faa666";
-        default: return "black";
-      }
-  }
+    switch (parameterType) {
+      case "string":
+        return "#df99ff";
+      case "folder":
+        return "#FEA82F";
+      case "boolean":
+        return "#4abffe";
+      case "file":
+        return "#faa666";
+      default:
+        return "black";
+    }
+  };
 
   return (
     <div className="flex flex-col items-center">
       <div className="absolute left-[-13px] flex flex-col items-center gap-3 justify-center min-h-full transform translate-y-[5px]">
-        {data.tool.parameters.filter(e=>e.active).map((parameter) => (
-          <Handle
-            key={parameter.name}
-            data-testrender={ctx.test}
-            type="target"
-            id={parameter.name}
-            className="transition-primary transition-curtain"
-            position={Position.Left}
-            style={{
-              width: 11,
-              height: 11,
-              position: "unset",
-              borderRadius: "999px",
-              borderStyle: "solid",
-              borderWidth: "2px",
-              borderColor: colorController(parameter.type), 
-              background: 'transparent' 
-            }}
-            onConnect={(params) => {
-              console.log("handle onConnect", params);
-              console.log(parameter.name);
-            }}
-            isConnectable={isConnectable}
-            isConnectableStart={false}
-            >
-            <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute right-[17px] top-[-8px]`}>{parameter.name}</p>
-          </Handle>
-        ))}
+        {data.tool.parameters
+          .filter((e) => e.active)
+          .map((parameter) => (
+            <Handle
+              key={parameter.name}
+              data-testrender={ctx.test}
+              type="target"
+              id={parameter.name}
+              className="transition-primary transition-curtain"
+              position={Position.Left}
+              style={{
+                width: 11,
+                height: 11,
+                position: "unset",
+                borderRadius: "999px",
+                borderStyle: "solid",
+                borderWidth: "2px",
+                borderColor: colorController(parameter.type),
+                background: "transparent",
+              }}
+              onConnect={(params) => {
+                console.log("handle onConnect", params);
+                console.log(parameter.name);
+              }}
+              isConnectable={isConnectable}
+              isConnectableStart={false}>
+              <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute right-[17px] top-[-8px]`}>{parameter.name}</p>
+            </Handle>
+          ))}
       </div>
       <p className="text-white absolute bottom-[-18px] max-w-[100px] truncate text-center text-sm">{data.label}</p>
       <div>
@@ -89,14 +95,13 @@ const MindExexNode = ({ isConnectable, data }) => {
             fill="#0E0E0E"
           />
         </svg>
-        
       </div>
       <div className="absolute right-[-13px]  flex flex-col items-center gap-3 justify-center min-h-full transform translate-y-[5px]">
         <Handle
           type="source"
           position={Position.Right}
           id="file"
-          style={{ width: 11, height: 11, borderRadius: "999px", position: "unset", border: "none", background: colorController('file') }}
+          style={{ width: 11, height: 11, borderRadius: "999px", position: "unset", border: "none", background: colorController("file") }}
           onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}>
           <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute left-[17px] top-[-8px]`}>file</p>
@@ -106,7 +111,7 @@ const MindExexNode = ({ isConnectable, data }) => {
           data-testid="folder"
           position={Position.Right}
           id="folder"
-          style={{ width: 11, height: 11, borderRadius: "999px", position: "unset", border: "none", background: colorController('folder') }}
+          style={{ width: 11, height: 11, borderRadius: "999px", position: "unset", border: "none", background: colorController("folder") }}
           onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}>
           <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute left-[17px] top-[-8px]`}>folder</p>

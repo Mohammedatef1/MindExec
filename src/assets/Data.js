@@ -164,7 +164,8 @@ const tools = [
       { name: "follow-redirects", type: "boolean", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
       { name: "scan-all-ips", type: "boolean", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
       { name: "stat", type: "boolean", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "tempelates", type: "folder", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },{ name: "urls-list", type: "file", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true }
+      { name: "tempelates", type: "folder", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
+      { name: "urls-list", type: "file", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
     ],
   },
 ];
@@ -214,14 +215,15 @@ const scripts = [
       { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
       { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
     ],
-  },{
+  },
+  {
     name: "recursively-cat-all",
     type: "tool",
     category: "",
     finalCommand: "find in -type f -exec cat {} + | tee out/output.txt",
     ontput: "",
     stdout: "",
-    stderr: " ",
+    stderr: "",
     status: "proccessing...",
     duration: "",
     command: {
@@ -254,4 +256,4 @@ const spliter = [
   },
 ];
 
-export { scripts, tools,spliter };
+export { scripts, spliter, tools };

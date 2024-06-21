@@ -5,6 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #171717;
+}
 @keyframes transition-curtain {
   0% {
     opacity: 0;
@@ -18,7 +21,6 @@
   0% {
     opacity: 0;
     transform: translateY(10px);
-    
   }
   100% {
     opacity: 1;
@@ -29,7 +31,6 @@
 @keyframes glitch-color {
   0% {
     transform: translate(0);
-    
   }
 
   20% {
@@ -120,7 +121,6 @@ body {
   background: linear-gradient(154deg, #171717 0%, #060606 100%);
 }
 
-
 .scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -158,7 +158,6 @@ body {
     transform: rotate(360deg);
   }
 }
-
 
 @layer components {
   .max-container {

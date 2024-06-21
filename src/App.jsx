@@ -1,54 +1,64 @@
-import Nav from "./components/Nav";
-// eslint-disable-next-line no-unused-vars
-import { Home, Landing, LeftFrame, Login, MindMap, RightFrme, Signup } from "./sections/section";
+import Dashboard from "./pages/Dashboard";
+import Editor from "./pages/Editor";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import { Toaster } from "react-hot-toast";
 import AppProvider from "./AppProvider";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import ProtectedSignRoute from "./pages/ProtectedSignRoute";
 
-const Editor = () => (
-  <main className="max-h-screen overflow-hidden">
-    <Nav />
-    <section className="w-full flex h-[calc(100vh-72px)]">
-      <LeftFrame />
-      <MindMap />
-      <RightFrme />
-    </section>
-  </main>
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/login",
+      element: (
+        <ProtectedSignRoute>
+          <Login />
+        </ProtectedSignRoute>
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <ProtectedSignRoute>
+          <Register />
+        </ProtectedSignRoute>
+      ),
+    },
+    {
+      path: "/editor",
+      element: (
+        <ProtectedRoute>
+          <Editor />
+        </ProtectedRoute>
+      ),
+    },
+  ],
+  { basename: "/MindExec" }
 );
 
 const App = () => (
-  <AppProvider>
-    <Router basename="/MindExec">
-      <Switch>
-        <Route
-          path="/"
-          exact
-          className="transition-curtain"
-          component={Landing}
-        />
-        <Route
-          path="/home"
-          component={Home}
-          className="transition-curtain"
-        />
-        <Route
-          path="/login"
-          component={Login}
-          className="transition-curtain"
-        />
-        <Route
-          path="/signup"
-          component={Signup}
-          className="transition-curtain"
-        />
-        <Route
-          path="/editor"
-          component={Editor}
-          className="transition-curtain"
-        />
-      </Switch>
-    </Router>
-  </AppProvider>
+  <>
+    <Toaster />
+    <AppProvider>
+      <RouterProvider router={router} />
+    </AppProvider>
+  </>
 );
 export default App;
