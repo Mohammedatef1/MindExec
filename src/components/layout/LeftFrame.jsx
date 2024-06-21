@@ -4,13 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useRef, useState } from "react";
 import AppContext from "../../AppContext";
 import { scripts, spliter, tools } from "../../assets/Data";
-import ArrowIcon from "../Icons/ArrowIcon";
-import BooleanIcon from "../Icons/BooleanIcon";
-import FileIcon from "../Icons/FileIcon";
-import FolderIcon from "../Icons/FolderIcon";
-import GripDots from "../Icons/GripDots";
-import StringIcon from "../Icons/StringIcon";
-import ToolIcon from "../Icons/ToolIcon";
+import ArrowIcon from "../icons/ArrowIcon";
+import BooleanIcon from "../icons/BooleanIcon";
+import FileIcon from "../icons/FileIcon";
+import FolderIcon from "../icons/FolderIcon";
+import GripDots from "../icons/GripDots";
+import StringIcon from "../icons/StringIcon";
+import ToolIcon from "../icons/ToolIcon";
 
 import "../../components/index.css";
 
