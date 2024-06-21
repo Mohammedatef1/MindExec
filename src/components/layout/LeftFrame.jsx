@@ -119,7 +119,7 @@ const LeftFrame = () => {
               className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
               <div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-[#dedede] uppercase flex items-center justify-between`}>
                 <h2>Search</h2>
-                <ArrowIcon className={`text-white rotate-180 transition-primary`}></ArrowIcon>
+                <ArrowIcon className="text-white rotate-180 transition-primary"></ArrowIcon>
               </div>
               <AnimatePresence>
                 <motion.div
