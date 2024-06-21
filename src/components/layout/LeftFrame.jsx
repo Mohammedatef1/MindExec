@@ -110,17 +110,21 @@ const LeftFrame = () => {
               placeholder="Search library"
               type="text"
               value={searchWord}
-              onChange={(e) => setSearchWord(e.target.value)}
+              onChange={(e) => {
+                setSearchWord(e.target.value);
+                console.log(scripts.concat(spliter, tools).filter((tool) => tool.name.includes(searchWord)));
+              }}
             />
           </div>
           {searchWord && (
             <div
               id="search-options"
               className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
-              <div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-[#dedede] uppercase flex items-center justify-between`}>
+              {/*<div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-[#dedede] uppercase flex items-center justify-between`}>
                 <h2>Search</h2>
                 <ArrowIcon className="text-white rotate-180 transition-primary"></ArrowIcon>
-              </div>
+              </div>*/}
+              {scripts.concat(spliter, tools).filter((tool) => tool.name.includes(searchWord)).length === 0 && <p className="text-white text-center bg-primary1 transition-curtain">No results found</p>}
               <AnimatePresence>
                 <motion.div
                   variants={menuVars}
@@ -131,23 +135,25 @@ const LeftFrame = () => {
                   id="scripts"
                   className={`bg-black px-4 origin-top overflow-hidden`}>
                   <ul className="text-white">
-                    {scripts.map((tool) => (
-                      <li
-                        key={tool.name}
-                        data-min={5}
-                        id="script 1"
-                        className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
-                        onDragStart={(event) => handleDragStart(event, tool)}
-                        draggable>
-                        <GripDots />
-                        <ToolIcon className="scale-75" />
-                        <p>{tool.name}</p>
-                        <FontAwesomeIcon
-                          icon={faCircleInfo}
-                          className="ms-auto text-[#dedede]"
-                        />
-                      </li>
-                    ))}
+                    {scripts
+                      .concat(spliter, tools)
+                      .filter((tool) => tool.name.includes(searchWord))
+                      .map((tool) => (
+                        <li
+                          key={tool.name}
+                          data-min={5}
+                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                          onDragStart={(event) => handleDragStart(event, tool)}
+                          draggable>
+                          <GripDots />
+                          <ToolIcon className="scale-75" />
+                          <p>{tool.name}</p>
+                          <FontAwesomeIcon
+                            icon={faCircleInfo}
+                            className="ms-auto text-[#dedede]"
+                          />
+                        </li>
+                      ))}
                   </ul>
                 </motion.div>
               </AnimatePresence>
@@ -180,7 +186,6 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          id="script 1"
                           className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
@@ -219,7 +224,6 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          id="script 1"
                           className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
@@ -259,7 +263,6 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          id="script 1"
                           className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
