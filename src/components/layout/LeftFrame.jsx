@@ -74,7 +74,7 @@ const LeftFrame = () => {
   };
 
   return (
-    <div className={`${ctx.builder ? "w-1/5" : "w-0"} bg-primary1 h-full`}>
+    <div className={`bg-primary1 h-full`}>
       <div className=" bg-black mt-16 mx-6 rounded-[4px]  ">
         <button
           onClick={() => {
@@ -190,7 +190,7 @@ const LeftFrame = () => {
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
                           <GripDots />
-                          <ToolIcon className="scale-75" />
+                          <ToolIcon className="scale-75 min-w-[40px] min-h-[40px]" />
                           <p>{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}

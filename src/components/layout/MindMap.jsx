@@ -7,7 +7,7 @@ const MindMap = () => {
   return (
     <div
       id="container"
-      className={`${ctx.builder ? "w-3/5" : "w-4/5"} h-full transition-all`}>
+      className={`h-full transition-all`}>
       <MindNode />
     </div>
   );

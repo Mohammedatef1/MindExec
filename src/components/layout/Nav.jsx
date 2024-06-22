@@ -56,6 +56,7 @@ function Nav() {
           <button
             onClick={() => {
               ctx.setBuilder(true);
+              ctx.setShowLeft(true);
             }}
             className={`uppercase border-2 rounded-tl-[4px] active  border-black px-12 py-2  ${ctx.builder ? "text-white bg-black" : "text-gray-200 "}`}>
             Builder
@@ -63,6 +64,7 @@ function Nav() {
           <button
             onClick={() => {
               ctx.setBuilder(false);
+              ctx.setShowLeft(false);
             }}
             className={`uppercase border-2 rounded-tl-[4px]  active border-black px-12 py-2  ${!ctx.builder ? "text-white bg-black" : "text-gray-200 flex "} flex items-center gap-2 justify-between relative`}>
             <label>runs</label>

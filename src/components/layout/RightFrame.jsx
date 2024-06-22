@@ -1,8 +1,10 @@
 import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { saveAs } from "file-saver";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../../AppContext";
+import AIIcon from "../icons/AIIcon";
 
 const RightFrme = () => {
   const [parameters, setParameters] = useState(true);
@@ -79,8 +81,26 @@ const RightFrme = () => {
       });
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAnalyze = async () => {
+    setIsLoading(true);
+    try {
+      // Simulate analysis process
+      await new Promise((resolve) => setTimeout(resolve, 15000));
+
+      // After analysis is complete, download the PDF
+      const pdfUrl = "path/to/your/pdf/file.pdf";
+      saveAs(pdfUrl, "analysis.pdf");
+    } catch (error) {
+      console.error("Error during analysis:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="w-1/5 bg-primary1 h-full transition-none">
+    <div className="bg-primary1 h-full transition-none">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
           <h2 className="font-bold uppercase text-white mb-4 ">Map Details</h2>
@@ -90,6 +110,21 @@ const RightFrme = () => {
           <p className="text-red-400">
             Space Name <span className="text-gray-300 px-2">Playground</span>
           </p>
+          {!ctx.builder && ctx.runEnd && (
+            <button
+              className={`ai-button gap-2 mt-[140px] mx-auto text-white flex items-center justify-center ${isLoading ? "loading" : ""}`}
+              onClick={handleAnalyze}
+              disabled={isLoading}>
+              {isLoading ? (
+                <div className="loader"></div>
+              ) : (
+                <>
+                  <AIIcon />
+                  <p>Analyze with AI</p>
+                </>
+              )}
+            </button>
+          )}
         </div>
       )}
       {ctx.selectedNode && ctx.selectedNode.type == "inputNode" && (

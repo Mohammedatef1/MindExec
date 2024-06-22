@@ -43,11 +43,7 @@ const router = createBrowserRouter(
     },
     {
       path: "/editor",
-      element: (
-        <ProtectedRoute>
-          <Editor />
-        </ProtectedRoute>
-      ),
+      element: <Editor />,
     },
   ],
   { basename: "/MindExec" }

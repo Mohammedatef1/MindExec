@@ -13,11 +13,15 @@ const AppProvider = ({ children }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  const [showLeft, setShowLeft] = useState(true);
+  const [showRight, setShowRight] = useState(true);
+
   const [selectedNode, setSelectedNode] = useState(null);
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [reactFlowInstance, setReactFlowInstance, onInstanceChange] = useState(null);
   const [builder, setBuilder] = useState(true);
   const [runStart, setRunStart] = useState(false);
+  const [runEnd, setRunEnd] = useState(false);
 
   const [test, setTest] = useState(false);
 
@@ -76,7 +80,7 @@ const AppProvider = ({ children }) => {
       });
   }
 
-  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode, setSelectedNode, reactFlowInstance, setReactFlowInstance, onInstanceChange, test, setTest, selectedEdge, setSelectedEdge, generateCommands, builder, setBuilder, runStart, setRunStart }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode, setSelectedNode, reactFlowInstance, setReactFlowInstance, onInstanceChange, test, setTest, selectedEdge, setSelectedEdge, generateCommands, builder, setBuilder, runStart, setRunStart, showLeft, showRight, setShowLeft, setShowRight, runEnd, setRunEnd }}>{children}</AppContext.Provider>;
 };
 
 export default AppProvider;
