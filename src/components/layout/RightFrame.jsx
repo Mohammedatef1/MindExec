@@ -90,7 +90,7 @@ const RightFrme = () => {
       await new Promise((resolve) => setTimeout(resolve, 15000));
 
       // After analysis is complete, download the PDF
-      const pdfUrl = "path/to/your/pdf/file.pdf";
+      const pdfUrl = "https://drive.google.com/file/d/1XJrnW0IPTfEZSo3PtSAFajXL0lMBPI4d";
       saveAs(pdfUrl, "analysis.pdf");
     } catch (error) {
       console.error("Error during analysis:", error);
