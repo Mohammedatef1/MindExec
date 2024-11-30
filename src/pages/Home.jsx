@@ -28,27 +28,27 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="h-[300vh] max-w-screen text-white scrollbar bg-[#060606]">
-      <nav className="px-[7%] pt-[44px] flex justify-between items-center font-[Inter] z-10">
+    <div className="pb-10 max-w-screen text-white scrollbar bg-[#060606]">
+      <nav className="px-4 md:px-[7%] pt-8 md:pt-11 flex justify-between items-center font-[Inter] z-10">
         <div className="flex justify-between items-center">
           <MindExecLogo />
         </div>
-        <div className="flex justify-between gap-12 items-center">
-          <Link to="/about">About</Link>
-          <Link to="/features">Features</Link>
-          <Link to="/faq">FAQ</Link>
+        <div className="flex justify-between gap-3 md:gap-6 lg:gap-12 items-center">
+          <Link to="/">About</Link>
+          <Link to="/">Features</Link>
+          <Link to="/">FAQ</Link>
         </div>
-        <div className="flex justify-between gap-8 items-center z-20 text-[#dedede]">
+        <div className="flex justify-between gap-2 md:gap-4 lg:gap-8 items-center z-20 text-[#dedede]">
           <Link to="/login">Log In</Link>
           <Link
             to="/register"
-            className="px-6 py-3 rounded-lg border-gradient-primary">
+            className="px-4 py-2 md:px-6 md:py-3 rounded-lg border-gradient-primary">
             Sign Up
           </Link>
         </div>
       </nav>
-      <div className="pt-[150px] mb-[352px] text-[#dedede] relative">
-        <div className="ps-[7%] w-3/5">
+      <div className="pt-[150px] mb-24 md:mb-48 lg:mb-[352px] text-[#dedede] relative">
+        <div className="ps-4 md:ps-[7%] w-4/5 md:w-3/5 relative z-10">
           <h2 className="text-4xl font-[700] mb-[10px]">
             MindExec. is an ideal solution
             <br /> for individuals working as
@@ -64,7 +64,7 @@ const Landing = () => {
         </div>
         <RedShape />
       </div>
-      <section className="w-[80%] z-0 rounded-md p-[53px] mx-auto bg-[#ffffff14] relative overflow-hidden">
+      <section className="mx-6 md:mx-12 lg:mx-24 z-0 rounded-md p-4 md:p-7 lg:p-12 bg-[#ffffff14] relative overflow-hidden">
         <div className="z-10">
           <p className="text-[#700] text-xl font-[700]">Workflow Automation</p>
           <h2 className="text-4xl text-[#dedede] font-[700] mt-[18px]">

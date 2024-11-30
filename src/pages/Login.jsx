@@ -72,8 +72,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full">
-      <div className="w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
+    <div className="flex flex-wrap w-full">
+      <div className="w-full lg:w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scannig
           <br />
@@ -121,7 +121,7 @@ const Login = () => {
           </defs>
         </svg>
       </div>
-      <div className="w-1/2 h-screen bg-black flex justify-center items-center">
+      <div className="w-full lg:w-1/2 h-screen bg-black flex justify-center items-center">
         <div>
           <h2 className="text-[40px] text-gray-primary font-bold mb-10">Create Your MindExec. Account</h2>
           <form

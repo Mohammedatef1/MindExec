@@ -96,12 +96,12 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex w-full relative">
-      <div className="w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
+    <div className="flex flex-wrap w-full relative">
+      <div className="w-full lg:w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
         <h1 className="text-white text-[40px] font-bold ">
-          Unleash your Scannig
+          Unleash your Scanning
           <br />
-          Capabilites Using <span className="text-red-primary">MindExec.</span>
+          Capabilities Using <span className="text-red-primary">MindExec.</span>
         </h1>
         <p className="text-[#DEDEDE] mt-4 text-md z-10">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <svg
@@ -145,7 +145,7 @@ const Signup = () => {
           </defs>
         </svg>
       </div>
-      <div className="w-1/2 h-screen bg-black flex justify-center items-center">
+      <div className="w-full lg:w-1/2 h-screen bg-black flex justify-center items-center">
         <div>
           <h2 className="text-[40px] text-gray-primary font-bold mb-10">Create Your MindExec. Account</h2>
           <form
