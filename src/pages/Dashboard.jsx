@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
 import MindExecLogo from "../components/icons/MindExecLogo";
+import useActiveUser from '../hooks/useActiveUser';
 
 const Dashboard = () => {
   const [activeSec, setActiveSec] = useState("home");
@@ -18,6 +19,8 @@ const Dashboard = () => {
       console.log(err);
     }
   };
+
+  const { user } = useActiveUser();
 
   return (
     <div className="bg-primary1">
@@ -46,7 +49,7 @@ const Dashboard = () => {
           </svg>
           <button onClick={signOut}>Log out</button>
           <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">os</p>
-          <p className="text-[18px]">ossama yasser</p>
+          <p className="text-[18px]">{user?.user.user_metadata.full_name}</p>
         </div>
       </nav>
       <div className="flex">
@@ -349,7 +352,7 @@ const Dashboard = () => {
                     </td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">{user?.user.user_metadata.full_name}</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">
                       <Link
                         to="/editor"
@@ -365,7 +368,7 @@ const Dashboard = () => {
                     </td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">ossama yasser</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">{user?.user.user_metadata.full_name}</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">
                       <Link
                         to="/editor"
