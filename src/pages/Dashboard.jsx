@@ -20,6 +20,24 @@ const Dashboard = () => {
     }
   };
 
+  const getInitials = (name) => {
+    if (!name) return ""; // Handle empty input
+  
+    const words = name.trim().split(/\s+/); // Split the name into words by spaces
+    if (words.length >= 2) {
+      // If there are 2 or more words, return the first letter of the first and second words
+      return words[0][0].toUpperCase() + words[1][0].toUpperCase();
+    } else {
+      // If there is only one word, return the first 2 letters
+      return name.slice(0, 2).toUpperCase();
+    }
+  }
+
+  const capitalize = (word) => {
+    if (!word) return ""; // Handle empty input
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  }
+
   const { user } = useActiveUser();
 
   return (
@@ -48,8 +66,8 @@ const Dashboard = () => {
             />
           </svg>
           <button onClick={signOut}>Log out</button>
-          <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">os</p>
-          <p className="text-[18px]">{user?.user.user_metadata.full_name}</p>
+          <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">{getInitials(user?.user.user_metadata.full_name)}</p>
+          <p className="text-[18px]">{capitalize(user?.user.user_metadata.full_name)}</p>
         </div>
       </nav>
       <div className="flex">
@@ -352,7 +370,7 @@ const Dashboard = () => {
                     </td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">{user?.user.user_metadata.full_name}</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">{capitalize(user?.user.user_metadata.full_name)}</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">
                       <Link
                         to="/editor"
@@ -368,7 +386,7 @@ const Dashboard = () => {
                     </td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">{user?.user.user_metadata.full_name}</td>
+                    <td className="py-2 mb-2 text-[#A0A0A0]">{capitalize(user?.user.user_metadata.full_name)}</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">
                       <Link
                         to="/editor"
