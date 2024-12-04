@@ -73,7 +73,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-wrap w-full">
-      <div className="w-full lg:w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary">
+      <div className="w-full lg:w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary relative">
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scannig
           <br />
