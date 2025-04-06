@@ -45,8 +45,7 @@ const router = createBrowserRouter(
       path: "/editor",
       element: <Editor />,
     },
-  ],
-  { basename: "/MindExec" }
+  ]
 );
 
 const App = () => (

@@ -39,7 +39,7 @@ const MindNode = () => {
   const isValidConnection = useCallback(
     (connection) => {
       const valid = ctx.reactFlowInstance.getNode(connection.target).data.tool.parameters.find((e) => e.name === connection.targetHandle).type == connection.sourceHandle;
-      return valid;
+      return valid;  
     },
     [ctx, ctx.reactFlowInstance]
   );
