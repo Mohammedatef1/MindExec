@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
 import GoogleLogo from "../components/icons/GoogleLogo";
+import { Copy } from "lucide-react";
 
 const Login = () => {
   const {
@@ -177,9 +178,34 @@ const Login = () => {
 
             <Link to="/register">
               <p className="text-[16px]">
-                Dosnot have an account? <span className="text-red-primary">Create one!</span>
+                Doesn%apos;t have an account? <span className="text-red-primary hover:underline">Create one!</span>
               </p>
             </Link>
+            <div className="mt-8 py-4 rounded-lg w-[440px]">
+              <p className="text-gray-100 font-medium mb-2">Demo Credentials:</p>
+              <div className="text-sm text-gray-100">
+                <p className="flex items-center gap-2">
+                  Email: demo@mindexec.com
+                  <Copy
+                    className="w-4 h-4 cursor-pointer hover:text-gray-300"
+                    onClick={() =>{ 
+                      navigator.clipboard.writeText('demo@mindexec.com')
+                      toast('Email copied')
+                    }}
+                  />
+                </p>
+                <p className="flex items-center gap-2">
+                  Password: Mindexec123
+                  <Copy
+                    className="w-4 h-4 cursor-pointer hover:text-gray-300"
+                    onClick={() =>{ 
+                      navigator.clipboard.writeText('Mindexec123')
+                      toast('Password copied')
+                    }}
+                  />
+                </p>
+              </div>
+            </div>
           </form>
         </div>
       </div>
