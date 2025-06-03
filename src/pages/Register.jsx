@@ -103,7 +103,7 @@ const Signup = () => {
           <br />
           Capabilities Using <span className="text-red-primary">MindExec.</span>
         </h1>
-        <p className="text-[#DEDEDE] mt-4 text-md z-10">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
+        <p className="text-main mt-4 text-md z-10">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <svg
           className="absolute bottom-0 left-0 z-0"
           xmlns="http://www.w3.org/2000/svg"
@@ -147,11 +147,11 @@ const Signup = () => {
       </div>
       <div className="w-full lg:w-1/2 h-screen bg-black flex justify-center items-center">
         <div>
-          <h2 className="text-[40px] text-gray-primary font-bold mb-10">Create Your MindExec. Account</h2>
+          <h2 className="text-[40px] text-muted font-bold mb-10">Create Your MindExec. Account</h2>
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
             onSubmit={handleSubmit(onSubmit, onError)}>
-            <button className="h-[54px] w-[440px] rounded-lg border-gray-200 border-2 text-gray-primary flex gap-[5px] items-center justify-center mb-8">
+            <button className="h-[54px] w-[440px] rounded-lg border-gray-200 border-2 text-muted flex gap-[5px] items-center justify-center mb-8">
               <GoogleLogo />
               <span className="text-xl">Sign up with Google</span>
             </button>
@@ -209,7 +209,7 @@ const Signup = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isLoading ? "bg-[#77000075] text-[#dedede82] " : "bg-red-primary text-gray-primary"} mb-8`}>
+              className={`h-[54px] w-[440px] rounded-lg  flex items-center justify-center transition-all ${isLoading ? "bg-[#77000075] text-[#dedede82] " : "bg-red-primary text-muted"} mb-8`}>
               Sign up
             </button>
 

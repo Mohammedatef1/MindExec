@@ -10,7 +10,7 @@ body {
 }
 .ai-button {
   border-radius: 8px;
-  background: linear-gradient(94deg, #700 0%, #841004 32.9%, #a2350f 73.28%, #bd5718 107.68%, #fea82f 149.56%);
+  background: linear-gradient(94deg, #360077 0%, #841004 32.9%, #a2350f 73.28%, #bd5718 107.68%, #fea82f 149.56%);
   box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 0.25) inset, 0px 0px 32px 1px rgba(119, 0, 0, 0.24);
   height: 56px;
   width: 240px;
@@ -112,7 +112,7 @@ body {
 
 .custom-rounded-table td {
   border-width: 1px 0;
-  border-color: #700;
+  border-color: #360077;
 }
 
 .custom-rounded-table td:first-child {
@@ -156,7 +156,7 @@ body {
 }
 
 .custom-text {
-  background: linear-gradient(91deg, #700 0%, #841004 25.45%, #a2350f 56.69%, #bd5718 83.3%, #fea82f 115.7%);
+  background: linear-gradient(91.14deg, #072586 0%, #7246A7 115.7%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -190,7 +190,7 @@ body {
 .loading-circle {
   width: 50px;
   height: 50px;
-  border: 5px solid #700; /* Change color as needed */
+  border: 5px solid #360077; /* Change color as needed */
   border-top: 5px solid transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -219,19 +219,15 @@ body {
   }
 
   .text-red-primary {
-    color: #700;
+    color: #360077;
   }
 
   .bg-red-primary {
-    background-color: #700;
+    background-color: #360077;
   }
 
   .border-red-primary {
-    border-color: #700;
-  }
-
-  .text-gray-primary {
-    color: #dedede;
+    border-color: #360077;
   }
 
   .shadow-primary1 {
@@ -291,4 +287,10 @@ body {
   .info-text {
     @apply font-montserrat text-slate-gray text-lg leading-7;
   }
+}
+
+.card-section{
+  border:1px solid #ffffff2f;
+  backdrop-filter: blur(46.79999923706055px);
+  background: #FFFFFF0A;
 }

@@ -120,7 +120,7 @@ const LeftFrame = () => {
             <div
               id="search-options"
               className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
-              {/*<div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-[#dedede] uppercase flex items-center justify-between`}>
+              {/*<div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-main uppercase flex items-center justify-between`}>
                 <h2>Search</h2>
                 <ArrowIcon className="text-white rotate-180 transition-primary"></ArrowIcon>
               </div>*/}
@@ -150,7 +150,7 @@ const LeftFrame = () => {
                           <p>{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-[#dedede]"
+                            className="ms-auto text-main"
                           />
                         </li>
                       ))}
@@ -164,7 +164,7 @@ const LeftFrame = () => {
               id="options"
               className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
               <div
-                className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${openedSection === "scripts" ? "bg-black" : ""} text-[#dedede] uppercase flex items-center justify-between`}
+                className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${openedSection === "scripts" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownScripts}>
                 <h2>Scripts</h2>
                 <ArrowIcon
@@ -194,7 +194,7 @@ const LeftFrame = () => {
                           <p>{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-[#dedede]"
+                            className="ms-auto text-main"
                           />
                         </li>
                       ))}
@@ -203,7 +203,7 @@ const LeftFrame = () => {
                 )}
               </AnimatePresence>
               <div
-                className={`px-4 py-3  border-b-2 transition-primary hover:bg-black border-black ${openedSection === "spliter" ? "bg-black" : ""} text-[#dedede] uppercase flex items-center justify-between`}
+                className={`px-4 py-3  border-b-2 transition-primary hover:bg-black border-black ${openedSection === "spliter" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownSpliter}>
                 <h2>Spliter</h2>
                 <ArrowIcon
@@ -232,7 +232,7 @@ const LeftFrame = () => {
                           <p>{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-[#dedede]"
+                            className="ms-auto text-main"
                           />
                         </li>
                       ))}
@@ -241,7 +241,7 @@ const LeftFrame = () => {
                 )}
               </AnimatePresence>
               <div
-                className={`px-4 py-3  border-b-2 active hover:bg-black border-black ${openedSection === "tools" ? "bg-black" : ""} text-[#dedede] uppercase flex items-center justify-between`}
+                className={`px-4 py-3  border-b-2 active hover:bg-black border-black ${openedSection === "tools" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownTools}>
                 <h2>Tools</h2>
 
@@ -271,7 +271,7 @@ const LeftFrame = () => {
                           <p>{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-[#dedede]"
+                            className="ms-auto text-main"
                           />
                         </li>
                       ))}
@@ -294,7 +294,7 @@ const LeftFrame = () => {
               <StringIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">String</p>
-                <p className="text-sm text-[#dedede]">String input for tool parameters.</p>
+                <p className="text-sm text-main">String input for tool parameters.</p>
               </div>
             </li>
             <li
@@ -305,7 +305,7 @@ const LeftFrame = () => {
               <BooleanIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">Boolean</p>
-                <p className="text-sm text-[#dedede]">Boolean switcher for tool parameters.</p>
+                <p className="text-sm text-main">Boolean switcher for tool parameters.</p>
               </div>
             </li>
             <li
@@ -316,7 +316,7 @@ const LeftFrame = () => {
               <FileIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">File</p>
-                <p className="text-sm text-[#dedede] ">Import file from url, or select files from storage.</p>
+                <p className="text-sm text-main ">Import file from url, or select files from storage.</p>
               </div>
             </li>
             <li
@@ -327,7 +327,7 @@ const LeftFrame = () => {
               <FolderIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">Folder</p>
-                <p className="text-sm text-[#dedede]">Input git repository as a folder.</p>
+                <p className="text-sm text-main">Input git repository as a folder.</p>
               </div>
             </li>
           </ul>
