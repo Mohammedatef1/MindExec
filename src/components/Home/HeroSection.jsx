@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
@@ -30,14 +29,14 @@ const HeroSection = () => {
   return (
     <section className="pt-[150px] mb-16 md:mb-20 lg:mb-32 text-main relative">
       <div className="relative z-10 container mx-auto">
-        <h2 className="text-4xl font-[700] mb-[10px] text-main">
+        <h2 className="text-4xl font-bold mb-[10px] text-main">
           BUGSPY is an ideal solution
           <br /> for individuals working as
         </h2>
-        {developerName === "Security Engineer" && <h2 className={`text-4xl font-[700] custom-text glitch-color`}>{developerName}</h2>}
-        {developerName === "Penetration Tester" && <h2 className={`text-4xl font-[700] custom-text glitch-color`}>{developerName}</h2>}
-        {developerName === "Bug Bounty Hunter" && <h2 className={`text-4xl font-[700] custom-text glitch-color`}>{developerName}</h2>}
-        {developerName === "DevSecOps Engineer" && <h2 className={`text-4xl font-[700] custom-text glitch-color`}>{developerName}</h2>}
+        {developerName === "Security Engineer" && <h2 className={`text-4xl font-bold custom-text glitch-color`}>{developerName}</h2>}
+        {developerName === "Penetration Tester" && <h2 className={`text-4xl font-bold custom-text glitch-color`}>{developerName}</h2>}
+        {developerName === "Bug Bounty Hunter" && <h2 className={`text-4xl font-bold custom-text glitch-color`}>{developerName}</h2>}
+        {developerName === "DevSecOps Engineer" && <h2 className={`text-4xl font-bold custom-text glitch-color`}>{developerName}</h2>}
         <p className="mt-4 mb-8 text-[16px] max-w-[75%] text-muted">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <Link to="/login">
           <button className="px-6 py-3 font=[Inter] rounded-lg bg-red-primary">Get Started</button>

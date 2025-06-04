@@ -1,26 +1,27 @@
 const HomeCard = () => {
   return (
-    <section className="card-section mx-6 md:mx-12 lg:mx-24 z-0 rounded-md p-2 md:p-6 lg:p-8 relative overflow-hidden">
-      <div className="flex items-center gap-y-4 flex-wrap">
-        <div className="w-full md:w-1/2 relative z-10">
-          <div className="py-4 md:py-4 lg:py-12 ps-2 md:ps:10 lg:ps-16">
-            <p className="text-primary-light text-xl font-[700]">Workflow Automation</p>
-            <h2 className="text-4xl text-main font-[700] mt-[18px]">
-              Build, Edit,
-              <br /> and Run Workflows
-            </h2>
-            <p className="max-w-[630px] text-muted text-md mb-7 mt-[18px]">Evolve from the terminal to a specialised IDE for offensive security. Use Trickest’s library of tool nodes, import your own scripts, or drop in your favourite open-source tools – all in one place.</p>
+    <section>
+      <div className="container mx-auto card-section z-0 rounded-md p-2 md:p-6 lg:p-8 relative overflow-hidden">
+        <div className="flex items-center gap-y-4 flex-wrap">
+          <div className="w-full md:w-1/2 relative z-10">
+            <div className="py-4 md:py-4 lg:py-12 ps-2 md:ps:10 lg:ps-16">
+              <p className="text-primary-light text-xl font-bold">Workflow Automation</p>
+              <h2 className="text-heading text-main font-bold mt-[18px]">
+                Build, Edit, and Run Workflows
+              </h2>
+              <p className="max-w-[630px] text-muted text-md mb-7 mt-[18px]">Evolve from the terminal to a specialized IDE for offensive security. Use BugSpy’s library of tool nodes, import your own scripts, or drop in your favorite open-source tools – all in one place.</p>
+            </div>
+          </div>
+          <div className="w-full md:w-1/2">
+            <img
+              className="w-full h-full object-contain max-h-80"
+              src="work flow home.png"
+              alt=""
+            />
           </div>
         </div>
-        <div className="w-full md:w-1/2">
-          <img
-            className="w-full h-full object-contain max-h-80"
-            src="work flow home.png"
-            alt=""
-          />
-        </div>
+        <YellowShape />
       </div>
-      <YellowShape />
     </section>
   );
 };
