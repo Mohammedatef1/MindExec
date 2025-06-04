@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import Logo from "../components/icons/MindExecLogo";
 import HeroSection from "../components/Home/HeroSection";
-import HomeFeature from "../components/Home/HomeFeature";
 import HomeCard from "../components/Home/HomeCard";
+import HomeFeatureWrapper from "../components/Home/HomeFeatureWrapper";
 
 const Home = () => {
 
@@ -28,7 +28,7 @@ const Home = () => {
       </nav>
       <HeroSection />
       <HomeCard />
-      <HomeFeature />
+      <HomeFeatureWrapper />
     </div>
   );
 };
