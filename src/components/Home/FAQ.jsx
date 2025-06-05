@@ -30,10 +30,10 @@ const QUESTIONS = [
 
 const FAQ = () => {
   return (
-    <section>
+    <section className="py-10 md:py-20 lg:py-32">
       <MaxWidthWrapper className="max-w-4xl">
         <h2 className="text-heading text-main font-bold">Frequently Asked Questions</h2>
-        <div className="flex flex-col gap-y-2 md:gap-y-4 lg:gap-y-6 mt-6 md:mt-8 lg:mt-10">
+        <div className="flex flex-col gap-y-4 lg:gap-y-6 mt-6 md:mt-8 lg:mt-10">
           {QUESTIONS.map((item, index) => (
             <FAQItem key={index} question={item.question} answer={item.answer} />
           ))}

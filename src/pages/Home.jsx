@@ -5,6 +5,7 @@ import HomeCard from "../components/Home/HomeCard";
 import HomeFeatureWrapper from "../components/Home/HomeFeatureWrapper";
 import MaxWidthWrapper from "../components/layout/MaxWidthWrapper";
 import FAQ from "../components/Home/FAQ";
+import Steps from "../components/Home/Steps";
 
 const Home = () => {
   return (
@@ -32,6 +33,7 @@ const Home = () => {
       <HeroSection />
       <HomeCard />
       <HomeFeatureWrapper />
+      <Steps />
       <FAQ />
     </div>
   );

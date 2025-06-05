@@ -47,7 +47,7 @@ export default {
       plugin(function({ addComponents, theme }) {
       addComponents({
         '.text-heading': {
-          fontSize: theme('fontSize.lg'),
+          fontSize: theme('fontSize.xl'),
           '@screen md': {
             fontSize: theme('fontSize.2xl'),
           },

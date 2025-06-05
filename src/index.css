@@ -294,3 +294,11 @@ body {
   backdrop-filter: blur(46.79999923706055px);
   background: #FFFFFF0A;
 }
+
+.step-count{
+  background: linear-gradient(180deg, #E7E1EF 0%, #440196 79.76%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
