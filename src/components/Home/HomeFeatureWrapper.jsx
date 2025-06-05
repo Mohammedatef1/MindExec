@@ -1,6 +1,6 @@
 import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 import HomeFeature from "./HomeFeature";
-const sideImage = "/work flow home.png"
+const sideImage = "/work flow home.png";
 
 const features = [
   {
@@ -20,24 +20,31 @@ const features = [
     content: "Eliminate critical bugs fast with guided, foolproof remediation steps. Finding a bug isn’t enough — fixing it fast is what matters. BUGSPY delivers clear remediation paths, with code-level guidance, risk ratings, and patching suggestions. Whether you're a developer or a security analyst, you’ll fix fast, with confidence — and zero guesswork.",
     reverseOrder: true,
     sideImage: sideImage,
-  }
-]
+  },
+];
 
 const HomeFeatureWrapper = () => {
   return (
-    <MaxWidthWrapper className="flex flex-col gap-y-4 md:gap-y-8 lg:gap-y-12">
-      {features.map((feature, idx) => (
-        <HomeFeature key={idx} {...feature} />
-      ))}
-      <RightShape className="absolute bottom-10 right-0" />
-      <LeftShape className="absolute top-10 left-0" />
-    </MaxWidthWrapper>
+    <div className="relative">
+      <div className="relative z-10 py-20 md:py-28 lg:py-32">
+        <MaxWidthWrapper className="flex flex-col gap-y-4 md:gap-y-8 lg:gap-y-12">
+          {features.map((feature, idx) => (
+            <HomeFeature
+              key={idx}
+              {...feature}
+            />
+          ))}
+        </MaxWidthWrapper>
+      </div>
+      <RightShape className="absolute bottom-0 translate-y-1/4 right-0" />
+      <LeftShape className="absolute top-0 -translate-y-[10%] left-0" />
+    </div>
   );
 };
 
 export default HomeFeatureWrapper;
 
-function LeftShape({className}) {
+function LeftShape({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
