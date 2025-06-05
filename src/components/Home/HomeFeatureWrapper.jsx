@@ -1,3 +1,4 @@
+import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 import HomeFeature from "./HomeFeature";
 const sideImage = "/work flow home.png"
 
@@ -24,13 +25,13 @@ const features = [
 
 const HomeFeatureWrapper = () => {
   return (
-    <div className="flex flex-col gap-y-4 md:gap-y-8 lg:gap-y-12">
+    <MaxWidthWrapper className="flex flex-col gap-y-4 md:gap-y-8 lg:gap-y-12">
       {features.map((feature, idx) => (
         <HomeFeature key={idx} {...feature} />
       ))}
       <RightShape className="absolute bottom-10 right-0" />
       <LeftShape className="absolute top-10 left-0" />
-    </div>
+    </MaxWidthWrapper>
   );
 };
 

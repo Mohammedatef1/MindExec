@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 
 const HeroSection = () => {
   const [developerName, setDeveloperName] = useState("Security Engineer");
@@ -28,7 +29,7 @@ const HeroSection = () => {
 
   return (
     <section className="pt-[150px] mb-16 md:mb-20 lg:mb-32 text-main relative">
-      <div className="relative z-10 container mx-auto">
+      <MaxWidthWrapper className="relative z-10">
         <h2 className="text-4xl font-bold mb-[10px] text-main">
           BUGSPY is an ideal solution
           <br /> for individuals working as
@@ -41,7 +42,7 @@ const HeroSection = () => {
         <Link to="/login">
           <button className="px-6 py-3 font=[Inter] rounded-lg bg-red-primary">Get Started</button>
         </Link>
-      </div>
+      </MaxWidthWrapper>
       <RedShape />
     </section>
   );
