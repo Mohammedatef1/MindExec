@@ -4,9 +4,9 @@ import HeroSection from "../components/Home/HeroSection";
 import HomeCard from "../components/Home/HomeCard";
 import HomeFeatureWrapper from "../components/Home/HomeFeatureWrapper";
 import MaxWidthWrapper from "../components/layout/MaxWidthWrapper";
+import FAQ from "../components/Home/FAQ";
 
 const Home = () => {
-
   return (
     <div className="pb-10 max-w-screen text-white scrollbar">
       <nav className="font-[Inter]">
@@ -32,6 +32,7 @@ const Home = () => {
       <HeroSection />
       <HomeCard />
       <HomeFeatureWrapper />
+      <FAQ />
     </div>
   );
 };

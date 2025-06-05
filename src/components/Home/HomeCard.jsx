@@ -12,10 +12,10 @@ const HomeCard = () => {
                 <h2 className="text-heading text-main font-bold mt-[18px]">
                   Build, Edit, and Run Workflows
                 </h2>
-                <p className="max-w-[630px] text-muted text-md mb-7 mt-[18px]">Evolve from the terminal to a specialized IDE for offensive security. Use BugSpy’s library of tool nodes, import your own scripts, or drop in your favorite open-source tools – all in one place.</p>
+                <p className="max-w-[630px] text-muted text-sm md:text-base mb-7 mt-[18px]">Evolve from the terminal to a specialized IDE for offensive security. Use BugSpy’s library of tool nodes, import your own scripts, or drop in your favorite open-source tools – all in one place.</p>
               </div>
             </div>
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 ps-8">
               <img
                 className="w-full h-full object-contain max-h-80"
                 src="work flow home.png"
