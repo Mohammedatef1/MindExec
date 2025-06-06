@@ -292,11 +292,11 @@ const RightFrme = () => {
             {ctx.selectedNode.data.tool.status == "succeeded" && <span className="uppercase py-1 px-4 rounded-lg text-[#00dfaf] bg-[#122633]">succeeded</span>}
             {ctx.selectedNode.data.tool.status == "proccessing..." && <span className="uppercase py-1 px-4 rounded-lg text-[#ff920e] bg-[#241a22]">proccessing...</span>}
             <p className="mt-4 text-xl text-white ">{ctx.selectedNode.data.label}</p>
-            <p className=" text-sm text-[#dedede]">{ctx.selectedNode.id}</p>
+            <p className=" text-sm text-main">{ctx.selectedNode.id}</p>
             {ctx.selectedNode.data.tool.status == "succeeded" && <div className="w-full mx-auto text-[#17ccfd] bg-[#122633] py-2 mt-8 border-2 border-[#17ccfd] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
             {ctx.selectedNode.data.tool.status == "proccessing..." && <div className="w-full mx-auto text-[#ff920e] bg-[#241a22] py-2 mt-8 border-2 border-[#ff920e] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
             <p className="mt-4 text-lg text-[#678eb4]">
-              Duration <span className="ps-1 text-[#dedede]">{ctx.selectedNode.data.tool.duration}</span>
+              Duration <span className="ps-1 text-main">{ctx.selectedNode.data.tool.duration}</span>
             </p>
           </div>
           {parameters && (

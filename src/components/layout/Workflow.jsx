@@ -1714,7 +1714,7 @@ const MindNode = () => {
               {loadingStart && (
                 <div className="loading-container w-full transition-curtain z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   <div className="loading-circle z-20"></div>
-                  <div className="w-full h-full absolute transition-primary z-10 bg-[#dedede] opacity-10"></div>
+                  <div className="w-full h-full absolute transition-primary z-10 bg-base opacity-10"></div>
                 </div>
               )}
             </div>

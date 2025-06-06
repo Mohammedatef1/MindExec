@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -5,9 +7,9 @@ export default {
     fontSize: {
       xs: ["12px", "16px"],
       sm: ["14px", "20px"],
-      base: ["16px", "19.5px"],
-      lg: ["18px", "21.94px"],
-      xl: ["20px", "24.38px"],
+      base: ["16px", "23px"],
+      lg: ["18px", "24.5px"],
+      xl: ["20px", "26px"],
       "2xl": ["24px", "29.26px"],
       "3xl": ["28px", "50px"],
       "4xl": ["48px", "58px"],
@@ -19,7 +21,11 @@ export default {
         montserrat: ["Montserrat", "sans-serif"],
       },
       colors: {
-        primary: "#ECEEFF",
+        primary: "#360077",
+        "primary-light": "#7246A7",
+        "background": "#000000",
+        "main": "#dedede",
+        "muted": "#A6A6A6",
         "coral-red": "#FF6452",
         "slate-gray": "#6D6D6D",
         "pale-blue": "#F5F6FF",
@@ -37,5 +43,20 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+      plugin(function({ addComponents, theme }) {
+      addComponents({
+        '.text-heading': {
+          fontSize: theme('fontSize.xl'),
+          '@screen md': {
+            fontSize: theme('fontSize.2xl'),
+          },
+          '@screen lg': {
+            fontSize: '32px',
+            lineHeight: 1.2
+          },
+        }
+      })
+    })
+  ],
 };

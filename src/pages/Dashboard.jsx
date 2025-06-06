@@ -46,7 +46,7 @@ const Dashboard = () => {
         <div>
           <MindExecLogo />
         </div>
-        <div className="flex justify-center items-center me-2 text-[#DEDEDE] ">
+        <div className="flex justify-center items-center me-2 text-main ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -90,7 +90,7 @@ const Dashboard = () => {
                     fill="#DEDEDE"
                   />
                 </svg>
-                <p className="text-[#DEDEDE] mt-1 text-[12px]">Home</p>
+                <p className="text-main mt-1 text-[12px]">Home</p>
               </li>
               <li
                 onClick={() => {
@@ -112,7 +112,7 @@ const Dashboard = () => {
                     fill="#DEDEDE"
                   />
                 </svg>
-                <p className="text-[#DEDEDE] mt-2 text-[12px]">Workflows</p>
+                <p className="text-main mt-2 text-[12px]">Workflows</p>
               </li>
               <li
                 onClick={() => {
@@ -130,7 +130,7 @@ const Dashboard = () => {
                     fill="#D9D9D9"
                   />
                 </svg>
-                <p className="text-[#DEDEDE] mt-2 text-[12px]">All Runs</p>
+                <p className="text-main mt-2 text-[12px]">All Runs</p>
               </li>
             </ul>
             <ul className="w-full mb-10">
@@ -158,7 +158,7 @@ const Dashboard = () => {
                     fill="#DEDEDE"
                   />
                 </svg>
-                <p className="text-[#DEDEDE] mt-1 text-[12px]">Library</p>
+                <p className="text-main mt-1 text-[12px]">Library</p>
               </li>
               <li className="flex flex-col justify-between items-center  py-[20px] ">
                 <svg
@@ -176,7 +176,7 @@ const Dashboard = () => {
                     fill="#DEDEDE"
                   />
                 </svg>
-                <p className="text-[#DEDEDE] mt-1 text-[12px]">Setting</p>
+                <p className="text-main mt-1 text-[12px]">Setting</p>
               </li>
             </ul>
           </div>
@@ -304,7 +304,7 @@ const Dashboard = () => {
               </svg>
               <h2 className="text-white text-xl mb-4">Start your Automation Journey </h2>
               <p className="text-[#A0A0A0] mb-8 text-center w-4/5 text-sm leading-[17px]">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
-              <button className="px-6 py-3  rounded-lg text-xl text-[#DEDEDE] bg-[#700]">Explore Workflows</button>
+              <button className="px-6 py-3  rounded-lg text-xl text-main bg-[#360077]">Explore Workflows</button>
             </div>
             <div className="w-2/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
               <div className="mt-11 mb-12 relative w-full">
