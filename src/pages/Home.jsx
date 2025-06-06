@@ -6,6 +6,7 @@ import HomeFeatureWrapper from "../components/Home/HomeFeatureWrapper";
 import MaxWidthWrapper from "../components/layout/MaxWidthWrapper";
 import FAQ from "../components/Home/FAQ";
 import Steps from "../components/Home/Steps";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -16,16 +17,17 @@ const Home = () => {
             <Logo />
           </div>
           <div className="flex justify-between gap-3 md:gap-6 lg:gap-12 items-center">
-            <Link to="/">About</Link>
-            <Link to="/">Features</Link>
-            <Link to="/">FAQ</Link>
+            <NavLink className="nav-link" to="/">Home</NavLink>
+            <NavLink className="nav-link" to="/about">About</NavLink>
+            <NavLink className="nav-link" to="/features">Features</NavLink>
+            <NavLink className="nav-link" to="/faq">FAQ</NavLink>
           </div>
           <div className="flex justify-between gap-2 md:gap-4 lg:gap-8 items-center z-20 text-main">
-            <Link to="/login">Log In</Link>
+            <Link className="text-primary-light" to="/login">Log In</Link>
             <Link
               to="/register"
-              className="px-4 py-2 md:px-6 md:py-3 rounded-lg border-gradient-primary">
-              Sign Up
+              className="register-btn px-4 py-2 md:px-6 md:py-3 rounded-lg relative bg-background border-gradient-primary">
+              <span>Sign Up</span>
             </Link>
           </div>
         </MaxWidthWrapper>
