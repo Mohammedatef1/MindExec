@@ -153,9 +153,13 @@ body {
   @apply text-muted
 }
 
-.nav-link.active{
+:not(footer).nav-link.active{
   @apply text-primary-light
 }
+
+/* footer .nav-link.active{
+  @apply
+} */
 
 .register-btn > span{
   background: linear-gradient(270deg, #072586 0%, #7246A7 100%);
@@ -335,4 +339,8 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
+}
+
+.social-item{
+  background: linear-gradient(91.14deg, #072586 0%, #7246A7 115.7%);
 }
