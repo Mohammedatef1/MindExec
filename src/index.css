@@ -273,7 +273,7 @@ body {
   }
 
   .shadow-red-primary {
-    box-shadow: 0px 0px 16px 1px rgba(119, 0, 0, 0.499);
+    box-shadow: 0 0 20px 0px #7246a7a1;
   }
 
   .transition-primary {

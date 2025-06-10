@@ -62,7 +62,7 @@ const Dashboard = () => {
               cx="17"
               cy="4"
               r="3"
-              fill="#770000"
+              fill="#7246A7"
             />
           </svg>
           <button onClick={signOut}>Log out</button>
@@ -78,7 +78,7 @@ const Dashboard = () => {
                 onClick={() => {
                   setActiveSec("home");
                 }}
-                className={`flex flex-col transition-primary cursor-pointer justify-between items-center  py-[20px] ${activeSec == "home" ? "bg-[#77000033]" : ""} `}>
+                className={`flex flex-col transition-primary cursor-pointer justify-between items-center  py-[20px] ${activeSec == "home" ? "bg-primary-light/20" : ""} `}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="32"
@@ -96,7 +96,7 @@ const Dashboard = () => {
                 onClick={() => {
                   setActiveSec("workflow");
                 }}
-                className={`flex flex-col transition-primary justify-between items-center py-[20px] cursor-pointer ${activeSec == "workflow" ? "bg-[#77000033]" : ""} `}>
+                className={`flex flex-col transition-primary justify-between items-center py-[20px] cursor-pointer ${activeSec == "workflow" ? "bg-primary-light/20" : ""} `}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 onClick={() => {
                   setActiveSec("allRuns");
                 }}
-                className={`flex transition-primary flex-col justify-between items-center  py-[20px] cursor-pointer ${activeSec == "allRuns" ? "bg-[#77000033]" : ""} `}>
+                className={`flex transition-primary flex-col justify-between items-center  py-[20px] cursor-pointer ${activeSec == "allRuns" ? "bg-primary-light/20" : ""} `}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -199,12 +199,12 @@ const Dashboard = () => {
                   <path
                     d="M99.5298 20.3824L168.16 89.2147C170.884 91.9467 170.884 96.3676 168.16 99.0996L99.8211 167.64C97.0952 170.374 92.6706 170.385 89.9313 167.664L20.8976 99.1016C18.1488 96.3717 18.1401 91.9284 20.8781 89.1877L89.6206 20.3775C92.3568 17.6387 96.7964 17.6409 99.5298 20.3824Z"
                     fill="#0E0E0E"
-                    stroke="#770000"
+                    stroke="#7246A7"
                     strokeWidth="2"
                   />
                   <path
                     d="M154.351 91.2989L97.3912 34.1715C95.8292 32.605 93.2923 32.6037 91.7288 34.1687L34.6687 91.285C33.1041 92.8511 33.1091 95.3902 34.6798 96.9502L91.9743 153.853C93.5396 155.408 96.068 155.402 97.6256 153.84L154.351 96.9474C155.907 95.3863 155.907 92.86 154.351 91.2989Z"
-                    fill="#770000"
+                    fill="#7246A7"
                   />
                   <g filter="url(#filter1_d_351_141)">
                     <path
@@ -312,7 +312,7 @@ const Dashboard = () => {
                 <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
               </div>
 
-              <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
+              <table className="w-[90%] border-separate border-spacing-y-6">
                 <thead className="text-white decoration-none">
                   <tr>
                     <th className="py-2 text-transparent">logo</th>
@@ -321,8 +321,8 @@ const Dashboard = () => {
                     <th className="py-2 ">Runs</th>
                   </tr>
                 </thead>
-                <tbody className="p-2 text-center">
-                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                <tbody className="p-2 text-center text-main">
+                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-primary-light">
                     <td className="py-2 mb-2">1</td>
                     <td className="py-2 mb-2 text-white">
                       <Link to="/editor">Fuzz web app for vulnerabilities</Link>
@@ -330,8 +330,8 @@ const Dashboard = () => {
                     <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
                     <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
                   </tr>
-                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
-                    <td className="py-2 mb-2">1</td>
+                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-primary-light">
+                    <td className="py-2 mb-2">2</td>
                     <td className="py-2 mb-2 text-white">
                       <Link to="/editor">Simple Content Discovery</Link>
                     </td>
@@ -363,7 +363,7 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="p-2 text-center">
-                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-red-primary">
                     <td className="py-2 mb-2">1</td>
                     <td className="py-2 mb-2 text-white">
                       <Link to="/editor">Fuzz web app for vulnerabilities</Link>
@@ -379,7 +379,7 @@ const Dashboard = () => {
                       </Link>
                     </td>
                   </tr>
-                  <tr className="bg-[#77000033] custom-rounded-table rounded-lg border-2 border-red-primary">
+                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-red-primary">
                     <td className="py-2 mb-2">2</td>
                     <td className="py-2 mb-2 text-white">
                       <Link to="/editor">Simple Content Discovery</Link>
