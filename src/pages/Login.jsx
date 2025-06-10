@@ -140,7 +140,7 @@ const Login = () => {
             <p className="text-[16px]">
               Doesn{`'`}t have an account? {" "}
               <Link to="/register">
-                <span className="text-primary-light hover:underline">Create one!</span>
+                <span className="text-primary-light hover:underline font-bold">Create one!</span>
               </Link>
             </p>
             <div className="mt-8 py-4 rounded-lg w-[440px]">
@@ -177,7 +177,7 @@ const Login = () => {
 
 export default Login;
 
-const LoginSvg = ({ className }) => {
+export const LoginSvg = ({ className }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
