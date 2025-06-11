@@ -40,7 +40,7 @@ const HeroSection = () => {
         {developerName === "DevSecOps Engineer" && <h2 className={`text-4xl font-bold custom-text glitch-color`}>{developerName}</h2>}
         <p className="mt-4 mb-8 text-[16px] max-w-[75%] text-muted">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <Link to="/login">
-          <button className="px-6 py-3 font=[Inter] rounded-lg bg-red-primary">Get Started</button>
+          <button className="px-6 py-3 font=[Inter] rounded-lg bg-primary">Get Started</button>
         </Link>
       </MaxWidthWrapper>
       <RedShape />

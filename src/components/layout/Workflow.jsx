@@ -1649,7 +1649,7 @@ const MindNode = () => {
   return (
     <div
       id="container"
-      className={`relative ${widthController()}  max-h-full overflow-hidden h-full border-r-[1px] bg-primary1 border-l-[1px] border-red-900`}>
+      className={`relative ${widthController()}  max-h-full overflow-hidden h-full border-r bg-primary1 border-l border-primary-light`}>
       <ReactFlowProvider>
         <div
           className={`reactflow-wrapper w-full transition-primary ${commandIsOpen ? "h-3/5" : "h-[calc(100%-2.5rem)]"} `}
@@ -1724,9 +1724,9 @@ const MindNode = () => {
 
       <div
         //onClick={() => setCommandIsOpen(!commandIsOpen)}
-        className="h-10 cursor-default bg-black border-t-[1px] border-red-primary flex">
+        className="h-10 cursor-default bg-black border-t border-primary-light flex">
         <p
-          className={`${activeSec == "command" ? "bg-primary1" : ""} px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
+          className={`${activeSec == "command" ? "bg-primary1" : ""} cursor-pointer px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
           onClick={() => {
             setActiveSec("command");
           }}>
@@ -1734,7 +1734,7 @@ const MindNode = () => {
         </p>
         {!ctx.builder && (
           <p
-            className={`${activeSec == "output" ? "bg-primary1" : ""} transition-primary transition-primary px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
+            className={`${activeSec == "output" ? "bg-primary1" : ""} cursor-pointer transition-primary transition-primary px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
             onClick={() => {
               setActiveSec("output");
             }}>
@@ -1743,7 +1743,7 @@ const MindNode = () => {
         )}
         {!ctx.builder && (
           <p
-            className={`${activeSec == "stdout" ? "bg-primary1" : ""} transition-primary px-4 flex items-center w-fit uppercase tracking-widest font-bold spa max-w-[100%]  h-full text-center font-[Consolas] text-white`}
+            className={`${activeSec == "stdout" ? "bg-primary1" : ""} cursor-pointer transition-primary px-4 flex items-center w-fit uppercase tracking-widest font-bold spa max-w-[100%]  h-full text-center font-[Consolas] text-white`}
             onClick={() => {
               setActiveSec("stdout");
             }}>
@@ -1752,7 +1752,7 @@ const MindNode = () => {
         )}
         {!ctx.builder && (
           <p
-            className={`${activeSec == "stderr" ? "bg-primary1" : ""} transition-primary px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
+            className={`${activeSec == "stderr" ? "bg-primary1" : ""} cursor-pointer transition-primary px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
             onClick={() => {
               setActiveSec("stderr");
             }}>
