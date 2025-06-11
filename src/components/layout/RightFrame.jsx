@@ -100,14 +100,14 @@ const RightFrme = () => {
   };
 
   return (
-    <div className="bg-primary1 h-full transition-none">
+    <div className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
           <h2 className="font-bold uppercase text-white mb-4 ">Map Details</h2>
-          <p className="text-red-400">
+          <p className="text-primary-light font-bold">
             Created <span className="text-gray-300 px-2">1 week ago</span>
           </p>
-          <p className="text-red-400">
+          <p className="text-primary-light font-bold">
             Space Name <span className="text-gray-300 px-2">Playground</span>
           </p>
           {!ctx.builder && ctx.runEnd && (
@@ -216,7 +216,7 @@ const RightFrme = () => {
                 id="options"
                 className="mt-10">
                 <div
-                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
+                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary cursor-pointer hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
                   onClick={() => {
                     setParametersIsOpen(!parametersIsOpen);
                   }}>
@@ -287,7 +287,7 @@ const RightFrme = () => {
       {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && !ctx.builder && (
         <div
           data-test={ctx.test}
-          className="transition-curtain mt-8">
+          className="transition-curtain">
           <div className="px-4">
             {ctx.selectedNode.data.tool.status == "succeeded" && <span className="uppercase py-1 px-4 rounded-lg text-[#00dfaf] bg-[#122633]">succeeded</span>}
             {ctx.selectedNode.data.tool.status == "proccessing..." && <span className="uppercase py-1 px-4 rounded-lg text-[#ff920e] bg-[#241a22]">proccessing...</span>}
@@ -305,7 +305,7 @@ const RightFrme = () => {
                 id="options"
                 className="mt-10">
                 <div
-                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
+                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary cursor-pointer hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
                   onClick={() => {
                     setParametersIsOpen(!parametersIsOpen);
                   }}>

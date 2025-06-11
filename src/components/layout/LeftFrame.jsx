@@ -74,8 +74,8 @@ const LeftFrame = () => {
   };
 
   return (
-    <div className={`bg-primary1 h-full`}>
-      <div className=" bg-black mt-16 mx-6 rounded-[4px]  ">
+    <div className={`bg-primary1 h-full pt-16`}>
+      <div className=" bg-black mx-6 rounded-[4px]">
         <button
           onClick={() => {
             setLibrary(true);
@@ -119,7 +119,7 @@ const LeftFrame = () => {
           {searchWord && (
             <div
               id="search-options"
-              className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
+              className="mt-10 max-h-[calc(100vh-300px)] scrollbar overflow-y-auto">
               {/*<div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-main uppercase flex items-center justify-between`}>
                 <h2>Search</h2>
                 <ArrowIcon className="text-white rotate-180 transition-primary"></ArrowIcon>
@@ -162,9 +162,9 @@ const LeftFrame = () => {
           {!searchWord && (
             <div
               id="options"
-              className="mt-10 max-h-[440px] scrollbar overflow-y-auto">
+              className="mt-10 max-h-[calc(100vh-300px)] scrollbar overflow-y-auto">
               <div
-                className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black ${openedSection === "scripts" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
+                className={`px-4 py-3 border-t-2 border-b-2 cursor-pointer transition-primary hover:bg-black border-black ${openedSection === "scripts" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownScripts}>
                 <h2>Scripts</h2>
                 <ArrowIcon
@@ -203,7 +203,7 @@ const LeftFrame = () => {
                 )}
               </AnimatePresence>
               <div
-                className={`px-4 py-3  border-b-2 transition-primary hover:bg-black border-black ${openedSection === "spliter" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
+                className={`px-4 py-3  border-b-2 cursor-pointer transition-primary hover:bg-black border-black ${openedSection === "spliter" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownSpliter}>
                 <h2>Spliter</h2>
                 <ArrowIcon
@@ -241,7 +241,7 @@ const LeftFrame = () => {
                 )}
               </AnimatePresence>
               <div
-                className={`px-4 py-3  border-b-2 active hover:bg-black border-black ${openedSection === "tools" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
+                className={`px-4 py-3 border-b-2 active cursor-pointer hover:bg-black border-black ${openedSection === "tools" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownTools}>
                 <h2>Tools</h2>
 

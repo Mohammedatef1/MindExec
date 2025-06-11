@@ -9,7 +9,7 @@ function Nav() {
   const ctx = useContext(AppContext);
 
   return (
-    <header className="border-b-2 border-red-900 w-full">
+    <header className="border-b border-primary-light w-full">
       <nav className="flex items-center text-white-400 bg-primary1">
         <div className="w-1/5 p-4 flex items-center justify-around">
           <Link to="/">
@@ -58,7 +58,7 @@ function Nav() {
               ctx.setBuilder(true);
               ctx.setShowLeft(true);
             }}
-            className={`uppercase border-2 rounded-tl-[4px] active  border-black px-12 py-2  ${ctx.builder ? "text-white bg-black" : "text-gray-200 "}`}>
+            className={`uppercase border-2 rounded-tl-[4px] active border-black px-12 py-2 ${ctx.builder ? "text-white bg-black" : "text-gray-200 cursor-pointer"}`}>
             Builder
           </button>
           <button
@@ -66,8 +66,8 @@ function Nav() {
               ctx.setBuilder(false);
               ctx.setShowLeft(false);
             }}
-            className={`uppercase border-2 rounded-tl-[4px]  active border-black px-12 py-2  ${!ctx.builder ? "text-white bg-black" : "text-gray-200 flex "} flex items-center gap-2 justify-between relative`}>
-            <label>runs</label>
+            className={`uppercase border-2 rounded-tl-[4px] active border-black px-12 py-2  ${!ctx.builder ? "text-white bg-black" : "text-gray-200 flex cursor-pointer"} flex items-center gap-2 justify-between relative`}>
+            <label className="cursor-pointer">runs</label>
             {ctx.runStart && (
               <div className="loading-container transition-curtain absolute right-3 inline">
                 <div

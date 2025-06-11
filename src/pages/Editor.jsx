@@ -23,7 +23,7 @@ const Editor = () => {
     <main className="max-h-screen overflow-hidden">
       <Nav />
       <section
-        className="w-full h-[calc(100vh-72px)] grid"
+        className="w-full h-[calc(100vh-81px)] grid"
         style={{ gridTemplateColumns: getGridTemplateColumns() }}>
         {ctx.showLeft && (
           <div className="relative">
