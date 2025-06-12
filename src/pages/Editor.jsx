@@ -23,68 +23,55 @@ const Editor = () => {
   return (
     <main className="max-h-screen overflow-hidden">
       <Nav />
-      <section
-        className="w-full h-[calc(100vh-81px)]"
-        >
-          <PanelGroup direction="horizontal">
-            {ctx.showLeft && (
-              <Panel>
-                <div className="relative h-full">
-                  <LeftFrame />
-                  <button
-                    className="absolute top-1/2 z-20 p-2 rounded-lg text-white -right-5 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
-                    onClick={toggleLeft}>
-                    {ctx.showLeft ? <ArrowIcon className=" transform rotate-90" /> : <ArrowIcon className="transform -rotate-90" />}
-                  </button>
-                </div>
-              </Panel>
-              )}
-              {/*  */}
-              {/* {ctx.showRight && (
-                <div className="relative">
-                  <RightFrame />
-                  <button
-                    className="absolute top-1/2 z-20 p-2 rounded-lg text-white -left-5 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
-                    onClick={toggleRight}>
-                    {ctx.showRight ? <ArrowIcon className=" transform -rotate-90" /> : <ArrowIcon className="transform rotate-90" />}
-                  </button>
-                </div>
-              )} */}
-          
+      <section className="w-full h-[calc(100vh-81px)]">
+        <PanelGroup direction="horizontal">
+          {ctx.showLeft && (
+            <Panel>
+              <div className="relative h-full">
+                <LeftFrame />
+                <button
+                  className="absolute top-1/2 z-20 p-2 rounded-lg text-white -right-5 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
+                  onClick={toggleLeft}>
+                  {ctx.showLeft ? <ArrowIcon className=" transform rotate-90" /> : <ArrowIcon className="transform -rotate-90" />}
+                </button>
+              </div>
+            </Panel>
+          )}
+
           <PanelResizeHandle />
           <Panel>
-            <PanelGroup direction="vertical">
-              <Panel className="bg-red-200">
-                <div className="relative h-full">
-                  <MindMap />
-                  {!ctx.showLeft && (
-                    <button
-                      className="absolute top-1/2 z-20 p-2 rounded-lg text-white left-0 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
-                      onClick={toggleLeft}>
-                      {ctx.showLeft ? <ArrowIcon className=" transform rotate-90" /> : <ArrowIcon className="transform -rotate-90" />}
-                    </button>
-                  )}
-                  {!ctx.showRight && (
-                    <button
-                      className="absolute top-1/2 z-20 p-2 rounded-lg text-white right-0 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
-                      onClick={toggleRight}>
-                      {ctx.showRight ? <ArrowIcon className=" transform -rotate-90" /> : <ArrowIcon className="transform rotate-90" />}
-                    </button>
-                  )}
-                </div>
-              </Panel>
-              <PanelResizeHandle />
-              <Panel className="bg-blue-200">
-                
-              </Panel>
-            </PanelGroup>
+            <div className="relative h-full">
+              <MindMap />
+              {!ctx.showLeft && (
+                <button
+                  className="absolute top-1/2 z-20 p-2 rounded-lg text-white left-0 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
+                  onClick={toggleLeft}>
+                  {ctx.showLeft ? <ArrowIcon className=" transform rotate-90" /> : <ArrowIcon className="transform -rotate-90" />}
+                </button>
+              )}
+              {!ctx.showRight && (
+                <button
+                  className="absolute top-1/2 z-20 p-2 rounded-lg text-white right-0 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
+                  onClick={toggleRight}>
+                  {ctx.showRight ? <ArrowIcon className=" transform -rotate-90" /> : <ArrowIcon className="transform rotate-90" />}
+                </button>
+              )}
+            </div>
           </Panel>
           <PanelResizeHandle />
-          <Panel className="bg-gray-100">
-            right
-          </Panel>
-          </PanelGroup>
-          
+          {ctx.showRight && (
+            <Panel className="bg-gray-100">
+              <div className="relative h-full">
+                <RightFrame />
+                <button
+                  className="absolute top-1/2 z-20 p-2 rounded-lg text-white -left-5 transform scale-150 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
+                  onClick={toggleRight}>
+                  {ctx.showRight ? <ArrowIcon className=" transform -rotate-90" /> : <ArrowIcon className="transform rotate-90" />}
+                </button>
+              </div>
+            </Panel>
+          )}
+        </PanelGroup>
       </section>
     </main>
   );
