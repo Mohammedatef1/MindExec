@@ -10,8 +10,8 @@ const Editor = () => {
     <main className="max-h-screen overflow-hidden">
       <Nav />
       <section className="w-full h-[calc(100vh-81px)]">
-        <PanelGroup direction="horizontal">
-          <Panel>
+        <PanelGroup  direction="horizontal">
+          <Panel defaultSize={25} minSize={10} maxSize={25}>
             <div className="relative h-full">
               <LeftFrame />
             </div>
@@ -19,7 +19,7 @@ const Editor = () => {
 
           <PanelResizeHandle className="w-px bg-primary-light" />
 
-          <Panel>
+          <Panel defaultSize={50} minSize={50} >
             <div className="relative h-full">
               <MindMap />
             </div>
@@ -27,7 +27,7 @@ const Editor = () => {
 
           <PanelResizeHandle className="w-px bg-primary-light" />
 
-          <Panel className="bg-gray-100">
+          <Panel defaultSize={25} minSize={10} maxSize={25}>
             <div className="relative h-full">
               <RightFrame />
             </div>
