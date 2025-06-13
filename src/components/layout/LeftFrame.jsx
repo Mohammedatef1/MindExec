@@ -75,19 +75,19 @@ const LeftFrame = () => {
 
   return (
     <div className={`bg-primary1 h-full pt-16`}>
-      <div className=" bg-black mx-6 rounded-[4px]">
+      <div className="px-6 rounded-[4px] flex items-center justify-center gap-y-2 flex-wrap">
         <button
           onClick={() => {
             setLibrary(true);
           }}
-          className={`uppercase w-1/2 border-2 rounded-[4px]    border-black px-8 py-2 transition-primary ${library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
+          className={`uppercase w-1/2 min-w-min border-2 rounded-[4px] border-black px-1 py-2 transition-primary ${library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
           library
         </button>
         <button
           onClick={() => {
             setLibrary(false);
           }}
-          className={`uppercase w-1/2 border-2 rounded-[4px]    border-black px-8 py-2 transition-primary ${!library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
+          className={`uppercase w-1/2 min-w-min border-2 rounded-[4px] border-black px-1 py-2 transition-primary ${!library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
           inputs
         </button>
       </div>
