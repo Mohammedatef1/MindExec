@@ -13,7 +13,7 @@ const QUESTIONS = [
   },
   {
     question: "What types of vulnerabilities can BUGSPY detect?",
-    answer: "BUGSPY scans for common threats including SQL injection, XSS, command injection, authentication flaws, sensitive data exposure, and insecure configurations. BUGSPY scans for common threats including SQL injection, XSS, command injection, authentication flaws, sensitive data exposure, and insecure configurations. BUGSPY scans for common threats including SQL injection, XSS, command injection, authentication flaws, sensitive data exposure, and insecure configurations.",
+    answer: "BUGSPY scans for common threats including SQL injection, XSS, command injection, authentication flaws, sensitive data exposure, and insecure configurations.",
   },
   {
     question: "Does BUGSPY support both automated and manual scanning?",
