@@ -18,7 +18,7 @@ const Footer = () => {
           <p className="text-muted text-sm">All Rights reserved© 2025 BUGSPY</p>
         </div>
       </MaxWidthWrapper>
-      <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto" />
+      <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto -z-1" />
     </footer>
   );
 };
