@@ -336,22 +336,3 @@ body {
 .social-item{
   background: linear-gradient(91.14deg, #072586 0%, #7246A7 115.7%);
 }
-
-.accordion-content{
-  max-height: 0;
-  transition: all 0.5s cubic-bezier(0,1,0,1);
-  -webkit-transition: all 0.5s cubic-bezier(0,1,0,1);
-  -moz-transition: all 0.5s cubic-bezier(0,1,0,1);
-  -ms-transition: all 0.5s cubic-bezier(0,1,0,1);
-  -o-transition: all 0.5s cubic-bezier(0,1,0,1);
-}
-
-.accordion-content.opened {
-  max-height: 999px;
-  height: auto;
-  transition: all 0.5s cubic-bezier(1,0,1,0);
-  -webkit-transition: all 0.5s cubic-bezier(1,0,1,0);
-  -moz-transition: all 0.5s cubic-bezier(1,0,1,0);
-  -ms-transition: all 0.5s cubic-bezier(1,0,1,0);
-  -o-transition: all 0.5s cubic-bezier(1,0,1,0);
-}
