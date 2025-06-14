@@ -1,25 +1,26 @@
 import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 import HomeFeature from "./HomeFeature";
 const sideImage = "/work flow home.png";
+const Rectangle = "/Rectangle.png";
 
 const features = [
   {
-    heading: "Scan Instantly",
-    content: "Uncover deep system flaws with lightning-speed vulnerability detection. BUGSPY starts working the moment you connect. It scans every line of code, every endpoint, and every dependency — instantly. No waiting, no noise — just clear, actionable insights that expose hidden threats and silent exploits. Get the speed of automation with the accuracy of deep system understanding.",
+    heading: "Real-Time Vulnerability Detection",
+    content: "BUGSPY scans your web app instantly, identifying threats like SQL injection, XSS, and misconfigurations as they happen. You get fast, actionable insights without waiting.",
     reverseOrder: true,
     sideImage: sideImage,
   },
   {
-    heading: "Track Intelligently",
-    content: "Stay ahead of every threat through nonstop precision monitoring. Security is not a one-time scan — it’s a process. BUGSPY monitors your systems 24/7, tracking unusual behavior, access anomalies, and system changes in real time. Receive smart alerts, not spam. Prioritize what matters with live dashboards tailored for security teams, developers, and executives.",
+    heading: "Manual & Automated Testing",
+    content: "Switch seamlessly between hands-free automated scans and expert-level manual testing. Perfect for quick checks or deep, customized analysis.",
     reverseOrder: false,
     sideImage: sideImage,
   },
   {
-    heading: "Fix Securely",
-    content: "Eliminate critical bugs fast with guided, foolproof remediation steps. Finding a bug isn’t enough — fixing it fast is what matters. BUGSPY delivers clear remediation paths, with code-level guidance, risk ratings, and patching suggestions. Whether you're a developer or a security analyst, you’ll fix fast, with confidence — and zero guesswork.",
+    heading: "Actionable Security Reports with Fixes.",
+    content: "Receive clean, prioritized reports highlighting each issue's severity and clear recommendations for resolution. Designed for both developers and non-experts.",
     reverseOrder: true,
-    sideImage: sideImage,
+    sideImage: Rectangle,
   },
 ];
 
