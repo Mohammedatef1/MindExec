@@ -2,6 +2,7 @@ import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 import HomeFeature from "./HomeFeature";
 const sideImage = "/work flow home.png";
 const Rectangle = "/Rectangle.png";
+const subtract = "/Subtract.png";
 
 const features = [
   {
@@ -14,7 +15,7 @@ const features = [
     heading: "Manual & Automated Testing",
     content: "Switch seamlessly between hands-free automated scans and expert-level manual testing. Perfect for quick checks or deep, customized analysis.",
     reverseOrder: false,
-    sideImage: sideImage,
+    sideImage: subtract,
   },
   {
     heading: "Actionable Security Reports with Fixes.",
