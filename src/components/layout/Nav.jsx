@@ -82,10 +82,12 @@ function Nav() {
             className=""
             icon={faBell}
           />
-          <FontAwesomeIcon
-            className="me-6 bg-black rounded-sm p-[4px] w-4 h-4"
-            icon={faX}
-          />
+          <Link to="/dashboard">
+            <FontAwesomeIcon
+              className="me-6 bg-black rounded-sm p-[4px] w-4 h-4"
+              icon={faX}
+            />
+          </Link>
         </div>
       </nav>
     </header>

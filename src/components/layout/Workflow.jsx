@@ -1308,7 +1308,7 @@ const MindNode = () => {
       http://testphp.vulnweb.com:80/'1=1'
       http://testphp.vulnweb.com:80/(%E7%94%A8%E7%9A%84%E7%9C%8B%E5%88%B0demo
      `;
-      ctx.eactFlowInstance.getNode("gau-1").data.tool.stderr = `No stderr output found.`;
+      ctx.reactFlowInstance.getNode("gau-1").data.tool.stderr = `No stderr output found.`;
       ctx.reactFlowInstance.getNode("gau-1").data.tool.stdout = `http://testphp.vulnweb.com/
       http://testphp.vulnweb.com:80/AJAX/index.php'
       http://testphp.vulnweb.com:80/AJAX/index.php--user-data-dir

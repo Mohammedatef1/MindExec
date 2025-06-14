@@ -1,5 +1,6 @@
+import { useState } from "react";
 import MaxWidthWrapper from "../layout/MaxWidthWrapper";
-import FAQItem from "./FAQItem";
+import AccordionItem from "./AccordionItem";
 
 const QUESTIONS = [
   {
@@ -29,13 +30,26 @@ const QUESTIONS = [
 ];
 
 const FAQ = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const activeIndexHandler = (i) => {
+    if (activeIndex === i) return setActiveIndex(null);
+    setActiveIndex(i)
+  };
+
   return (
     <section className="py-10 md:py-20 lg:py-32">
       <MaxWidthWrapper className="max-w-4xl">
         <h2 className="text-heading text-main font-bold">Frequently Asked Questions</h2>
         <div className="flex flex-col gap-y-4 lg:gap-y-6 mt-6 md:mt-8 lg:mt-10">
           {QUESTIONS.map((item, index) => (
-            <FAQItem key={index} question={item.question} answer={item.answer} />
+            <AccordionItem
+              key={index}
+              activeIndexHandler={() => activeIndexHandler(index)}
+              opened={activeIndex === index}
+              question={item.question}
+              answer={item.answer}
+            />
           ))}
         </div>
       </MaxWidthWrapper>

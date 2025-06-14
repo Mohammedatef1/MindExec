@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
 import MindExecLogo from "../components/icons/MindExecLogo";
-import useActiveUser from '../hooks/useActiveUser';
+import useActiveUser from "../hooks/useActiveUser";
 
 const Dashboard = () => {
   const [activeSec, setActiveSec] = useState("home");
@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   const getInitials = (name) => {
     if (!name) return ""; // Handle empty input
-  
+
     const words = name.trim().split(/\s+/); // Split the name into words by spaces
     if (words.length >= 2) {
       // If there are 2 or more words, return the first letter of the first and second words
@@ -31,12 +31,12 @@ const Dashboard = () => {
       // If there is only one word, return the first 2 letters
       return name.slice(0, 2).toUpperCase();
     }
-  }
+  };
 
   const capitalize = (word) => {
     if (!word) return ""; // Handle empty input
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
-  }
+  };
 
   const { user } = useActiveUser();
 
@@ -46,13 +46,12 @@ const Dashboard = () => {
         <div>
           <MindExecLogo />
         </div>
-        <div className="flex justify-center items-center me-2 text-main ">
+        <div className="flex justify-center items-center gap-x-4 me-2 text-main ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className="me-6"
             fill="none">
             <path
               d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
@@ -65,9 +64,13 @@ const Dashboard = () => {
               fill="#7246A7"
             />
           </svg>
-          <button onClick={signOut}>Log out</button>
-          <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">{getInitials(user?.user.user_metadata.full_name)}</p>
           <p className="text-[18px]">{capitalize(user?.user.user_metadata.full_name)}</p>
+          <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">{getInitials(user?.user.user_metadata.full_name)}</p>
+          <button
+            onClick={signOut}
+            className="text-red-500">
+            Log out
+          </button>
         </div>
       </nav>
       <div className="flex">
@@ -188,122 +191,9 @@ const Dashboard = () => {
                 <p className="text-gray-200 text-center">Latest Runs</p>
                 <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
               </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="189"
-                height="188"
-                viewBox="0 0 189 188"
-                className="my-6"
-                fill="none">
-                <g filter="url(#filter0_d_351_141)">
-                  <path
-                    d="M99.5298 20.3824L168.16 89.2147C170.884 91.9467 170.884 96.3676 168.16 99.0996L99.8211 167.64C97.0952 170.374 92.6706 170.385 89.9313 167.664L20.8976 99.1016C18.1488 96.3717 18.1401 91.9284 20.8781 89.1877L89.6206 20.3775C92.3568 17.6387 96.7964 17.6409 99.5298 20.3824Z"
-                    fill="#0E0E0E"
-                    stroke="#7246A7"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M154.351 91.2989L97.3912 34.1715C95.8292 32.605 93.2923 32.6037 91.7288 34.1687L34.6687 91.285C33.1041 92.8511 33.1091 95.3902 34.6798 96.9502L91.9743 153.853C93.5396 155.408 96.068 155.402 97.6256 153.84L154.351 96.9474C155.907 95.3863 155.907 92.86 154.351 91.2989Z"
-                    fill="#7246A7"
-                  />
-                  <g filter="url(#filter1_d_351_141)">
-                    <path
-                      d="M110.027 94.0022L86.876 79.8588C85.5433 79.0446 83.8333 80.0038 83.8333 81.5655V106.822C83.8333 108.294 85.3711 109.262 86.6988 108.625L109.85 97.5119C111.28 96.8258 111.38 94.8287 110.027 94.0022Z"
-                      fill="#DEDEDE"
-                    />
-                  </g>
-                </g>
-                <defs>
-                  <filter
-                    id="filter0_d_351_141"
-                    x="0.830322"
-                    y="0.324829"
-                    width="187.373"
-                    height="187.373"
-                    filterUnits="userSpaceOnUse"
-                    colorInterpolationFilters="sRGB">
-                    <feFlood
-                      floodOpacity="0"
-                      result="BackgroundImageFix"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feMorphology
-                      radius="1"
-                      operator="dilate"
-                      in="SourceAlpha"
-                      result="effect1_dropShadow_351_141"
-                    />
-                    <feOffset />
-                    <feGaussianBlur stdDeviation="8" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="out"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0.466667 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="BackgroundImageFix"
-                      result="effect1_dropShadow_351_141"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="effect1_dropShadow_351_141"
-                      result="shape"
-                    />
-                  </filter>
-                  <filter
-                    id="filter1_d_351_141"
-                    x="67.8333"
-                    y="63.5624"
-                    width="59.1514"
-                    height="61.2616"
-                    filterUnits="userSpaceOnUse"
-                    colorInterpolationFilters="sRGB">
-                    <feFlood
-                      floodOpacity="0"
-                      result="BackgroundImageFix"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset />
-                    <feGaussianBlur stdDeviation="8" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="out"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0.5 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="BackgroundImageFix"
-                      result="effect1_dropShadow_351_141"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="effect1_dropShadow_351_141"
-                      result="shape"
-                    />
-                  </filter>
-                </defs>
-              </svg>
+              <RunsShape className="mb-6" />
               <h2 className="text-white text-xl mb-4">Start your Automation Journey </h2>
-              <p className="text-[#A0A0A0] mb-8 text-center w-4/5 text-sm leading-[17px]">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
+              <p className="text-muted mb-8 text-center w-4/5 text-sm ">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
               <button className="px-6 py-3  rounded-lg text-xl text-main bg-[#360077]">Explore Workflows</button>
             </div>
             <div className="w-2/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
@@ -406,3 +296,122 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+const RunsShape = ({className}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="188"
+      height="188"
+      viewBox="0 0 188 188"
+      className={className}
+      fill="none">
+      <g filter="url(#filter0_d_399_79)">
+        <path
+          d="M89.1211 20.3779C91.7718 17.7247 96.0205 17.6437 98.7686 20.1338L99.0303 20.3828L167.66 89.2148C170.299 91.8615 170.381 96.0933 167.907 98.8389L167.66 99.0996L99.3213 167.64C96.6807 170.288 92.4458 170.381 89.6934 167.911L89.4316 167.664L20.3975 99.1016C17.7346 96.4568 17.6435 92.2041 20.1299 89.4492L20.3779 89.1875L89.1211 20.3779Z"
+          fill="#0E0E0E"
+          stroke="#7246A7"
+          strokeWidth="2"
+        />
+        <path
+          d="M153.851 91.2989L96.8913 34.1715C95.3294 32.605 92.7924 32.6037 91.229 34.1687L34.1688 91.285C32.6043 92.8511 32.6092 95.3902 34.1799 96.9502L91.4745 153.853C93.0398 155.408 95.5682 155.402 97.1258 153.84L153.851 96.9474C155.407 95.3863 155.407 92.86 153.851 91.2989Z"
+          fill="#7246A7"
+        />
+        <g filter="url(#filter1_d_399_79)">
+          <path
+            d="M109.528 94.0022L86.3761 79.8588C85.0434 79.0446 83.3335 80.0038 83.3335 81.5655V106.822C83.3335 108.294 84.8713 109.262 86.199 108.625L109.35 97.5119C110.78 96.8258 110.881 94.8287 109.528 94.0022Z"
+            fill="#DEDEDE"
+          />
+        </g>
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_399_79"
+          x="0.330078"
+          y="0.324829"
+          width="187.373"
+          height="187.373"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB">
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feMorphology
+            radius="1"
+            operator="dilate"
+            in="SourceAlpha"
+            result="effect1_dropShadow_399_79"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="8" />
+          <feComposite
+            in2="hardAlpha"
+            operator="out"
+          />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.447059 0 0 0 0 0.27451 0 0 0 0 0.654902 0 0 0 0.5 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_399_79"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_399_79"
+            result="shape"
+          />
+        </filter>
+        <filter
+          id="filter1_d_399_79"
+          x="67.3335"
+          y="63.5624"
+          width="59.1514"
+          height="61.2616"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB">
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="8" />
+          <feComposite
+            in2="hardAlpha"
+            operator="out"
+          />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0 0.870833 0 0 0 0.5 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_399_79"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_399_79"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
