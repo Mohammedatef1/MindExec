@@ -1,26 +1,27 @@
 import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 import HomeFeature from "./HomeFeature";
-const sideImage = "/work flow home.png";
+const vulnerabilityDetected = "/vulnerability detected.png";
 const Rectangle = "/Rectangle.png";
+const subtract = "/Subtract.png";
 
 const features = [
   {
     heading: "Real-Time Vulnerability Detection",
     content: "BUGSPY scans your web app instantly, identifying threats like SQL injection, XSS, and misconfigurations as they happen. You get fast, actionable insights without waiting.",
     reverseOrder: true,
-    sideImage: sideImage,
+    sideImage: Rectangle, 
   },
   {
     heading: "Manual & Automated Testing",
     content: "Switch seamlessly between hands-free automated scans and expert-level manual testing. Perfect for quick checks or deep, customized analysis.",
     reverseOrder: false,
-    sideImage: sideImage,
+    sideImage: subtract,
   },
   {
     heading: "Actionable Security Reports with Fixes.",
     content: "Receive clean, prioritized reports highlighting each issue's severity and clear recommendations for resolution. Designed for both developers and non-experts.",
     reverseOrder: true,
-    sideImage: Rectangle,
+    sideImage: vulnerabilityDetected,
   },
 ];
 
