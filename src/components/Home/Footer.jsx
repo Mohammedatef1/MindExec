@@ -10,7 +10,7 @@ const Footer = () => {
         <div className=" mb-8 md:mb-16">
           <Logo />
         </div>
-        <div className="flex items-center justify-between mb-12 md:mb-24">
+        <div className="flex items-center justify-between flex-wrap mb-12 md:mb-24">
           <NavLinks />
           <SocialIcons />
         </div>
@@ -18,7 +18,7 @@ const Footer = () => {
           <p className="text-muted text-sm">All Rights reserved© 2025 BUGSPY</p>
         </div>
       </MaxWidthWrapper>
-      <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto -z-10" />
+      <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto -z-10 min-h-full" />
     </footer>
   );
 };
