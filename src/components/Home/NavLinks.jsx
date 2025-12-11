@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom'
 
-const NavLinks = () => {
+const NavLinks = ({ mode }) => {
   return (
-    <div className="flex justify-between gap-3 md:gap-6 lg:gap-12 items-center">
+    <div className={`${mode === "desktop" ? "hidden md:flex" : mode === "mobile" ? "flex md:hidden" : "flex"} justify-center flex-wrap gap-3 md:gap-6 lg:gap-12 items-center`}>
       <NavLink className="nav-link" to="/">Home</NavLink>
       <NavLink className="nav-link" to="/about">About</NavLink>
       <NavLink className="nav-link" to="/features">Features</NavLink>

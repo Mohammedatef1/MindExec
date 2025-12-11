@@ -38,8 +38,8 @@ const HomeFeatureWrapper = () => {
           ))}
         </MaxWidthWrapper>
       </div>
-      <RightShape className="absolute bottom-0 translate-y-1/4 right-0" />
-      <LeftShape className="absolute top-0 -translate-y-[10%] left-0" />
+      <RightShape className="absolute bottom-0 translate-y-1/4 right-0 max-w-full" />
+      <LeftShape className="absolute top-0 -translate-y-[10%] left-0 max-w-full" />
     </div>
   );
 };

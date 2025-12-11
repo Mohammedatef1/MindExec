@@ -10,7 +10,7 @@ const Footer = () => {
         <div className=" mb-8 md:mb-16">
           <Logo />
         </div>
-        <div className="flex items-center justify-between flex-wrap mb-12 md:mb-24">
+        <div className="flex items-center justify-between flex-wrap gap-y-8 mb-12 md:mb-24">
           <NavLinks />
           <SocialIcons />
         </div>
