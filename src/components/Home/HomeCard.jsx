@@ -2,7 +2,7 @@ import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 
 const HomeCard = () => {
   return (
-    <section>
+    <section id="about">
       <MaxWidthWrapper>
         <div className="z-0 relative overflow-hidden card-section p-2 md:p-6 lg:p-8 rounded-md ">
           <div className="flex items-center gap-y-4 flex-wrap">

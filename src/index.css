@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #171717;
 }
@@ -150,7 +154,7 @@ body {
 }
 
 .nav-link{
-  @apply text-muted
+  @apply text-muted cursor-pointer;
 }
 
 :not(footer).nav-link.active{

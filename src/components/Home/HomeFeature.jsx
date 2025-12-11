@@ -1,6 +1,6 @@
 const HomeFeature = ({reverseOrder, heading, sideImage, content }) => {
   return (
-    <section>
+    <section id="features">
       <div className="container mx-auto">
         <div className={`flex flex-wrap items-center gap-y-8 md:gap-y-12 ${reverseOrder? 'flex-row-reverse' : 'flex-row'}`}>
           <div className="w-full md:w-1/2">
