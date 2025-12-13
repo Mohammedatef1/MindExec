@@ -15,7 +15,7 @@ const Footer = () => {
           <SocialIcons />
         </div>
         <div className="copyright flex justify-center">
-          <p className="text-muted text-sm">All Rights reserved© 2025 BUGSPY</p>
+          <p className="text-muted text-sm">All rights reserved © 2025 MindExec</p>
         </div>
       </MaxWidthWrapper>
       <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto -z-10 min-h-full" />

@@ -4,28 +4,28 @@ import AccordionItem from "./AccordionItem";
 
 const QUESTIONS = [
   {
-    question: "What is BUGSPY and what does it do?",
-    answer: "BUGSPY is a web vulnerability scanner that automatically detects security flaws in websites and web apps, helping developers identify and fix issues like SQL injection, XSS, and misconfigurations.",
+    question: "What is MindExec and what does it do?",
+    answer: "MindExec is a web vulnerability scanner that automatically detects security flaws in websites and web apps, helping developers identify and fix issues like SQL injection, XSS, and misconfigurations.",
   },
   {
-    question: "Who should use BUGSPY?",
-    answer: "BUGSPY is designed for developers, system admins, and cybersecurity teams who want a simple yet effective way to secure their web applications.",
+    question: "Who should use MindExec?",
+    answer: "MindExec is designed for developers, system admins, and cybersecurity teams who want a simple yet effective way to secure their web applications.",
   },
   {
-    question: "What types of vulnerabilities can BUGSPY detect?",
-    answer: "BUGSPY scans for common threats including SQL injection, XSS, command injection, authentication flaws, sensitive data exposure, and insecure configurations.",
+    question: "What types of vulnerabilities can MindExec detect?",
+    answer: "MindExec scans for common threats including SQL injection, XSS, command injection, authentication flaws, sensitive data exposure, and insecure configurations.",
   },
   {
-    question: "Does BUGSPY support both automated and manual scanning?",
-    answer: "Yes, BUGSPY offers automated scanning and allows manual testing for deeper analysis by security professionals.",
+    question: "Does MindExec support both automated and manual scanning?",
+    answer: "Yes, MindExec offers automated scanning and allows manual testing for deeper analysis by security professionals.",
   },
   {
     question: "How are scan results presented to the user?",
-    answer: "BUGSPY generates real-time reports that include vulnerability details, severity levels, and suggested fixes in a clear and organized format.",
+    answer: "MindExec generates real-time reports that include vulnerability details, severity levels, and suggested fixes in a clear and organized format.",
   },
   {
-    question: "What technologies is BUGSPY built with?",
-    answer: "BUGSPY is built using React.js, Tailwind CSS, Node.js, Express, MongoDB, and integrates tools like OWASP ZAP and Burp Suite.",
+    question: "What technologies is MindExec built with?",
+    answer: "MindExec is built using React.js, Tailwind CSS, Node.js, Express, MongoDB, and integrates tools like OWASP ZAP and Burp Suite.",
   },
 ];
 

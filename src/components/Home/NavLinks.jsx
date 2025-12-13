@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 
 const NavLinks = ({ mode }) => {
-  
+
   const scrollTo = (target, offset = 0) => {
     const element = document.getElementById(target);
     if (!element) return

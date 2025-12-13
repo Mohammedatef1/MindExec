@@ -7,7 +7,7 @@ const subtract = "/Subtract.png";
 const features = [
   {
     heading: "Real-Time Vulnerability Detection",
-    content: "BUGSPY scans your web app instantly, identifying threats like SQL injection, XSS, and misconfigurations as they happen. You get fast, actionable insights without waiting.",
+    content: "MindExec scans your web app instantly, identifying threats like SQL injection, XSS, and misconfigurations as they happen. You get fast, actionable insights without waiting.",
     reverseOrder: true,
     sideImage: Rectangle, 
   },

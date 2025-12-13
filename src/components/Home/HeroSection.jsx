@@ -31,7 +31,7 @@ const HeroSection = () => {
     <section className="pt-[150px] mb-16 md:mb-20 lg:mb-32 text-main relative">
       <MaxWidthWrapper className="relative z-10">
         <h2 className="text-4xl font-bold mb-[10px] text-main">
-          BUGSPY is an ideal solution
+          MindExec. is an ideal solution
           <br /> for individuals working as
         </h2>
         {developerName === "Security Engineer" && <h2 className={`text-4xl font-bold custom-text glitch-color`}>{developerName}</h2>}
