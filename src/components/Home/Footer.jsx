@@ -10,15 +10,15 @@ const Footer = () => {
         <div className=" mb-8 md:mb-16">
           <Logo />
         </div>
-        <div className="flex items-center justify-between mb-12 md:mb-24">
+        <div className="flex items-center justify-between flex-wrap gap-y-8 mb-12 md:mb-24">
           <NavLinks />
           <SocialIcons />
         </div>
         <div className="copyright flex justify-center">
-          <p className="text-muted text-sm">All Rights reserved© 2025 BUGSPY</p>
+          <p className="text-muted text-sm">All rights reserved © 2025 MindExec</p>
         </div>
       </MaxWidthWrapper>
-      <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto -z-10" />
+      <FooterIcon className="absolute bottom-0 right-0 w-10/12 md:w-2/3 h-auto -z-10 min-h-full" />
     </footer>
   );
 };

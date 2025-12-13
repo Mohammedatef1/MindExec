@@ -2,7 +2,7 @@ import MaxWidthWrapper from "../layout/MaxWidthWrapper";
 
 const HomeCard = () => {
   return (
-    <section>
+    <section id="about">
       <MaxWidthWrapper>
         <div className="z-0 relative overflow-hidden card-section p-2 md:p-6 lg:p-8 rounded-md ">
           <div className="flex items-center gap-y-4 flex-wrap">
@@ -12,7 +12,7 @@ const HomeCard = () => {
                 <h2 className="text-heading text-main font-bold mt-[18px]">
                   Build, Edit, and Run Workflows
                 </h2>
-                <p className="max-w-[630px] text-muted text-sm md:text-base mb-7 mt-[18px]">Evolve from the terminal to a specialized IDE for offensive security. Use BugSpy’s library of tool nodes, import your own scripts, or drop in your favorite open-source tools – all in one place.</p>
+                <p className="max-w-[630px] text-muted text-sm md:text-base mb-7 mt-[18px]">Evolve from the terminal to a specialized IDE for offensive security. Use MindExec’s library of tool nodes, import your own scripts, or drop in your favorite open-source tools – all in one place.</p>
               </div>
             </div>
             <div className="w-full md:w-1/2 ps-8">

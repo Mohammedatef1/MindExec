@@ -1,4 +1,3 @@
-import { Copy } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -11,7 +10,12 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "demo@mindexec.com",
+      password: "Mindexec123"
+    }
+  });
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -76,16 +80,16 @@ const Login = () => {
     <div className="flex flex-wrap w-full">
       <div className="w-full lg:w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary relative">
         <h1 className="text-white text-[40px] font-bold ">
-          Unleash your Scannig
+          Unleash your Scanning
           <br />
-          Capabilites Using <span className="text-primary-light">BUGSPY</span>
+          Capabilities Using <span className="text-primary-light">MindExec</span>
         </h1>
         <p className="text-main mt-4 text-md">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <LoginSvg className="absolute bottom-0 left-0 pointer-events-none" />
       </div>
       <div className="w-full lg:w-1/2 h-screen bg-black flex justify-center items-center">
         <div>
-          <h2 className="text-[40px] text-main font-bold mb-10">Create Your BUGSPY Account</h2>
+          <h2 className="text-[40px] text-main font-bold mb-10">Create Your MindExec Account</h2>
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
             onSubmit={handleSubmit(onSubmit, onError)}>
@@ -138,12 +142,12 @@ const Login = () => {
             </button>
 
             <p className="text-[16px]">
-              Doesn{`'`}t have an account? {" "}
+              Don{`'`}t have an account? {" "}
               <Link to="/register">
                 <span className="text-primary-light hover:underline font-bold">Create one!</span>
               </Link>
             </p>
-            <div className="mt-8 py-4 rounded-lg w-[440px]">
+            {/* <div className="mt-8 py-4 rounded-lg w-[440px]">
               <p className="text-gray-100 font-medium mb-2">Demo Credentials:</p>
               <div className="text-sm text-gray-100">
                 <p className="flex items-center gap-2">
@@ -167,7 +171,7 @@ const Login = () => {
                   />
                 </p>
               </div>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

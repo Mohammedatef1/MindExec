@@ -1,12 +1,28 @@
 import { NavLink } from 'react-router-dom'
 
-const NavLinks = () => {
+const NavLinks = ({ mode }) => {
+
+  const scrollTo = (target, offset = 0) => {
+    const element = document.getElementById(target);
+    if (!element) return
+
+    if (typeof offset !== "number" ) offset = 0
+
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+  }
+
   return (
-    <div className="flex justify-between gap-3 md:gap-6 lg:gap-12 items-center">
+    <div className={`${mode === "desktop" ? "hidden md:flex" : mode === "mobile" ? "flex md:hidden" : "flex"} justify-center flex-wrap gap-3 md:gap-6 lg:gap-12 items-center`}>
       <NavLink className="nav-link" to="/">Home</NavLink>
-      <NavLink className="nav-link" to="/about">About</NavLink>
-      <NavLink className="nav-link" to="/features">Features</NavLink>
-      <NavLink className="nav-link" to="/faq">FAQ</NavLink>
+      <span className="nav-link" onClick={() => {scrollTo("about", 150)}} >About</span>
+      <span className="nav-link" onClick={() => {scrollTo("features")}} >Features</span>
+      <span className="nav-link" onClick={() => {scrollTo("faq")}} >FAQ</span>
     </div>
   )
 }

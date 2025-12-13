@@ -102,14 +102,14 @@ const Signup = () => {
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scanning
           <br />
-          Capabilities Using <span className="text-primary-light">BUGSPY</span>
+          Capabilities Using <span className="text-primary-light">MindExec</span>
         </h1>
         <p className="text-main mt-4 text-md z-10">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <LoginSvg className="absolute bottom-0 left-0 pointer-events-none" />
       </div>
       <div className="w-full lg:w-1/2 h-screen bg-black flex justify-center items-center">
         <div>
-          <h2 className="text-[40px] text-main font-bold mb-10">Create Your BUGSPY Account</h2>
+          <h2 className="text-[40px] text-main font-bold mb-10">Create Your MindExec Account</h2>
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
             onSubmit={handleSubmit(onSubmit, onError)}>
