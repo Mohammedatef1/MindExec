@@ -1634,22 +1634,10 @@ const MindNode = () => {
     padding: "15px",
   };
 
-  const widthController = () => {
-    if (ctx.showLeft && ctx.showRight) {
-      return "max-w-[60vw]";
-    } else if (!ctx.showLeft && ctx.showRight) {
-      return "max-w-[80vw]";
-    } else if (ctx.showLeft && !ctx.showRight) {
-      return "max-w-[80vw]";
-    } else if (!ctx.showLeft && !ctx.showRight) {
-      return "max-w-[100vw]";
-    }
-  };
-
   return (
     <div
       id="container"
-      className={`relative ${widthController()}  max-h-full overflow-hidden h-full border-r bg-primary1 border-l border-primary-light`}>
+      className={`relative max-h-full overflow-hidden h-full border-r bg-primary1 border-l border-primary-light`}>
       <ReactFlowProvider>
         <div
           className={`reactflow-wrapper w-full transition-primary ${commandIsOpen ? "h-3/5" : "h-[calc(100%-2.5rem)]"} `}
