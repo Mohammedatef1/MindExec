@@ -103,11 +103,11 @@ const RightFrme = () => {
     <div className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
-          <h2 className="font-bold uppercase text-white mb-4 ">Map Details</h2>
-          <p className="text-primary-light font-bold">
+          <h2 className="font-bold uppercase text-white mb-4 truncate">Map Details</h2>
+          <p className="text-primary-light font-bold truncate">
             Created <span className="text-gray-300 px-2">1 week ago</span>
           </p>
-          <p className="text-primary-light font-bold">
+          <p className="text-primary-light font-bold truncate">
             Space Name <span className="text-gray-300 px-2">Playground</span>
           </p>
           {!ctx.builder && ctx.runEnd && (

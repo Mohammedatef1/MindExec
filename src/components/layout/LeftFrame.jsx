@@ -75,7 +75,7 @@ const LeftFrame = () => {
 
   return (
     <div className={`bg-primary1 h-full pt-16`}>
-      <div className=" bg-black mx-6 rounded-[4px]">
+      <div className=" bg-black mx-6 rounded-[4px] whitespace-nowrap">
         <button
           onClick={() => {
             setLibrary(true);
@@ -100,7 +100,7 @@ const LeftFrame = () => {
             onBlur={() => {
               setSearchFocused(false);
             }}
-            className={`bg-black border-[1px] transition-primary ${searchFocused ? "border-white" : "border-black"}   my-6 hover:border-gray-200 mx-6 rounded-[4px] `}>
+            className={`bg-black border-[1px] transition-primary whitespace-nowrap ${searchFocused ? "border-white" : "border-black"}   my-6 hover:border-gray-200 mx-6 rounded-[4px] `}>
             <FontAwesomeIcon
               className="text-white ps-3"
               icon={faMagnifyingGlass}
