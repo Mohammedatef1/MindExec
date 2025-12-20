@@ -77,7 +77,7 @@ function Nav() {
             )}
           </button>
         </div>
-        <div className="flex-1 p-4 flex items-center justify-end gap-6">
+        <div className="flex-1 p-4 flex items-center justify-end gap-3">
           <button className="relative p-2 rounded-lg hover:bg-primary-light/10 transition-colors group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,10 +94,12 @@ function Nav() {
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7246A7] rounded-full border-2 border-primary1"></span>
           </button>
           <Link to="/dashboard">
-            <FontAwesomeIcon
-              className="me-6 bg-black rounded-sm p-[4px] w-4 h-4"
-              icon={faX}
-            />
+            <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-600/10 hover:bg-red-600/20 active:bg-red-600/30 text-red-400 hover:text-red-300 active:text-red-200 transition-all duration-200 border border-red-600/20 hover:border-red-600/40 active:border-red-600/50 focus:outline-none focus:ring-2 focus:ring-red-600/50">
+              <FontAwesomeIcon 
+                icon={faX} 
+                className="text-sm"
+              />
+            </button>
           </Link>
         </div>
       </nav>

@@ -90,38 +90,49 @@ const LeftFrame = () => {
       </div>
       {library && (
         <div className="transition-curtain">
-          <div
-            onFocus={() => {
-              setSearchFocused(true);
-            }}
-            onBlur={() => {
-              setSearchFocused(false);
-            }}
-            className={`bg-black border-[1px] transition-primary whitespace-nowrap ${searchFocused ? "border-white" : "border-black"}   my-6 hover:border-gray-200 mx-6 rounded-[4px] `}>
-            <FontAwesomeIcon
-              className="text-white ps-3"
-              icon={faMagnifyingGlass}
-            />
-            <input
-              className="rounded-[4px] w-4/5 text-white bg-black py-1 ps-3 outline-none"
-              placeholder="Search library"
-              type="text"
-              value={searchWord}
-              onChange={(e) => {
-                setSearchWord(e.target.value);
-                console.log(scripts.concat(spliter, tools).filter((tool) => tool.name.includes(searchWord)));
+          <div className="relative p-6">
+            <div
+              onFocus={() => {
+                setSearchFocused(true);
               }}
-            />
+              onBlur={() => {
+                setSearchFocused(false);
+              }}
+              className={`bg-black border-2 transition-all duration-200 rounded-lg flex items-center gap-2 px-3 py-2.5 ${
+                searchFocused 
+                  ? "border-[#7246A7]" 
+                  : "border-gray-700 hover:border-gray-500"
+              }`}>
+              <FontAwesomeIcon
+                className={`transition-colors duration-200 ${searchFocused ? "text-[#7246A7]" : "text-gray-400"}`}
+                icon={faMagnifyingGlass}
+              />
+              <input
+                className="flex-1 w-full text-white bg-transparent outline-none placeholder:text-gray-500 text-sm"
+                placeholder="Search library..."
+                type="text"
+                value={searchWord}
+                onChange={(e) => {
+                  setSearchWord(e.target.value);
+                }}
+              />
+            </div>
           </div>
           {searchWord && (
             <div
               id="search-options"
-              className="mt-10 max-h-[calc(100vh-300px)] scrollbar overflow-y-auto">
-              {/*<div className={`px-4 py-3 border-t-2 border-b-2 transition-primary hover:bg-black border-black bg-black text-main uppercase flex items-center justify-between`}>
-                <h2>Search</h2>
-                <ArrowIcon className="text-white rotate-180 transition-primary"></ArrowIcon>
-              </div>*/}
-              {scripts.concat(spliter, tools).filter((tool) => tool.name.includes(searchWord)).length === 0 && <p className="text-white text-center bg-primary1 transition-curtain">No results found</p>}
+              className="max-h-[calc(100vh-280px)] scrollbar overflow-y-auto">
+              {scripts.concat(spliter, tools).filter((tool) => 
+                tool.name.toLowerCase().includes(searchWord.toLowerCase())
+              ).length === 0 && (
+                <div className="flex flex-col items-center justify-center py-12 px-4">
+                  <div className="w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center mb-4">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="text-gray-500 text-xl" />
+                  </div>
+                  <p className="text-gray-400 text-sm font-medium">No results found</p>
+                  <p className="text-gray-500 text-xs mt-1">Try a different search term</p>
+                </div>
+              )}
               <AnimatePresence>
                 <motion.div
                   variants={menuVars}
@@ -134,20 +145,20 @@ const LeftFrame = () => {
                   <ul className="text-white">
                     {scripts
                       .concat(spliter, tools)
-                      .filter((tool) => tool.name.includes(searchWord))
+                      .filter((tool) => tool.name.toLowerCase().includes(searchWord.toLowerCase()))
                       .map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
                           <GripDots />
                           <ToolIcon className="scale-75" />
-                          <p>{tool.name}</p>
+                          <p className="flex-1">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-main"
+                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
                           />
                         </li>
                       ))}
@@ -159,7 +170,7 @@ const LeftFrame = () => {
           {!searchWord && (
             <div
               id="options"
-              className="mt-10 max-h-[calc(100vh-300px)] scrollbar overflow-y-auto">
+              className="max-h-[calc(100vh-280px)] scrollbar overflow-y-auto">
               <div
                 className={`px-4 py-3 border-t-2 border-b-2 cursor-pointer transition-primary hover:bg-black border-black ${openedSection === "scripts" ? "bg-black" : ""} text-main uppercase flex items-center justify-between`}
                 onClick={toggleDropdownScripts}>
@@ -183,15 +194,15 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
                           <GripDots />
                           <ToolIcon className="scale-75 min-w-[40px] min-h-[40px]" />
-                          <p>{tool.name}</p>
+                          <p className="flex-1">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-main"
+                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
                           />
                         </li>
                       ))}
@@ -221,15 +232,15 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
                           <GripDots />
                           <ToolIcon className="scale-75" />
-                          <p>{tool.name}</p>
+                          <p className="flex-1">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-main"
+                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
                           />
                         </li>
                       ))}
@@ -260,15 +271,15 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600  flex items-center gap-2"
+                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
                           onDragStart={(event) => handleDragStart(event, tool)}
                           draggable>
                           <GripDots />
                           <ToolIcon className="scale-75" />
-                          <p>{tool.name}</p>
+                          <p className="flex-1">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-main"
+                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
                           />
                         </li>
                       ))}
