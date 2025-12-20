@@ -43,7 +43,11 @@ const router = createBrowserRouter(
     },
     {
       path: "/editor",
-      element: <Editor />,
+      element: (
+        <ProtectedRoute>
+          <Editor />
+        </ProtectedRoute>
+      ),
     },
   ]
 );
