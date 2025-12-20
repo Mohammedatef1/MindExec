@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../../AppContext";
+import { formatRelativeTime } from "../../lib/utils";
 import AIIcon from "../icons/AIIcon";
 
 const RightFrme = () => {
@@ -103,13 +104,12 @@ const RightFrme = () => {
     <div className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
-          <h2 className="font-bold uppercase text-white mb-4 truncate">Map Details</h2>
-          <p className="text-primary-light font-bold truncate">
-            Created <span className="text-gray-300 px-2">1 week ago</span>
-          </p>
-          <p className="text-primary-light font-bold truncate">
-            Space Name <span className="text-gray-300 px-2">Playground</span>
-          </p>
+          <h2 className="font-bold uppercase text-white mb-4 truncate">Workflow Details</h2>
+          {ctx.workflowMetadata?.created_at ? 
+            <p className="text-primary-light font-bold truncate">
+              Created:<span className="text-gray-300 px-2">{formatRelativeTime(ctx.workflowMetadata.created_at)}</span>
+            </p>
+          : null}
           {!ctx.builder && ctx.runEnd && (
             <button
               className={`ai-button gap-2 mt-[140px] mx-auto text-white flex items-center justify-center ${isLoading ? "loading" : ""}`}

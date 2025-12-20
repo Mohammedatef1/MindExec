@@ -1,22 +1,34 @@
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faPlus, faRightFromBracket, faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
 import MindExecLogo from "../components/icons/MindExecLogo";
+import { createWorkflow, deleteWorkflow, getUserWorkflows } from "../components/Storage";
+import DeleteWorkflowModal from "../components/ui/DeleteWorkflowModal";
+import WorkflowNameModal from "../components/ui/WorkflowNameModal";
 import useActiveUser from "../hooks/useActiveUser";
+import { formatRelativeTime } from "../lib/utils";
 
 const Dashboard = () => {
   const [activeSec, setActiveSec] = useState("home");
   const navigate = useNavigate();
+  const [workflows, setWorkflows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, workflowId: null, workflowName: "" });
+  const [signingOut, setSigningOut] = useState(false);
 
   const signOut = async () => {
     try {
+      setSigningOut(true);
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       navigate("/login", { replace: true });
     } catch (err) {
       console.log(err);
+      setSigningOut(false);
     }
   };
 
@@ -40,36 +52,109 @@ const Dashboard = () => {
 
   const { user } = useActiveUser();
 
+  useEffect(() => {
+    const fetchWorkflows = async () => {
+      if (user) {
+        setLoading(true);
+        const data = await getUserWorkflows();
+        setWorkflows(data);
+        setLoading(false);
+      }
+    };
+    fetchWorkflows();
+  }, [user]);
+
+  const handleDeleteClick = (workflowId, workflowName, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDeleteModal({ isOpen: true, workflowId, workflowName });
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteWorkflow(deleteModal.workflowId);
+      setWorkflows(workflows.filter(w => w.id !== deleteModal.workflowId));
+      setDeleteModal({ isOpen: false, workflowId: null, workflowName: "" });
+      toast.success("Workflow deleted successfully");
+    } catch (error) {
+      console.error("Error deleting workflow:", error);
+      toast.error("Failed to delete workflow");
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModal({ isOpen: false, workflowId: null, workflowName: "" });
+  };
+
+  const handleCreateWorkflow = async (workflowName) => {
+    try {
+      const newWorkflow = await createWorkflow(workflowName);
+      setIsModalOpen(false);
+      // Refresh workflows list
+      const data = await getUserWorkflows();
+      setWorkflows(data);
+      // Navigate to editor with the new workflow ID
+      navigate(`/editor?workflow=${newWorkflow.id}`);
+    } catch (error) {
+      console.error("Error creating workflow:", error);
+      alert("Failed to create workflow: " + error.message);
+    }
+  };
+
   return (
     <div className="bg-primary1">
       <nav className="flex justify-between items-center border-b-[1px] border-red-primary p-[19px]">
         <div>
           <MindExecLogo />
         </div>
-        <div className="flex justify-center items-center gap-x-4 me-2 text-main ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none">
-            <path
-              d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
-              fill="black"
-            />
-            <circle
-              cx="17"
-              cy="4"
-              r="3"
-              fill="#7246A7"
-            />
-          </svg>
-          <p className="text-[18px]">{capitalize(user?.user.user_metadata.full_name)}</p>
-          <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">{getInitials(user?.user.user_metadata.full_name)}</p>
+        <div className="flex justify-center items-center gap-3 me-4">
+          {/* Notification Icon */}
+          <button className="relative p-2 rounded-lg hover:bg-primary-light/10 transition-colors group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="text-gray-300 group-hover:text-white transition-colors">
+              <path
+                d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7246A7] rounded-full border-2 border-primary1"></span>
+          </button>
+
+          {/* User Profile Section */}
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg hover:bg-primary-light/10 transition-colors group">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#360077] to-[#7246A7] flex items-center justify-center text-white font-semibold text-sm shadow-lg">
+              {getInitials(user?.user?.user_metadata?.full_name)}
+            </div>
+            <div className="flex flex-col">
+              <p className="text-white text-sm font-medium leading-tight">{capitalize(user?.user?.user_metadata?.full_name)}</p>
+              <p className="text-gray-400 text-xs leading-tight">User</p>
+            </div>
+          </div>
+
+          {/* Sign Out Button */}
           <button
             onClick={signOut}
-            className="text-red-500">
-            Log out
+            disabled={signingOut}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 transition-all border border-red-600/20 hover:border-red-600/40 group ${
+              signingOut ? "opacity-60 cursor-not-allowed" : ""
+            }`}>
+            {signingOut ? (
+              <FontAwesomeIcon 
+                icon={faSpinner} 
+                className="text-sm animate-spin"
+              />
+            ) : (
+              <FontAwesomeIcon 
+                icon={faRightFromBracket} 
+                className="text-sm group-hover:translate-x-0.5 transition-transform"
+              />
+            )}
+            <span className="text-sm font-medium">Sign Out</span>
           </button>
         </div>
       </nav>
@@ -199,7 +284,15 @@ const Dashboard = () => {
             <div className="w-2/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
               <div className="mt-11 mb-12 relative w-full">
                 <p className="text-gray-200 text-center">Recent Workflow</p>
-                <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+                <div className="absolute -top-1 right-6 flex gap-3 items-center">
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="px-4 py-2 bg-[#360077] text-white rounded-lg hover:bg-[#4a0099] transition-colors flex items-center gap-2 text-sm">
+                    <FontAwesomeIcon icon={faPlus} />
+                    {/* <span>New Workflow</span> */}
+                  </button>
+                  {/* <p className="text-gray-200 underline underline-offset-2">view all</p> */}
+                </div>
               </div>
 
               <table className="w-[90%] border-separate border-spacing-y-6">
@@ -212,22 +305,31 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="p-2 text-center text-main">
-                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-primary-light">
-                    <td className="py-2 mb-2">1</td>
-                    <td className="py-2 mb-2 text-white">
-                      <Link to="/editor">Fuzz web app for vulnerabilities</Link>
-                    </td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
-                  </tr>
-                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-primary-light">
-                    <td className="py-2 mb-2">2</td>
-                    <td className="py-2 mb-2 text-white">
-                      <Link to="/editor">Simple Content Discovery</Link>
-                    </td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
-                  </tr>
+                  {loading ? (
+                    <tr>
+                      <td colSpan="4" className="py-8">
+                        <div className="flex flex-col items-center justify-center gap-3">
+                          <div className="loading-circle" style={{ width: "40px", height: "40px", borderWidth: "4px" }}></div>
+                          <p className="text-gray-400 text-sm">Loading workflows...</p>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : workflows.length === 0 ? (
+                    <tr>
+                      <td colSpan="4" className="py-4 text-white">No workflows yet. Create one in the editor!</td>
+                    </tr>
+                  ) : (
+                    workflows.slice(0, 5).map((workflow, index) => (
+                      <tr key={workflow.id} className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-primary-light">
+                        <td className="py-2 mb-2">{index + 1}</td>
+                        <td className="py-2 mb-2 text-white">
+                          <Link to={`/editor?workflow=${workflow.id}`}>{workflow.name}</Link>
+                        </td>
+                        <td className="py-2 mb-2 text-[#A0A0A0]">{formatRelativeTime(workflow.updated_at)}</td>
+                        <td className="py-2 mb-2 text-[#A0A0A0]">{workflow.runs_count || 0}</td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -238,7 +340,15 @@ const Dashboard = () => {
             <div className="w-full border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
               <div className="mt-11 mb-12 relative w-full">
                 <p className="text-gray-200 text-center">Recent Workflow</p>
-                <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
+                <div className="absolute -top-1 right-6 flex gap-3 items-center">
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="px-4 py-2 bg-[#360077] text-white rounded-lg hover:bg-[#4a0099] transition-colors flex items-center gap-2">
+                    <FontAwesomeIcon icon={faPlus} />
+                    <span>New Workflow</span>
+                  </button>
+                  <p className="text-gray-200 underline underline-offset-2">view all</p>
+                </div>
               </div>
 
               <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
@@ -253,44 +363,61 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="p-2 text-center">
-                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-red-primary">
-                    <td className="py-2 mb-2">1</td>
-                    <td className="py-2 mb-2 text-white">
-                      <Link to="/editor">Fuzz web app for vulnerabilities</Link>
-                    </td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">2 days ago</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">0</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">{capitalize(user?.user.user_metadata.full_name)}</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">
-                      <Link
-                        to="/editor"
-                        target="_blank">
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-red-primary">
-                    <td className="py-2 mb-2">2</td>
-                    <td className="py-2 mb-2 text-white">
-                      <Link to="/editor">Simple Content Discovery</Link>
-                    </td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">7 days ago</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">2</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">{capitalize(user?.user.user_metadata.full_name)}</td>
-                    <td className="py-2 mb-2 text-[#A0A0A0]">
-                      <Link
-                        to="/editor"
-                        target="_blank">
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                      </Link>
-                    </td>
-                  </tr>
+                  {loading ? (
+                    <tr>
+                      <td colSpan="6" className="py-8">
+                        <div className="flex flex-col items-center justify-center gap-3">
+                          <div className="loading-circle" style={{ width: "40px", height: "40px", borderWidth: "4px" }}></div>
+                          <p className="text-gray-400 text-sm">Loading workflows...</p>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : workflows.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="py-4 text-white">No workflows yet. Create one in the editor!</td>
+                    </tr>
+                  ) : (
+                    workflows.map((workflow, index) => (
+                      <tr key={workflow.id} className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-red-primary">
+                        <td className="py-2">{index + 1}</td>
+                        <td className="py-2 text-white">
+                          <Link to={`/editor?workflow=${workflow.id}`}>{workflow.name}</Link>
+                        </td>
+                        <td className="py-2 text-[#A0A0A0]">{formatRelativeTime(workflow.updated_at)}</td>
+                        <td className="py-2 text-[#A0A0A0]">{workflow.runs_count || 0}</td>
+                        <td className="py-2 text-[#A0A0A0]">{capitalize(user?.user?.user_metadata?.full_name)}</td>
+                        <td className="py-2 text-[#A0A0A0] flex gap-3 justify-center items-center">
+                          <Link
+                            to={`/editor?workflow=${workflow.id}`}
+                            className="hover:text-white transition-colors">
+                            <FontAwesomeIcon icon={faPenToSquare} />
+                          </Link>
+                          <button
+                            onClick={(e) => handleDeleteClick(workflow.id, workflow.name, e)}
+                            className="hover:text-red-500 transition-colors">
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         )}
       </div>
+      <WorkflowNameModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreateWorkflow}
+      />
+      <DeleteWorkflowModal
+        isOpen={deleteModal.isOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        workflowName={deleteModal.workflowName}
+      />
     </div>
   );
 };

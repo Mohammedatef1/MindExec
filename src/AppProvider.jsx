@@ -24,6 +24,7 @@ const AppProvider = ({ children }) => {
   const [runEnd, setRunEnd] = useState(false);
 
   const [test, setTest] = useState(false);
+  const [workflowMetadata, setWorkflowMetadata] = useState(null);
 
   const addNode = (evt) => {
     console.log(evt.currentTarget.getAttribute("data-min"));
@@ -80,7 +81,7 @@ const AppProvider = ({ children }) => {
       });
   }
 
-  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode, setSelectedNode, reactFlowInstance, setReactFlowInstance, onInstanceChange, test, setTest, selectedEdge, setSelectedEdge, generateCommands, builder, setBuilder, runStart, setRunStart, showLeft, showRight, setShowLeft, setShowRight, runEnd, setRunEnd }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode, setSelectedNode, reactFlowInstance, setReactFlowInstance, onInstanceChange, test, setTest, selectedEdge, setSelectedEdge, generateCommands, builder, setBuilder, runStart, setRunStart, showLeft, showRight, setShowLeft, setShowRight, runEnd, setRunEnd, workflowMetadata, setWorkflowMetadata }}>{children}</AppContext.Provider>;
 };
 
 export default AppProvider;
