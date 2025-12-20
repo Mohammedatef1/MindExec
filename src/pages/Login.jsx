@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
-import GoogleLogo from "../components/icons/GoogleLogo";
+// import GoogleLogo from "../components/icons/GoogleLogo";
 
 const Login = () => {
   const {
@@ -140,7 +140,8 @@ const Login = () => {
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
             onSubmit={handleSubmit(onSubmit, onError)}>
-            <motion.button
+            {/* TODO: implement google sign in */}
+            {/* <motion.button
               type="button"
               whileTap={{ scale: 0.98 }}
               className="h-[54px] w-full rounded-lg border-gray-200 border-2 text-muted flex gap-[5px] items-center justify-center mb-8 hover:border-primary-light hover:bg-primary-light/5 transition-all duration-300">
@@ -151,7 +152,7 @@ const Login = () => {
               <div className="border-b-2 border-gray-200 w-6/12 h-1"></div>
               <span className="text-gray-400">or</span>
               <div className="border-b-2 border-gray-200 w-6/12 h-1"></div>
-            </div>
+            </div> */}
 
             <div className="mb-4 w-full">
               <label
