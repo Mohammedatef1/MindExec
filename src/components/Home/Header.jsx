@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import Logo from "../icons/MindExecLogo"
 import MaxWidthWrapper from "../layout/MaxWidthWrapper"
 import NavLinks from "./NavLinks"
-import useActiveUser from "../../hooks/useActiveUser"
+import useActiveUser from "../../hooks/useActiveUser.js"
 
 const Header = () => {
   const { user, loading } = useActiveUser();

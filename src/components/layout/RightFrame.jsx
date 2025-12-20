@@ -1,11 +1,9 @@
 import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { saveAs } from "file-saver";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../../AppContext";
 import { formatRelativeTime } from "../../lib/utils";
-import AIIcon from "../icons/AIIcon";
 
 const RightFrme = () => {
   const [parameters, setParameters] = useState(true);
@@ -82,24 +80,6 @@ const RightFrme = () => {
       });
   };
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleAnalyze = async () => {
-    setIsLoading(true);
-    try {
-      // Simulate analysis process
-      await new Promise((resolve) => setTimeout(resolve, 15000));
-
-      // After analysis is complete, download the PDF
-      const pdfUrl = "https://drive.usercontent.google.com/u/0/uc?id=1XJrnW0IPTfEZSo3PtSAFajXL0lMBPI4d&export=download";
-      saveAs(pdfUrl, "analysis.pdf");
-    } catch (error) {
-      console.error("Error during analysis:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
@@ -110,21 +90,6 @@ const RightFrme = () => {
               Created:<span className="text-gray-300 px-2">{formatRelativeTime(ctx.workflowMetadata.created_at)}</span>
             </p>
           : null}
-          {!ctx.builder && ctx.runEnd && (
-            <button
-              className={`ai-button gap-2 mt-[140px] mx-auto text-white flex items-center justify-center ${isLoading ? "loading" : ""}`}
-              onClick={handleAnalyze}
-              disabled={isLoading}>
-              {isLoading ? (
-                <div className="loader"></div>
-              ) : (
-                <>
-                  <AIIcon />
-                  <p>Analyze with AI</p>
-                </>
-              )}
-            </button>
-          )}
         </div>
       )}
       {ctx.selectedNode && ctx.selectedNode.type == "inputNode" && (

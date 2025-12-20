@@ -1,0 +1,1049 @@
+{
+  "nodes": [
+    {
+      "id": "gau-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 364,
+        "y": 101.4000015258789
+      },
+      "data": {
+        "label": "gau",
+        "tool": {
+          "name": "gau-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "print_input http://testphp.vulnweb.com/ | gau --threads 10 --blacklist ttf,woff,svg,png,jpg,gif | tee out/gau-1/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+            "-ack": "ttf,woff,svg,png,jpg,gif",
+            "-acs": "http://testphp.vulnweb.com/",
+            "-ac": "10"
+          },
+          "parameters": [
+            {
+              "name": "blacklist",
+              "type": "string",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "target",
+              "type": "string",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "threads",
+              "type": "string",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 364,
+        "y": 101.4000015258789
+      },
+      "dragging": false
+    },
+    {
+      "id": "string-input-1",
+      "type": "inputNode",
+      "position": {
+        "x": 75,
+        "y": 207.4000015258789
+      },
+      "data": {
+        "label": "http://testphp.vulnweb.com/",
+        "tool": {
+          "name": "string-input-1",
+          "type": "string",
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 75,
+        "y": 207.4000015258789
+      },
+      "dragging": false
+    },
+    {
+      "id": "string-input-2",
+      "type": "inputNode",
+      "position": {
+        "x": 171,
+        "y": 97.4000015258789
+      },
+      "data": {
+        "label": "10",
+        "tool": {
+          "name": "string-input-2",
+          "type": "string",
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 171,
+        "y": 97.4000015258789
+      }
+    },
+    {
+      "id": "string-input-3",
+      "type": "inputNode",
+      "position": {
+        "x": 182,
+        "y": 204.4000015258789
+      },
+      "data": {
+        "label": "ttf,woff,svg,png,jpg,gif",
+        "tool": {
+          "name": "string-input-3",
+          "type": "string",
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 182,
+        "y": 204.4000015258789
+      }
+    },
+    {
+      "id": "string-input-4",
+      "type": "inputNode",
+      "position": {
+        "x": 150.76203812832227,
+        "y": 281.3585252581977
+      },
+      "data": {
+        "label": "fqdn",
+        "tool": {
+          "name": "string-input-4",
+          "type": "string",
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 150.76203812832227,
+        "y": 281.3585252581977
+      }
+    },
+    {
+      "id": "string-input-5",
+      "type": "inputNode",
+      "position": {
+        "x": 97.98172169740636,
+        "y": 338.09736542143213
+      },
+      "data": {
+        "label": "20",
+        "tool": {
+          "name": "string-input-5",
+          "type": "string",
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "boolean-input-1",
+      "type": "inputNode",
+      "position": {
+        "x": 158.6790855929595,
+        "y": 398.79472931698524
+      },
+      "data": {
+        "label": "true",
+        "tool": {
+          "name": "boolean-input-1",
+          "type": "boolean",
+          "parameters": [
+            {
+              "name": "boolean",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40
+    },
+    {
+      "id": "generate-line-patches-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 1039.212588463923,
+        "y": 12.880484330119685
+      },
+      "data": {
+        "label": "generate-line-patches",
+        "tool": {
+          "name": "generate-line-patches-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "BATCH_SIZE=200\n\n    find in -type f -exec cat {} + > /tmp/merged.txt\n    FILE_SIZE=$(wc /tmp/merged.txt | awk '{print $1}')\n    for ((i=1;i<=FILE_SIZE;i+=BATCH_SIZE))\n    do\n       echo $i,$(($i+$BATCH_SIZE))\n    done | tee out/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "file",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "folder",
+              "type": "folder",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1039.212588463923,
+        "y": 12.880484330119685
+      }
+    },
+    {
+      "id": "katana-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 355.2857642981209,
+        "y": 315.6657309382929
+      },
+      "data": {
+        "label": "katana",
+        "tool": {
+          "name": "katana-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "katana -no-color -system-chrome -u http://testphp.vulnweb.com/ -headless -concurrency 20  -field-scope fqdn -extension-filter ttf,woff,svg,png,jpg,gif -output out/katana-1/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "concurrency",
+              "type": "string",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "extintion-filter",
+              "type": "string",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "field-scope",
+              "type": "string",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "url",
+              "type": "string",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "headless",
+              "type": "boolean",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 355.2857642981209,
+        "y": 315.6657309382929
+      },
+      "dragging": false
+    },
+    {
+      "id": "sort-uniq-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 615.228822720381,
+        "y": 121.93551746561052
+      },
+      "data": {
+        "label": "sort-uniq",
+        "tool": {
+          "name": "sort-uniq-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "file",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "folder",
+              "type": "folder",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80
+    },
+    {
+      "id": "urldedupe-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 864.8659791915852,
+        "y": 121.88156478622085
+      },
+      "data": {
+        "label": "urldedupe",
+        "tool": {
+          "name": "urldedupe-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "./urldedupe -u in/sort-uniq-1/output.txt -qs -s | tee out/urldedupe-1/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "query-string-only",
+              "type": "boolean",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "remove-similar-urls",
+              "type": "boolean",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "urls-files",
+              "type": "file",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 864.8659791915852,
+        "y": 121.88156478622085
+      },
+      "dragging": false
+    },
+    {
+      "id": "boolean-input-2",
+      "type": "inputNode",
+      "position": {
+        "x": 739.8697846852675,
+        "y": 96.01704794137893
+      },
+      "data": {
+        "label": "true",
+        "tool": {
+          "name": "boolean-input-2",
+          "type": "boolean",
+          "parameters": [
+            {
+              "name": "boolean",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 739.8697846852675,
+        "y": 96.01704794137893
+      },
+      "dragging": false
+    },
+    {
+      "id": "file-spliter-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 1255.2134172988026,
+        "y": 0.5269042512238968
+      },
+      "data": {
+        "label": "file-spliter",
+        "tool": {
+          "name": "file-spliter-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "multiple",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1255.2134172988026,
+        "y": 0.5269042512238968
+      },
+      "dragging": false
+    },
+    {
+      "id": "batch-output-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 1443.1622715460921,
+        "y": 123.29994613856613
+      },
+      "data": {
+        "label": "batch-output",
+        "tool": {
+          "name": "batch-output-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "find in -type f -exec cat {} + | sed -n in/file-splitter-1:itemp | tee out/batch-output-1/item/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "batch",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "file",
+              "type": "file",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1443.1622715460921,
+        "y": 123.29994613856613
+      },
+      "dragging": false
+    },
+    {
+      "id": "nuclei-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 1741.7584351486407,
+        "y": 90.01704794137899
+      },
+      "data": {
+        "label": "nuclei",
+        "tool": {
+          "name": "nuclei-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "nuclei -no-color -stats -templates in/git-input-1/ -list in/batch-output-1/batch-output-1:item/output.txt -scan-all-ips -follow-redirects -concurrency 50 -output out/nuclei-2/item/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "parallel-templates-execution",
+              "type": "string",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "target",
+              "type": "string",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "follow-redirects",
+              "type": "boolean",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "scan-all-ips",
+              "type": "boolean",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "stat",
+              "type": "boolean",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "tempelates",
+              "type": "folder",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "urls-list",
+              "type": "file",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1741.7584351486407,
+        "y": 90.01704794137899
+      },
+      "dragging": false
+    },
+    {
+      "id": "string-input-6",
+      "type": "inputNode",
+      "position": {
+        "x": 1555.325297467862,
+        "y": -4.020245448307293
+      },
+      "data": {
+        "label": "50",
+        "tool": {
+          "name": "string-input-6",
+          "type": "string",
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1555.325297467862,
+        "y": -4.020245448307293
+      },
+      "dragging": false
+    },
+    {
+      "id": "boolean-input-3",
+      "type": "inputNode",
+      "position": {
+        "x": 1570.4824631329657,
+        "y": 99.04848107439977
+      },
+      "data": {
+        "label": "true",
+        "tool": {
+          "name": "boolean-input-3",
+          "type": "boolean",
+          "parameters": [
+            {
+              "name": "boolean",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1570.4824631329657,
+        "y": 99.04848107439977
+      },
+      "dragging": false
+    },
+    {
+      "id": "recursively-cat-all-1",
+      "type": "mindExecNode",
+      "position": {
+        "x": 1930.0631778152112,
+        "y": 65.76986958130215
+      },
+      "data": {
+        "label": "recursively-cat-all",
+        "tool": {
+          "name": "recursively-cat-all-1",
+          "type": "tool",
+          "category": "",
+          "finalCommand": "find in -type f -exec cat {} + | tee out/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          },
+          "parameters": [
+            {
+              "name": "file",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "folder",
+              "type": "folder",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "width": 80,
+      "height": 80,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1930.0631778152112,
+        "y": 65.76986958130215
+      },
+      "dragging": false
+    },
+    {
+      "id": "folder-input-1",
+      "type": "inputNode",
+      "position": {
+        "x": 1562.7054765873474,
+        "y": 254.17147624753534
+      },
+      "data": {
+        "label": "fuzzing-templates.git",
+        "tool": {
+          "name": "folder-input-1",
+          "type": "folder",
+          "parameters": [
+            {
+              "name": "folder",
+              "type": "folder"
+            }
+          ]
+        }
+      },
+      "width": 40,
+      "height": 40,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 1562.7054765873474,
+        "y": 254.17147624753534
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-3",
+      "sourceHandle": "string",
+      "target": "gau-1",
+      "targetHandle": "blacklist",
+      "id": "reactflow__edge-string-input-3string-gau-1blacklist"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-1",
+      "sourceHandle": "string",
+      "target": "gau-1",
+      "targetHandle": "target",
+      "id": "reactflow__edge-string-input-1string-gau-1target"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-2",
+      "sourceHandle": "string",
+      "target": "gau-1",
+      "targetHandle": "threads",
+      "id": "reactflow__edge-string-input-2string-gau-1threads"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "boolean-input-1",
+      "sourceHandle": "boolean",
+      "target": "katana-1",
+      "targetHandle": "headless",
+      "id": "reactflow__edge-boolean-input-1boolean-katana-1headless"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-3",
+      "sourceHandle": "string",
+      "target": "katana-1",
+      "targetHandle": "extintion-filter",
+      "id": "reactflow__edge-string-input-3string-katana-1extintion-filter"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-1",
+      "sourceHandle": "string",
+      "target": "katana-1",
+      "targetHandle": "url",
+      "id": "reactflow__edge-string-input-1string-katana-1url"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-5",
+      "sourceHandle": "string",
+      "target": "katana-1",
+      "targetHandle": "concurrency",
+      "id": "reactflow__edge-string-input-5string-katana-1concurrency"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-4",
+      "sourceHandle": "string",
+      "target": "katana-1",
+      "targetHandle": "field-scope",
+      "id": "reactflow__edge-string-input-4string-katana-1field-scope"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "katana-1",
+      "sourceHandle": "file",
+      "target": "sort-uniq-1",
+      "targetHandle": "file",
+      "id": "reactflow__edge-katana-1file-sort-uniq-1file"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "gau-1",
+      "sourceHandle": "file",
+      "target": "sort-uniq-1",
+      "targetHandle": "file",
+      "id": "reactflow__edge-gau-1file-sort-uniq-1file"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "sort-uniq-1",
+      "sourceHandle": "file",
+      "target": "urldedupe-1",
+      "targetHandle": "urls-files",
+      "id": "reactflow__edge-sort-uniq-1file-urldedupe-1urls-files"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "boolean-input-2",
+      "sourceHandle": "boolean",
+      "target": "urldedupe-1",
+      "targetHandle": "query-string-only",
+      "id": "reactflow__edge-boolean-input-2boolean-urldedupe-1query-string-only"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "boolean-input-2",
+      "sourceHandle": "boolean",
+      "target": "urldedupe-1",
+      "targetHandle": "remove-similar-urls",
+      "id": "reactflow__edge-boolean-input-2boolean-urldedupe-1remove-similar-urls"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "urldedupe-1",
+      "sourceHandle": "file",
+      "target": "generate-line-patches-1",
+      "targetHandle": "file",
+      "id": "reactflow__edge-urldedupe-1file-generate-line-patches-1file"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "generate-line-patches-1",
+      "sourceHandle": "file",
+      "target": "file-spliter-1",
+      "targetHandle": "multiple",
+      "id": "reactflow__edge-generate-line-patches-1file-file-spliter-1multiple"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "file-spliter-1",
+      "sourceHandle": "file",
+      "target": "batch-output-1",
+      "targetHandle": "batch",
+      "id": "reactflow__edge-file-spliter-1file-batch-output-1batch"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "urldedupe-1",
+      "sourceHandle": "file",
+      "target": "batch-output-1",
+      "targetHandle": "file",
+      "id": "reactflow__edge-urldedupe-1file-batch-output-1file"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "boolean-input-3",
+      "sourceHandle": "boolean",
+      "target": "nuclei-1",
+      "targetHandle": "follow-redirects",
+      "id": "reactflow__edge-boolean-input-3boolean-nuclei-1follow-redirects"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "boolean-input-3",
+      "sourceHandle": "boolean",
+      "target": "nuclei-1",
+      "targetHandle": "scan-all-ips",
+      "id": "reactflow__edge-boolean-input-3boolean-nuclei-1scan-all-ips"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "boolean-input-3",
+      "sourceHandle": "boolean",
+      "target": "nuclei-1",
+      "targetHandle": "stat",
+      "id": "reactflow__edge-boolean-input-3boolean-nuclei-1stat"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "string-input-6",
+      "sourceHandle": "string",
+      "target": "nuclei-1",
+      "targetHandle": "parallel-templates-execution",
+      "id": "reactflow__edge-string-input-6string-nuclei-1parallel-templates-execution"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "nuclei-1",
+      "sourceHandle": "folder",
+      "target": "recursively-cat-all-1",
+      "targetHandle": "folder",
+      "id": "reactflow__edge-nuclei-1folder-recursively-cat-all-1folder"
+    },
+    {
+      "style": {
+        "stroke": "#2F2F2F",
+        "strokeWidth": 2
+      },
+      "source": "folder-input-1",
+      "sourceHandle": "folder",
+      "target": "nuclei-1",
+      "targetHandle": "tempelates",
+      "id": "reactflow__edge-folder-input-1folder-nuclei-1tempelates"
+    }
+  ]
+}

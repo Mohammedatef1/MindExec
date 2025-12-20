@@ -1,9 +1,12 @@
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
-import GoogleLogo from "../components/icons/GoogleLogo";
+// import GoogleLogo from "../components/icons/GoogleLogo";
 
 const Login = () => {
   const {
@@ -76,9 +79,51 @@ const Login = () => {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const errorVariants = {
+    hidden: { opacity: 0, y: -10, height: 0 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      height: "auto",
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <div className="flex flex-wrap w-full">
-      <div className="w-full lg:w-1/2 h-screen bg-primary1 flex flex-col justify-center px-[7%] bg-gradient-primary relative">
+    <motion.div
+      className="flex flex-wrap w-full"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}>
+      <motion.div
+        variants={itemVariants}
+        className="hidden lg:flex w-full lg:w-1/2 min-h-screen bg-primary1 flex-col justify-center px-[7%] bg-gradient-primary relative">
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scanning
           <br />
@@ -86,65 +131,103 @@ const Login = () => {
         </h1>
         <p className="text-main mt-4 text-md">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <LoginSvg className="absolute bottom-0 left-0 pointer-events-none" />
-      </div>
-      <div className="w-full lg:w-1/2 h-screen bg-black flex justify-center items-center">
-        <div>
-          <h2 className="text-[40px] text-main font-bold mb-10">Create Your MindExec Account</h2>
+      </motion.div>
+      <motion.div
+        variants={itemVariants}
+        className="w-full lg:w-1/2 min-h-screen bg-black flex justify-center items-center px-4 md:px-7 lg:px-10 py-10">
+        <div className="w-full max-w-[440px]">
+          <h2 className="text-[40px] text-main font-bold mb-10">Login to Your Account</h2>
           <form
             className="text-white text-lg flex flex-col justify-between items-center"
             onSubmit={handleSubmit(onSubmit, onError)}>
-            <button className="h-[54px] w-[440px] rounded-lg border-gray-200 border-2 text-muted flex gap-[5px] items-center justify-center mb-8">
+            {/* TODO: implement google sign in */}
+            {/* <motion.button
+              type="button"
+              whileTap={{ scale: 0.98 }}
+              className="h-[54px] w-full rounded-lg border-gray-200 border-2 text-muted flex gap-[5px] items-center justify-center mb-8 hover:border-primary-light hover:bg-primary-light/5 transition-all duration-300">
               <GoogleLogo />
               <span className="text-xl">Log in with Google</span>
-            </button>
-            <div className="flex justify-between items-center gap-4 w-[440px] mb-8">
+            </motion.button>
+            <div className="flex justify-between items-center gap-4 w-full mb-8">
               <div className="border-b-2 border-gray-200 w-6/12 h-1"></div>
-              <span>or</span>
+              <span className="text-gray-400">or</span>
               <div className="border-b-2 border-gray-200 w-6/12 h-1"></div>
-            </div>
+            </div> */}
 
-            <div className="mb-4">
+            <div className="mb-4 w-full">
               <label
                 htmlFor="email"
-                className=" text-left block mb-2">
+                className="text-left block mb-2 text-gray-300">
                 Email
               </label>
-              <input
+              <motion.input
                 disabled={isLoading}
                 {...register("email", { required: "Email is required", validate: validateEmail })}
                 id="email"
-                className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
+                className="w-full px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200 focus:border-primary-light focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 type="email"
               />
-              {errors.email && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.email.message}</label>}
+              <AnimatePresence>
+                {errors.email && (
+                  <motion.label
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={errorVariants}
+                    className="text-left text-sm text-red-500 block max-w-full mt-2 overflow-hidden">
+                    {errors.email.message}
+                  </motion.label>
+                )}
+              </AnimatePresence>
             </div>
-            <div className="mb-6">
+            <div className="mb-6 w-full">
               <label
                 htmlFor="password"
-                className=" text-left block mb-2">
+                className="text-left block mb-2 text-gray-300">
                 Password
               </label>
-              <input
+              <motion.input
                 disabled={isLoading}
                 {...register("password", { required: "Password is required" })}
                 id="password"
-                className="w-[440px] px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200"
+                className="w-full px-4 py-[14px] bg-transparent border-2 rounded-lg border-gray-200 focus:border-primary-light focus:outline-none transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 type="password"
               />
-              {errors.password && <label className=" text-left text-sm text-red-500 block max-w-[400px] mt-2">{errors.password.message}</label>}
+              <AnimatePresence>
+                {errors.password && (
+                  <motion.label
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={errorVariants}
+                    className="text-left text-sm text-red-500 block max-w-full mt-2 overflow-hidden">
+                    {errors.password.message}
+                  </motion.label>
+                )}
+              </AnimatePresence>
             </div>
 
-            <button
+            <motion.button
               type="submit"
               disabled={isLoading}
-              className={`h-[54px] w-[440px] rounded-lg flex items-center justify-center transition-opacity bg-primary text-main ${isLoading ? "opacity-60" : ""} mb-8`}>
-              Log in
-            </button>
+              whileTap={!isLoading ? { scale: 0.98 } : {}}
+              className={`h-[54px] w-full rounded-lg flex items-center justify-center gap-2 bg-primary text-main transition-all duration-300 mb-8 ${
+                isLoading ? "opacity-60 cursor-not-allowed" : "hover:bg-primary-light hover:shadow-lg"
+              }`}>
+              {isLoading ? (
+                <>
+                  <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+                  <span>Logging in...</span>
+                </>
+              ) : (
+                "Log in"
+              )}
+            </motion.button>
 
-            <p className="text-[16px]">
+            <p className="text-[16px] text-gray-400">
               Don{`'`}t have an account? {" "}
               <Link to="/register">
-                <span className="text-primary-light hover:underline font-bold">Create one!</span>
+                <span className="text-primary-light hover:underline font-bold transition-colors duration-200">Create one!</span>
               </Link>
             </p>
             {/* <div className="mt-8 py-4 rounded-lg w-[440px]">
@@ -174,8 +257,8 @@ const Login = () => {
             </div> */}
           </form>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
