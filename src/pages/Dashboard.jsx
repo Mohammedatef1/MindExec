@@ -102,7 +102,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-primary1">
+    <div className="bg-primary1 h-screen flex flex-col">
       <nav className="flex justify-between items-center border-b-[1px] border-red-primary p-[19px]">
         <div>
           <MindExecLogo />
@@ -158,15 +158,15 @@ const Dashboard = () => {
           </button>
         </div>
       </nav>
-      <div className="flex">
-        <div className="h-[calc(100vh-73px)] w-[96px] border-r-[1px]  border-red-primary">
+      <div className="flex flex-1">
+        <div className="border-r border-red-primary">
           <div className="flex flex-col justify-between items-center h-full">
             <ul className="w-full">
               <li
                 onClick={() => {
                   setActiveSec("home");
                 }}
-                className={`flex flex-col transition-primary cursor-pointer justify-between items-center  py-[20px] ${activeSec == "home" ? "bg-primary-light/20" : ""} `}>
+                className={`flex flex-col transition-primary cursor-pointer justify-between items-center px-6 py-5 ${activeSec == "home" ? "bg-primary-light/20" : ""} `}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="32"
@@ -270,8 +270,8 @@ const Dashboard = () => {
           </div>
         </div>
         {activeSec == "home" && (
-          <div className="w-full p-6 bg-[#060606] flex gap-6">
-            <div className="w-3/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center ">
+          <div className="flex-1 p-6 bg-[#060606] flex gap-6">
+            <div className="w-3/5 border-2 rounded-lg border-red-primary flex flex-col  items-center ">
               <div className="mt-11 relative w-full">
                 <p className="text-gray-200 text-center">Latest Runs</p>
                 <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
@@ -281,7 +281,7 @@ const Dashboard = () => {
               <p className="text-muted mb-8 text-center w-4/5 text-sm ">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
               <button className="px-6 py-3  rounded-lg text-xl text-main bg-[#360077]">Explore Workflows</button>
             </div>
-            <div className="w-2/5 border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
+            <div className="w-2/5 border-2 rounded-lg border-red-primary flex flex-col items-center">
               <div className="mt-11 mb-12 relative w-full">
                 <p className="text-gray-200 text-center">Recent Workflow</p>
                 <div className="absolute -top-1 right-6 flex gap-3 items-center">
@@ -309,7 +309,7 @@ const Dashboard = () => {
                     <tr>
                       <td colSpan="4" className="py-8">
                         <div className="flex flex-col items-center justify-center gap-3">
-                          <div className="loading-circle" style={{ width: "40px", height: "40px", borderWidth: "4px" }}></div>
+                          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-[#7246A7] text-2xl" />
                           <p className="text-gray-400 text-sm">Loading workflows...</p>
                         </div>
                       </td>
@@ -337,7 +337,7 @@ const Dashboard = () => {
         )}
         {activeSec == "workflow" && (
           <div className="w-full p-6 bg-[#060606] flex gap-6">
-            <div className="w-full border-2 rounded-lg border-red-primary shadow-red-primary flex flex-col  items-center">
+            <div className="w-full border-2 rounded-lg border-red-primary  flex flex-col items-center">
               <div className="mt-11 mb-12 relative w-full">
                 <p className="text-gray-200 text-center">Recent Workflow</p>
                 <div className="absolute -top-1 right-6 flex gap-3 items-center">
@@ -347,7 +347,7 @@ const Dashboard = () => {
                     <FontAwesomeIcon icon={faPlus} />
                     <span>New Workflow</span>
                   </button>
-                  <p className="text-gray-200 underline underline-offset-2">view all</p>
+                  {/* <p className="text-gray-200 underline underline-offset-2">view all</p> */}
                 </div>
               </div>
 
@@ -367,7 +367,7 @@ const Dashboard = () => {
                     <tr>
                       <td colSpan="6" className="py-8">
                         <div className="flex flex-col items-center justify-center gap-3">
-                          <div className="loading-circle" style={{ width: "40px", height: "40px", borderWidth: "4px" }}></div>
+                          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-[#7246A7] text-2xl" />
                           <p className="text-gray-400 text-sm">Loading workflows...</p>
                         </div>
                       </td>

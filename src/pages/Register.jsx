@@ -257,7 +257,7 @@ const Signup = () => {
               disabled={isLoading}
               whileTap={!isLoading ? { scale: 0.98 } : {}}
               className={`h-[54px] w-full rounded-lg flex items-center justify-center gap-2 bg-primary text-main transition-all duration-300 mb-8 ${
-                isLoading ? "opacity-60 cursor-not-allowed" : "hover:bg-primary-light hover:shadow-lg hover:shadow-primary-light/30"
+                isLoading ? "opacity-60 cursor-not-allowed" : "hover:bg-primary-light hover:shadow-lg"
               }`}>
               {isLoading ? (
                 <>
