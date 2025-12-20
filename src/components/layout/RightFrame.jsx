@@ -5,7 +5,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../../AppContext";
 import { formatRelativeTime } from "../../lib/utils";
 
-const RightFrme = () => {
+const RightFrame = () => {
   const [parameters, setParameters] = useState(true);
 
   const [parametersIsOpen, setParametersIsOpen] = useState(true);
@@ -147,7 +147,7 @@ const RightFrme = () => {
                 setParameters(true);
               }}
               className={`uppercase w-1/2 border-2 rounded-[4px] border-black text-center py-2 transition-primary ${parameters ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
-              Parameters
+              Inputs
             </button>
             <button
               onClick={() => {
@@ -331,4 +331,4 @@ const RightFrme = () => {
   );
 };
 
-export default RightFrme;
+export default RightFrame;

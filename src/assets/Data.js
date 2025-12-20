@@ -1,994 +1,951 @@
-const tools = [
-  {
+export const TOOLS_REGISTRY = {
+  /* =========================
+     ffuf-multi
+     ========================= */
+  "ffuf-multi": {
     name: "ffuf-multi",
-    type: "tool",
-    category: "",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "ffuf",
+    category: "fuzzing",
+    baseCommand: "ffuf",
+
+    inputs: {
+      "auto-calibration-keyword": {
+        active: true,
+        type: "string",
+        flag: "-ack",
+        default: "fuzz",
+      },
+      "auto-calibration-strategy": {
+        active: true,
+        type: "string",
+        flag: "-acs",
+        default: "basic",
+      },
+      "calibrate-filtering-options": {
+        active: true,
+        type: "boolean",
+        flag: "-ac",
+        default: false,
+      },
     },
-    parameters: [
-      { name: "auto-calibration-keyword", type: "string", default: "fuzz", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "auto-calibration-strategy", type: "string", default: "basic", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "calibrate-filtering-options", type: "boolean", default: false, command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-    ],
   },
-  {
+
+  /* =========================
+     rex
+     ========================= */
+  "rex": {
     name: "rex",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "rex",
+    category: "static-code-analysis",
+    baseCommand: "rex",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": {
+        active: true,
+        type: "folder",
+        flag: "-d",
+      },
+      "gh-token": {
+        active: true,
+        type: "string",
+        flag: "-t",
+      },
+      "github-repo": {
+        active: true,
+        type: "string",
+        flag: "-g",
+      },
+    },
   },
-  {
+
+  /* =========================
+     airixss
+     ========================= */
+  "airixss": {
     name: "airixss",
-    type: "tool",
-    category: "scanners",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "succeeded",
-    duration: "00:00:08",
-    command: {
-      initialComand: "",
-      command: "print_input oss.com | gau --subs --threads 5 | tee",
+    label: "airixss",
+    category: "scanner",
+    baseCommand: "airixss",
+
+    inputs: {
+      concurrency: {
+        active: true,
+        type: "string",
+        flag: "-c",
+        default: "50",
+      },
+      headers: {
+        active: true,
+        type: "string",
+        flag: "--headers",
+      },
+      "only-poc": {
+        active: true,
+        type: "boolean",
+        flag: "-g",
+        default: false,
+      },
     },
-    parameters: [
-      { name: "concurrency", type: "string", default: "50", command: "-c", description: "set concurency, default: 50", active: true },
-      { name: "headers", type: "string", default: "basic", command: "--headers", description: "Headers", active: true },
-      { name: "only-poc", type: "boolean", default: false, command: "-g", description: "Show only potentially vulnerable urls", active: true },
-    ],
   },
-  {
+
+  /* =========================
+     gau
+     ========================= */
+  "gau": {
     name: "gau",
-    type: "tool",
-    category: "",
-    finalCommand: "print_input https://glassdoor.com | gau --threads 10 --blacklist ttf,woff,svg,png,jpg,gif | tee out/gau-1/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "gau",
+    category: "crawler",
+    baseCommand: "gau",
+
+    inputs: {
+      target: {
+        active: true,
+        type: "string",
+        flag: "-u",
+        required: true,
+      },
+      blacklist: {
+        active: true,
+        type: "string",
+        flag: "--blacklist",
+      },
+      threads: {
+        active: true,
+        type: "string",
+        flag: "--threads",
+        default: "10",
+      },
     },
-    parameters: [
-      { name: "blacklist", type: "string", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "target", type: "string", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "threads", type: "string", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-    ],
   },
-  {
+
+  /* =========================
+     katana
+     ========================= */
+  "katana": {
     name: "katana",
-    type: "tool",
-    category: "",
-    finalCommand: `katana -no-color -system-chrome -u https://glassdoor.com -headless -concurrency 20  -field-scope fqdn -extension-filter ttf,woff,svg,png,jpg,gif -output out/katana-1/output.txt`,
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "katana",
+    category: "crawler",
+    baseCommand: "katana",
+
+    inputs: {
+      url: {
+        active: true,
+        type: "string",
+        flag: "-u",
+        required: true,
+      },
+      concurrency: {
+        active: true,
+        type: "string",
+        flag: "-concurrency",
+        default: "20",
+      },
+      "extension-filter": {
+        active: true,
+        type: "string",
+        flag: "-extension-filter",
+      },
+      "field-scope": {
+        active: true,
+        type: "string",
+        flag: "-field-scope",
+        default: "fqdn",
+      },
+      headless: {
+        active: true,
+        type: "boolean",
+        flag: "-headless",
+        default: true,
+      },
+      "no-color": {
+        active: true,
+        type: "boolean",
+        flag: "-no-color",
+        default: true,
+      },
+      "system-chrome": {
+        active: true,
+        type: "boolean",
+        flag: "-system-chrome",
+        default: true,
+      },
     },
-    parameters: [
-      { name: "concurrency", type: "string", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "extintion-filter", type: "string", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "field-scope", type: "string", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-      { name: "url", type: "string", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-      { name: "headless", type: "boolean", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-    ],
   },
-  {
+
+  /* =========================
+     urldedupe
+     ========================= */
+  "urldedupe": {
     name: "urldedupe",
-    type: "tool",
-    category: "",
-    finalCommand: "./urldedupe -u in/sort-uniq-1/output.txt -qs -s | tee out/urldedupe-1/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "urldedupe",
+    category: "processing",
+    baseCommand: "./urldedupe",
+
+    inputs: {
+      "query-string-only": {
+        active: true,
+        type: "boolean",
+        flag: "-qs",
+        default: false,
+      },
+      "remove-similar-urls": {
+        active: true,
+        type: "boolean",
+        flag: "-s",
+        default: false,
+      },
+      "urls-files": {
+        active: true,
+        type: "file",
+        flag: "-u",
+      },
     },
-    parameters: [
-      { name: "query-string-only", type: "boolean", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "remove-similar-urls", type: "boolean", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "urls-files", type: "file", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-    ],
   },
-  {
+
+  /* =========================
+     batch-output
+     ========================= */
+  "batch-output": {
     name: "batch-output",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} + | sed -n in/file-splitter-1:itemp | tee out/batch-output-1/item/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "batch-output",
+    category: "processing",
+    baseCommand: "batch-output",
+
+    inputs: {
+      batch: {
+        active: true,
+        type: "file",
+      },
+      file: {
+        active: true,
+        type: "file",
+      },
     },
-    parameters: [
-      { name: "batch", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "file", type: "file", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+   /* =========================
+     nuclei
+     ========================= */
+  "nuclei": {
     name: "nuclei",
-    type: "tool",
-    category: "",
-    finalCommand: "nuclei -no-color -stats -templates in/git-input-1/ -list in/batch-output-1/batch-output-1:item/output.txt -scan-all-ips -follow-redirects -concurrency 50 -output out/nuclei-2/item/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
-    },
-    parameters: [
-      { name: "parallel-templates-execution", type: "string", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "target", type: "string", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "follow-redirects", type: "boolean", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-      { name: "scan-all-ips", type: "boolean", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "stat", type: "boolean", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-      { name: "tempelates", type: "folder", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-      { name: "urls-list", type: "file", command: "-ac", description: " Automatically calibrate filtering options (default: false)", active: true },
-    ],
-  },
-  {
-    name: "httpx-screenshot",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "nuclei",
+    category: "scanner",
+    baseCommand: "nuclei",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "parallel-templates-execution": {
+        active: true,
+        type: "string",
+        flag: "-concurrency",
+      },
+      target: {
+        active: true,
+        type: "string",
+        flag: "-target",
+      },
+      "follow-redirects": {
+        active: true,
+        type: "boolean",
+        flag: "-follow-redirects",
+        default: false,
+      },
+      "scan-all-ips": {
+        active: true,
+        type: "boolean",
+        flag: "-scan-all-ips",
+        default: false,
+      },
+      stat: {
+        active: true,
+        type: "boolean",
+        flag: "-stats",
+        default: false,
+      },
+      templates: {
+        active: true,
+        type: "folder",
+        flag: "-templates",
+      },
+      "urls-list": {
+        active: true,
+        type: "file",
+        flag: "-list",
+      },
+    },
   },
-  {
+
+  /* =========================
+     httpx-screenshot
+     ========================= */
+  "httpx-screenshot": {
+    name: "httpx-screenshot",
+    label: "httpx-screenshot",
+    category: "static-code-analysis",
+    baseCommand: "httpx-screenshot",
+
+    inputs: {
+      "directory-to-scan": {
+        active: true,
+        type: "folder",
+        flag: "-d",
+      },
+      "gh-token": {
+        active: true,
+        type: "string",
+        flag: "-t",
+      },
+      "github-repo": {
+        active: true,
+        type: "string",
+        flag: "-g",
+      },
+    },
+  },
+
+  /* =========================
+     404checker
+     ========================= */
+  "404checker": {
     name: "404checker",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "404checker",
+    category: "static-code-analysis",
+    baseCommand: "404checker",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     csprecon
+     ========================= */
+  "csprecon": {
     name: "csprecon",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "csprecon",
+    category: "static-code-analysis",
+    baseCommand: "csprecon",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     zdns
+     ========================= */
+  "zdns": {
     name: "zdns",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "zdns",
+    category: "static-code-analysis",
+    baseCommand: "zdns",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     jaeles
+     ========================= */
+  "jaeles": {
     name: "jaeles",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "jaeles",
+    category: "static-code-analysis",
+    baseCommand: "jaeles",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     sourcegraph-scan
+     ========================= */
+  "sourcegraph-scan": {
     name: "sourcegraph-scan",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "sourcegraph-scan",
+    category: "static-code-analysis",
+    baseCommand: "sourcegraph-scan",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     fallparams
+     ========================= */
+  "fallparams": {
     name: "fallparams",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "fallparams",
+    category: "static-code-analysis",
+    baseCommand: "fallparams",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     whatwaf
+     ========================= */
+  "whatwaf": {
     name: "whatwaf",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "whatwaf",
+    category: "static-code-analysis",
+    baseCommand: "whatwaf",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     bigip-scanner
+     ========================= */
+  "bigip-scanner": {
     name: "bigip-scanner",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "bigip-scanner",
+    category: "static-code-analysis",
+    baseCommand: "bigip-scanner",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     add-subdomains
+     ========================= */
+  "add-subdomains": {
     name: "add-subdomains",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "add-subdomains",
+    category: "static-code-analysis",
+    baseCommand: "add-subdomains",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     xsubfind3r
+     ========================= */
+  "xsubfind3r": {
     name: "xsubfind3r",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "xsubfind3r",
+    category: "static-code-analysis",
+    baseCommand: "xsubfind3r",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     cookiemonster
+     ========================= */
+  "cookiemonster": {
     name: "cookiemonster",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
+    label: "cookiemonster",
+    category: "static-code-analysis",
+    baseCommand: "cookiemonster",
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
+    },
   },
-  {
+
+  /* =========================
+     searchsploit
+     ========================= */
+  "searchsploit": {
     name: "searchsploit",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
+    label: "searchsploit",
+    category: "static-code-analysis",
+    baseCommand: "searchsploit",
+
+    inputs: {
+      "directory-to-scan": { active: true,
+        type: "folder", flag: "-d" },
+      "gh-token": { active: true,
+        type: "string", flag: "-t" },
+      "github-repo": { active: true,
+        type: "string", flag: "-g" },
     },
+  }
+};
 
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
-  },
-  {
-    name: "httpx-screenshot",
-    type: "tool",
-    category: "static code analysis",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "00:00:08",
-    command: {
-      initialComand: "Rex | tee",
-      "-t": "mo.com",
-      "-g": "https://github.com/devanshbatham/OpenRedireX",
-      "-c": "10",
-      "-r": true,
-    },
-
-    parameters: [
-      { name: "directory-to-scan", type: "folder", default: "", command: "-d", description: "  Directory with files and folders to scan for secrets", active: true },
-      { name: "gh-token", type: "string", default: "basic", command: "-t", description: " GitHub token for scanning private repositories", active: true },
-      { name: "github-repo", type: "string", default: false, command: "-g", description: "GitHub repository to scan for secrets", active: true },
-    ],
-  },
-];
-
-const scripts = [
-  {
+export const SCRIPTS_REGISTRY = {
+  /* =========================
+     sort-uniq
+     ========================= */
+  "sort-uniq": {
     name: "sort-uniq",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "sort-uniq",
+    category: "processing",
+    baseCommand: "sort | uniq",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     generate-line-patches
+     ========================= */
+  "generate-line-patches": {
     name: "generate-line-patches",
-    type: "tool",
-    category: "",
-    finalCommand: `BATCH_SIZE=200
+    label: "generate-line-patches",
+    category: "processing",
+    baseCommand: "generate-line-patches",
 
-    find in -type f -exec cat {} + > /tmp/merged.txt
-    FILE_SIZE=$(wc /tmp/merged.txt | awk '{print $1}')
-    for ((i=1;i<=FILE_SIZE;i+=BATCH_SIZE))
-    do
-       echo $i,$(($i+$BATCH_SIZE))
-    done | tee out/output.txt`,
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     recursively-cat-all
+     ========================= */
+  "recursively-cat-all": {
     name: "recursively-cat-all",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} + | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: "",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "recursively-cat-all",
+    category: "processing",
+    baseCommand: "cat",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     sort
+     ========================= */
+  "sort": {
     name: "sort",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "sort",
+    category: "processing",
+    baseCommand: "sort",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     load-aws-ip-ranges
+     ========================= */
+  "load-aws-ip-ranges": {
     name: "load-aws-ip-ranges",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "load-aws-ip-ranges",
+    category: "dataset",
+    baseCommand: "load-aws-ip-ranges",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     load-gcp-ip-ranges
+     ========================= */
+  "load-gcp-ip-ranges": {
     name: "load-gcp-ip-ranges",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "load-gcp-ip-ranges",
+    category: "dataset",
+    baseCommand: "load-gcp-ip-ranges",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     get-subdomains-from-trickest-cloud-dataset
+     ========================= */
+  "get-subdomains-from-trickest-cloud-dataset": {
     name: "get-subdomains-from-trickest-cloud-dataset",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "get-subdomains-from-trickest-cloud-dataset",
+    category: "dataset",
+    baseCommand: "get-subdomains-from-trickest-cloud-dataset",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     parse-nuclei-output-into-technologies
+     ========================= */
+  "parse-nuclei-output-into-technologies": {
     name: "parse-nuclei-output-into-technologies",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "parse-nuclei-output-into-technologies",
+    category: "processing",
+    baseCommand: "parse-nuclei-output-into-technologies",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     remove-excessive-ports
+     ========================= */
+  "remove-excessive-ports": {
     name: "remove-excessive-ports",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "remove-excessive-ports",
+    category: "processing",
+    baseCommand: "remove-excessive-ports",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     parse-wpscan-output-into-findings
+     ========================= */
+  "parse-wpscan-output-into-findings": {
     name: "parse-wpscan-output-into-findings",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "parse-wpscan-output-into-findings",
+    category: "processing",
+    baseCommand: "parse-wpscan-output-into-findings",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     parse-joomscan-output-into-findings
+     ========================= */
+  "parse-joomscan-output-into-findings": {
     name: "parse-joomscan-output-into-findings",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "parse-joomscan-output-into-findings",
+    category: "processing",
+    baseCommand: "parse-joomscan-output-into-findings",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     remove-duplicate-jsonlines-records
+     ========================= */
+  "remove-duplicate-jsonlines-records": {
     name: "remove-duplicate-jsonlines-records",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "remove-duplicate-jsonlines-records",
+    category: "processing",
+    baseCommand: "remove-duplicate-jsonlines-records",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     parse-ffuf-output-into-findings
+     ========================= */
+  "parse-ffuf-output-into-findings": {
     name: "parse-ffuf-output-into-findings",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "parse-ffuf-output-into-findings",
+    category: "processing",
+    baseCommand: "parse-ffuf-output-into-findings",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
-    name: "parse-ffuf-output-into-findings",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
-    },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
-  },
-  {
+
+  /* =========================
+     split-jsonlines-into-files-based-on-field-value
+     ========================= */
+  "split-jsonlines-into-files-based-on-field-value": {
     name: "split-jsonlines-into-files-based-on-field-value",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "split-jsonlines-into-files-based-on-field-value",
+    category: "processing",
+    baseCommand: "split-jsonlines-into-files-based-on-field-value",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+    /* =========================
+     parse-zgrab2-tls-output
+     ========================= */
+  "parse-zgrab2-tls-output": {
     name: "parse-zgrab2-tls-output",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "parse-zgrab2-tls-output",
+    category: "processing",
+    baseCommand: "parse-zgrab2-tls-output",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     remove-default-http-ports-from-urls
+     ========================= */
+  "remove-default-http-ports-from-urls": {
     name: "remove-default-http-ports-from-urls",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "remove-default-http-ports-from-urls",
+    category: "processing",
+    baseCommand: "remove-default-http-ports-from-urls",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     find-hostnames-in-dnsx-results
+     ========================= */
+  "find-hostnames-in-dnsx-results": {
     name: "find-hostnames-in-dnsx-results",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "find-hostnames-in-dnsx-results",
+    category: "processing",
+    baseCommand: "find-hostnames-in-dnsx-results",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     find-extra-assets-in-httpx-results
+     ========================= */
+  "find-extra-assets-in-httpx-results": {
     name: "find-extra-assets-in-httpx-results",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "find-extra-assets-in-httpx-results",
+    category: "processing",
+    baseCommand: "find-extra-assets-in-httpx-results",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     filter-jsonlines-by-field-keyword
+     ========================= */
+  "filter-jsonlines-by-field-keyword": {
     name: "filter-jsonlines-by-field-keyword",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "filter-jsonlines-by-field-keyword",
+    category: "processing",
+    baseCommand: "filter-jsonlines-by-field-keyword",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     add-urls-to-zap-automation-plan
+     ========================= */
+  "add-urls-to-zap-automation-plan": {
     name: "add-urls-to-zap-automation-plan",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "add-urls-to-zap-automation-plan",
+    category: "integration",
+    baseCommand: "add-urls-to-zap-automation-plan",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     generate-number-of-batches
+     ========================= */
+  "generate-number-of-batches": {
     name: "generate-number-of-batches",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "generate-number-of-batches",
+    category: "processing",
+    baseCommand: "generate-number-of-batches",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     file-to-variable
+     ========================= */
+  "file-to-variable": {
     name: "file-to-variable",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    label: "file-to-variable",
+    category: "processing",
+    baseCommand: "file-to-variable",
+
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
   },
-  {
+
+  /* =========================
+     martians-nuclei-rover
+     ========================= */
+  "martians-nuclei-rover": {
     name: "martians-nuclei-rover",
-    type: "tool",
-    category: "",
-    finalCommand: "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
-    },
-    parameters: [
-      { name: "file", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true },
-      { name: "folder", type: "folder", command: "-acs", description: ' Autocalibration strategy: "basic" or "advanced" (default: basic)', active: true },
-    ],
-  },
-];
+    label: "martians-nuclei-rover",
+    category: "processing",
+    baseCommand: "martians-nuclei-rover",
 
-const spliter = [
-  {
-    name: "file-spliter",
-    type: "tool",
-    category: "",
-    finalCommand: "",
-    ontput: "",
-    stdout: "",
-    stderr: " ",
-    status: "proccessing...",
-    duration: "",
-    command: {
-      initialComand: "",
-      command: "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+    inputs: {
+      file: { active: true,
+        type: "file" },
+      folder: { active: true,
+        type: "folder" },
     },
-    parameters: [{ name: "multiple", type: "file", command: "-ack", description: " Autocalibration keyword (default: FUZZ)", active: true }],
-  },
-];
+  }
+};
 
-export { scripts, spliter, tools };
+export const SPLITTERS_REGISTRY = {
+  /* =========================
+     file-splitter
+     ========================= */
+  "file-splitter": {
+    name: "file-splitter",
+    label: "file-splitter",
+    category: "structural",
+    baseCommand: "file-splitter",
+
+    inputs: {
+      multiple: {
+        active: true,
+        type: "file",
+        multiple: true,
+      },
+    },
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+        multiple: true,
+      },
+    },
+  },
+};

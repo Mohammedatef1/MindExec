@@ -100,6 +100,7 @@ const MindNode = () => {
       if (workflowId) {
         const loadedData = await loadMindMap(workflowId);
         if (loadedData) {
+          console.log("loaded data", loadedData)
           ctx.setNodes(loadedData.nodes);
           ctx.setEdges(loadedData.edges);
           setSavedNodes(loadedData.nodes);
@@ -296,7 +297,7 @@ const MindNode = () => {
       const toolString = event.dataTransfer.getData("tool");
       const tool = JSON.parse(toolString);
 
-      console.log(tool);
+      console.log("tool", tool);
 
       // check if the dropped element is valid
       if (typeof type === "undefined" || !type) {

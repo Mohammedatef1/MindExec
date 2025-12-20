@@ -2,7 +2,7 @@ import { faCircleInfo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { scripts, spliter, tools } from "../../assets/Data";
+import { TOOLS_REGISTRY, SCRIPTS_REGISTRY, SPLITTERS_REGISTRY } from "../../assets/Data";
 import ArrowIcon from "../icons/ArrowIcon";
 import BooleanIcon from "../icons/BooleanIcon";
 import FileIcon from "../icons/FileIcon";
@@ -12,6 +12,10 @@ import StringIcon from "../icons/StringIcon";
 import ToolIcon from "../icons/ToolIcon";
 
 import "../../components/index.css";
+
+const TOOLS = Object.values(TOOLS_REGISTRY)
+const SCRIPTS = Object.values(SCRIPTS_REGISTRY)
+const SPLITTERS = Object.values(SPLITTERS_REGISTRY)
 
 const LeftFrame = () => {
   const [library, setLibrary] = useState(true);
@@ -27,7 +31,7 @@ const LeftFrame = () => {
   }, [searchWord]);
 
   const allTools = useMemo(() => {
-    const combined = [...scripts, ...spliter, ...tools];
+    const combined = [...SCRIPTS, ...SPLITTERS, TOOLS];
     
     const uniqueTools = combined.filter((tool, index, self) =>
       index === self.findIndex((t) => t.name === tool.name)
@@ -222,7 +226,7 @@ const LeftFrame = () => {
                     id="scripts"
                     className={`bg-black px-4 origin-top overflow-hidden`}>
                     <ul className="text-white">
-                      {scripts.map((tool) => (
+                      {SCRIPTS.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
@@ -260,7 +264,7 @@ const LeftFrame = () => {
                     transition={transition}
                     className={`bg-black px-6 origin-top overflow-hidden`}>
                     <ul className="text-white">
-                      {spliter.map((tool) => (
+                      {SPLITTERS.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
@@ -299,7 +303,7 @@ const LeftFrame = () => {
                     transition={transition}
                     className="bg-black px-6 origin-top overflow-hidden">
                     <ul className="text-white">
-                      {tools.map((tool) => (
+                      {TOOLS.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}

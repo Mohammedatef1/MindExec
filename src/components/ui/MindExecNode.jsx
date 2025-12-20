@@ -6,6 +6,8 @@ const MindExexNode = ({ isConnectable, data }) => {
 
   const ctx = useContext(AppContext);
 
+  console.log(data)
+
   const colorController = (parameterType) => {
     switch (parameterType) {
       case "string":
@@ -24,14 +26,14 @@ const MindExexNode = ({ isConnectable, data }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="absolute left-[-13px] flex flex-col items-center gap-3 justify-center min-h-full transform translate-y-[5px]">
-        {data.tool.parameters
-          .filter((e) => e.active)
-          .map((parameter) => (
+        {Object.entries(data.tool.inputs)
+          .filter(([key, input]) => input.active)
+          .map(([key, input]) => (
             <Handle
-              key={parameter.name}
+              key={key}
               data-testrender={ctx.test}
               type="target"
-              id={parameter.name}
+              id={key}
               className="transition-primary transition-curtain"
               position={Position.Left}
               style={{
@@ -41,16 +43,16 @@ const MindExexNode = ({ isConnectable, data }) => {
                 borderRadius: "999px",
                 borderStyle: "solid",
                 borderWidth: "2px",
-                borderColor: colorController(parameter.type),
+                borderColor: colorController(input.type),
                 background: "transparent",
               }}
               onConnect={(params) => {
                 console.log("handle onConnect", params);
-                console.log(parameter.name);
+                console.log(key);
               }}
               isConnectable={isConnectable}
               isConnectableStart={false}>
-              <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute right-[17px] top-[-8px]`}>{parameter.name}</p>
+              <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute right-[17px] top-[-8px]`}>{key}</p>
             </Handle>
           ))}
       </div>
