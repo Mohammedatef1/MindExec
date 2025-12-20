@@ -1,8 +1,7 @@
 import { faCircleInfo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useRef, useState } from "react";
-import AppContext from "../../AppContext";
+import { useRef, useState } from "react";
 import { scripts, spliter, tools } from "../../assets/Data";
 import ArrowIcon from "../icons/ArrowIcon";
 import BooleanIcon from "../icons/BooleanIcon";
@@ -17,8 +16,6 @@ import "../../components/index.css";
 const LeftFrame = () => {
   const [library, setLibrary] = useState(true);
   const [searchWord, setSearchWord] = useState("");
-
-  const ctx = useContext(AppContext);
 
   const onDragStart = (event, nodeType, label, tool) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
@@ -80,14 +77,14 @@ const LeftFrame = () => {
           onClick={() => {
             setLibrary(true);
           }}
-          className={`uppercase w-1/2 border-2 rounded-[4px]    border-black px-8 py-2 transition-primary ${library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
+          className={`uppercase w-1/2 border-2 rounded-[4px] border-black px-1 py-2 transition-primary ${library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
           library
         </button>
         <button
           onClick={() => {
             setLibrary(false);
           }}
-          className={`uppercase w-1/2 border-2 rounded-[4px]    border-black px-8 py-2 transition-primary ${!library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
+          className={`uppercase w-1/2 border-2 rounded-[4px]    border-black px-1 py-2 transition-primary ${!library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
           inputs
         </button>
       </div>

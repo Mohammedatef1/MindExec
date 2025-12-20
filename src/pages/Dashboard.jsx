@@ -8,7 +8,7 @@ import MindExecLogo from "../components/icons/MindExecLogo";
 import { createWorkflow, deleteWorkflow, getUserWorkflows } from "../components/Storage";
 import DeleteWorkflowModal from "../components/ui/DeleteWorkflowModal";
 import WorkflowNameModal from "../components/ui/WorkflowNameModal";
-import useActiveUser from "../hooks/useActiveUser";
+import useActiveUser from "../hooks/useActiveUser.js";
 import { formatRelativeTime } from "../lib/utils";
 
 const Dashboard = () => {

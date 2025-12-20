@@ -21,10 +21,10 @@ const Editor = () => {
   };
 
   return (
-    <main className="max-h-screen overflow-hidden">
+    <main className="h-screen max-h-screen flex flex-col overflow-hidden">
       <Nav />
       <section
-        className="w-full h-[calc(100vh-81px)] grid transition-all duration-500"
+        className="w-full flex-1 grid transition-all duration-500"
         style={{ gridTemplateColumns: getGridTemplateColumns() }}>
         <div className="relative min-w-0">
           <LeftFrame />
