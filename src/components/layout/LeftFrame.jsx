@@ -1,7 +1,7 @@
 import { faCircleInfo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { scripts, spliter, tools } from "../../assets/Data";
 import ArrowIcon from "../icons/ArrowIcon";
 import BooleanIcon from "../icons/BooleanIcon";
@@ -16,6 +16,36 @@ import "../../components/index.css";
 const LeftFrame = () => {
   const [library, setLibrary] = useState(true);
   const [searchWord, setSearchWord] = useState("");
+  const [debouncedSearchWord, setDebouncedSearchWord] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchWord(searchWord);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchWord]);
+
+  const allTools = useMemo(() => {
+    const combined = [...scripts, ...spliter, ...tools];
+    
+    const uniqueTools = combined.filter((tool, index, self) =>
+      index === self.findIndex((t) => t.name === tool.name)
+    );
+    return uniqueTools;
+  }, []);
+
+  const filteredTools = useMemo(() => {
+    if (!debouncedSearchWord.trim()) {
+      return [];
+    }
+    const searchTerm = debouncedSearchWord.toLowerCase().trim();
+    const searchResult = allTools.filter((tool) =>
+      tool.name.toLowerCase().includes(searchTerm)
+    )
+
+    return searchResult;
+  }, [allTools, debouncedSearchWord]);
 
   const onDragStart = (event, nodeType, label, tool) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
@@ -118,35 +148,36 @@ const LeftFrame = () => {
               />
             </div>
           </div>
-          {searchWord && (
+          {debouncedSearchWord.trim() && (
             <div
               id="search-options"
               className="max-h-[calc(100vh-280px)] scrollbar overflow-y-auto">
-              {scripts.concat(spliter, tools).filter((tool) => 
-                tool.name.toLowerCase().includes(searchWord.toLowerCase())
-              ).length === 0 && (
-                <div className="flex flex-col items-center justify-center py-12 px-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center mb-4">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} className="text-gray-500 text-xl" />
-                  </div>
-                  <p className="text-gray-400 text-sm font-medium">No results found</p>
-                  <p className="text-gray-500 text-xs mt-1">Try a different search term</p>
-                </div>
-              )}
-              <AnimatePresence>
-                <motion.div
-                  variants={menuVars}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={transition}
-                  id="scripts"
-                  className={`bg-black px-4 origin-top overflow-hidden`}>
-                  <ul className="text-white">
-                    {scripts
-                      .concat(spliter, tools)
-                      .filter((tool) => tool.name.toLowerCase().includes(searchWord.toLowerCase()))
-                      .map((tool) => (
+              <AnimatePresence mode="wait">
+                {filteredTools.length === 0 ? (
+                  <motion.div
+                    key="empty-state"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex flex-col items-center justify-center py-12 px-4">
+                    <div className="w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center mb-4">
+                      <FontAwesomeIcon icon={faMagnifyingGlass} className="text-gray-500 text-xl" />
+                    </div>
+                    <p className="text-gray-400 text-sm font-medium">No results found</p>
+                    <p className="text-gray-500 text-xs mt-1">Try a different search term</p>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="results"
+                    variants={menuVars}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={transition}
+                    className="bg-black px-4 origin-top overflow-hidden">
+                    <ul className="text-white">
+                      {filteredTools.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
@@ -162,12 +193,13 @@ const LeftFrame = () => {
                           />
                         </li>
                       ))}
-                  </ul>
-                </motion.div>
+                    </ul>
+                  </motion.div>
+                )}
               </AnimatePresence>
             </div>
           )}
-          {!searchWord && (
+          {!debouncedSearchWord.trim() && (
             <div
               id="options"
               className="max-h-[calc(100vh-280px)] scrollbar overflow-y-auto">
