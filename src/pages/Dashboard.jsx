@@ -1,4 +1,4 @@
-import { faPenToSquare, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faPlus, faRightFromBracket, faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -18,14 +18,17 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, workflowId: null, workflowName: "" });
+  const [signingOut, setSigningOut] = useState(false);
 
   const signOut = async () => {
     try {
+      setSigningOut(true);
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       navigate("/login", { replace: true });
     } catch (err) {
       console.log(err);
+      setSigningOut(false);
     }
   };
 
@@ -104,30 +107,54 @@ const Dashboard = () => {
         <div>
           <MindExecLogo />
         </div>
-        <div className="flex justify-center items-center gap-x-4 me-2 text-main ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none">
-            <path
-              d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
-              fill="black"
-            />
-            <circle
-              cx="17"
-              cy="4"
-              r="3"
-              fill="#7246A7"
-            />
-          </svg>
-          <p className="text-[18px]">{capitalize(user?.user.user_metadata.full_name)}</p>
-          <p className="p-[6px] me-2 leading-[110%] bg-[#060606] rounded-sm text-[20px]">{getInitials(user?.user.user_metadata.full_name)}</p>
+        <div className="flex justify-center items-center gap-3 me-4">
+          {/* Notification Icon */}
+          <button className="relative p-2 rounded-lg hover:bg-primary-light/10 transition-colors group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="text-gray-300 group-hover:text-white transition-colors">
+              <path
+                d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7246A7] rounded-full border-2 border-primary1"></span>
+          </button>
+
+          {/* User Profile Section */}
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg hover:bg-primary-light/10 transition-colors group">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#360077] to-[#7246A7] flex items-center justify-center text-white font-semibold text-sm shadow-lg">
+              {getInitials(user?.user?.user_metadata?.full_name)}
+            </div>
+            <div className="flex flex-col">
+              <p className="text-white text-sm font-medium leading-tight">{capitalize(user?.user?.user_metadata?.full_name)}</p>
+              <p className="text-gray-400 text-xs leading-tight">User</p>
+            </div>
+          </div>
+
+          {/* Sign Out Button */}
           <button
             onClick={signOut}
-            className="text-red-500">
-            Log out
+            disabled={signingOut}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 transition-all border border-red-600/20 hover:border-red-600/40 group ${
+              signingOut ? "opacity-60 cursor-not-allowed" : ""
+            }`}>
+            {signingOut ? (
+              <FontAwesomeIcon 
+                icon={faSpinner} 
+                className="text-sm animate-spin"
+              />
+            ) : (
+              <FontAwesomeIcon 
+                icon={faRightFromBracket} 
+                className="text-sm group-hover:translate-x-0.5 transition-transform"
+              />
+            )}
+            <span className="text-sm font-medium">Sign Out</span>
           </button>
         </div>
       </nav>

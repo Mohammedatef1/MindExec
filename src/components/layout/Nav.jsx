@@ -49,7 +49,7 @@ function Nav() {
                 fill="#0E0E0E"
               />
             </svg>
-            <p className="text-white font-bold text-md ms-2 me-4">Fuzz web app</p>{" "}
+            <p className="text-white font-bold text-md ms-2 me-4">{ctx.workflowMetadata?.name}</p>
           </div>
         </div>
         <div className="w-3/5 flex justify-center mt-auto">
