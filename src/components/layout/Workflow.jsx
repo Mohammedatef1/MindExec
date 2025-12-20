@@ -5,13 +5,14 @@ import "reactflow/dist/style.css";
 import AppContext from "../../AppContext";
 //import SideBar from "./SideBar";
 import { faFileArrowUp, faFloppyDisk, faPlay, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import toast from "react-hot-toast";
+import { useBlocker, useSearchParams } from "react-router-dom";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { loadMindMap, saveMindMap } from "../Storage";
+import UnsavedChangesModal from "../ui/UnsavedChangesModal";
+import WorkflowNameModal from "../ui/WorkflowNameModal";
 //import { debounce } from 'lodash';
-
-import { icon } from "@fortawesome/fontawesome-svg-core";
 import InputNode from "../ui/InputNode";
 import MindExecNode from "../ui/MindExecNode";
 import WorkflowButton from "../ui/WorkflowButton";
@@ -27,14 +28,24 @@ const onLoad = (reactFlowInstance) => {
 
 const MindNode = () => {
   const ctx = useContext(AppContext);
+  const [searchParams] = useSearchParams();
+  const workflowId = searchParams.get("workflow");
 
   const reactFlowWrapper = useRef(null);
+  const isConfirmingLeave = useRef(false);
 
   const [command, setCommand] = useState("");
   const [commandIsOpen, setCommandIsOpen] = useState(true);
   const [nodeType, setNodeType] = useState("");
   const [activeSec, setActiveSec] = useState("command");
   const [loadingStart, setLoadingStart] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [currentWorkflowId, setCurrentWorkflowId] = useState(workflowId);
+  const [workflowName, setWorkflowName] = useState("Untitled Workflow");
+  const [isNameModalOpen, setIsNameModalOpen] = useState(false);
+  const [savedNodes, setSavedNodes] = useState([]);
+  const [savedEdges, setSavedEdges] = useState([]);
+  const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
   const isValidConnection = useCallback(
     (connection) => {
@@ -79,16 +90,155 @@ const MindNode = () => {
     [ctx.setEdges, ctx, ctx.reactFlowInstance]
   );
 
+  useEffect(() => {
+    const loadWorkflow = async () => {
+      if (workflowId) {
+        const loadedData = await loadMindMap(workflowId);
+        if (loadedData) {
+          ctx.setNodes(loadedData.nodes);
+          ctx.setEdges(loadedData.edges);
+          setSavedNodes(loadedData.nodes);
+          setSavedEdges(loadedData.edges);
+          setCurrentWorkflowId(workflowId);
+          // Set workflow name and metadata if available
+          if (loadedData.workflowInfo) {
+            setWorkflowName(loadedData.workflowInfo.name);
+            // Store workflow metadata in context for RightFrame
+            ctx.setWorkflowMetadata(loadedData.workflowInfo);
+          }
+        }
+      } else {
+        // Reset if no workflow ID in URL
+        setCurrentWorkflowId(null);
+        setWorkflowName("Untitled Workflow");
+        setSavedNodes([]);
+        setSavedEdges([]);
+        ctx.setWorkflowMetadata(null);
+      }
+    };
+    loadWorkflow();
+  }, [workflowId]);
+
+  // Check for unsaved changes
+  const hasUnsavedChanges = useCallback(() => {
+    const nodesChanged = JSON.stringify(ctx.nodes) !== JSON.stringify(savedNodes);
+    const edgesChanged = JSON.stringify(ctx.edges) !== JSON.stringify(savedEdges);
+    return nodesChanged || edgesChanged;
+  }, [ctx.nodes, ctx.edges, savedNodes, savedEdges]);
+
+  // Handle browser beforeunload
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = "";
+        return "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [hasUnsavedChanges]);
+
+  // Block navigation if there are unsaved changes
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => {
+      // Don't block if user confirmed leaving
+      if (isConfirmingLeave.current) {
+        return false;
+      }
+      const hasChanges = JSON.stringify(ctx.nodes) !== JSON.stringify(savedNodes) ||
+                        JSON.stringify(ctx.edges) !== JSON.stringify(savedEdges);
+      return hasChanges && currentLocation.pathname !== nextLocation.pathname;
+    }
+  );
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      setShowUnsavedModal(true);
+    }
+  }, [blocker]);
+
   const handleSaveClick = () => {
-    saveMindMap(ctx.nodes, ctx.edges);
-    console.log(ctx.nodes);
+    // If we have a workflow ID, always update it (don't prompt for name)
+    if (currentWorkflowId) {
+      handleSaveWorkflow(workflowName, currentWorkflowId);
+    } else {
+      // New workflow - show modal for name
+      setIsNameModalOpen(true);
+    }
   };
-  const handleLoadClick = () => {
-    const loadedData = loadMindMap();
-    if (loadedData) {
-      ctx.setNodes(loadedData.nodes);
-      ctx.setEdges(loadedData.edges);
-      console.log(loadedData);
+
+  const handleSaveWorkflow = async (name, id = null) => {
+    try {
+      setIsSaving(true);
+      const saved = await saveMindMap(ctx.nodes, ctx.edges, name || "Untitled Workflow", id);
+      setCurrentWorkflowId(saved.id);
+      setWorkflowName(saved.name);
+      setSavedNodes(ctx.nodes);
+      setSavedEdges(ctx.edges);
+      
+      // Update workflow metadata in context
+      ctx.setWorkflowMetadata({
+        id: saved.id,
+        name: saved.name,
+        created_at: saved.created_at,
+        updated_at: saved.updated_at
+      });
+      
+      // Update URL to include the workflow ID if it's a new workflow
+      if (!id) {
+        window.history.replaceState({}, "", `/editor?workflow=${saved.id}`);
+      }
+      
+      toast.success("Workflow saved successfully!");
+      setIsNameModalOpen(false);
+    } catch (error) {
+      console.error("Error saving workflow:", error);
+      toast.error("Failed to save workflow: " + error.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleUnsavedConfirm = () => {
+    // Set flag to prevent re-blocking
+    isConfirmingLeave.current = true;
+    
+    // Update saved state to current state
+    setSavedNodes([...ctx.nodes]);
+    setSavedEdges([...ctx.edges]);
+    setShowUnsavedModal(false);
+    
+    // Proceed with the blocked navigation
+    if (blocker.state === "blocked" && blocker.proceed) {
+      blocker.proceed();
+    }
+    
+    // Reset flag after a short delay
+    setTimeout(() => {
+      isConfirmingLeave.current = false;
+    }, 100);
+  };
+
+  const handleUnsavedCancel = () => {
+    setShowUnsavedModal(false);
+    blocker.reset();
+  };
+  
+  const handleLoadClick = async () => {
+    const workflowIdToLoad = window.prompt("Enter workflow ID to load:");
+    if (workflowIdToLoad) {
+      const loadedData = await loadMindMap(workflowIdToLoad);
+      if (loadedData) {
+        ctx.setNodes(loadedData.nodes);
+        ctx.setEdges(loadedData.edges);
+        setCurrentWorkflowId(workflowIdToLoad);
+      } else {
+        alert("Workflow not found");
+      }
     }
   };
 
@@ -1686,6 +1836,8 @@ const MindNode = () => {
                   onClick={handleSaveClick}
                   icon={faFloppyDisk}
                   label={"Save"}
+                  disabled={isSaving || !hasUnsavedChanges()}
+                  className={isSaving || !hasUnsavedChanges() ? "opacity-50 cursor-not-allowed" : ""}
                 />
                 <WorkflowButton
                   onClick={handleLoadClick}
@@ -1832,6 +1984,17 @@ const MindNode = () => {
           Refresh
         </button>
       </div>
+      <WorkflowNameModal
+        isOpen={isNameModalOpen}
+        onClose={() => setIsNameModalOpen(false)}
+        onSubmit={(name) => handleSaveWorkflow(name, null)}
+        title="Save New Workflow"
+      />
+      <UnsavedChangesModal
+        isOpen={showUnsavedModal}
+        onClose={handleUnsavedCancel}
+        onConfirm={handleUnsavedConfirm}
+      />
     </div>
   );
 };
