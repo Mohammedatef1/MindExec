@@ -1,4 +1,4 @@
-import { faBell, faX } from "@fortawesome/free-solid-svg-icons";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ function Nav() {
   return (
     <header className="border-b border-primary-light w-full">
       <nav className="flex items-center text-white-400 bg-primary1">
-        <div className="w-1/5 p-4 flex items-center justify-around">
+        <div className="flex-1 p-4 gap-4 flex items-center ">
           <Link to="/">
             <MindExecLogo />
           </Link>
@@ -52,7 +52,7 @@ function Nav() {
             <p className="text-white font-bold text-md ms-2 me-4">{ctx.workflowMetadata?.name}</p>
           </div>
         </div>
-        <div className="w-3/5 flex justify-center mt-auto">
+        <div className="flex justify-center mt-auto">
           <button
             onClick={() => {
               ctx.setBuilder(true);
@@ -77,11 +77,22 @@ function Nav() {
             )}
           </button>
         </div>
-        <div className="w-1/5 p-4 flex items-center justify-end gap-6">
-          <FontAwesomeIcon
-            className=""
-            icon={faBell}
-          />
+        <div className="flex-1 p-4 flex items-center justify-end gap-6">
+          <button className="relative p-2 rounded-lg hover:bg-primary-light/10 transition-colors group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="text-gray-300 group-hover:text-white transition-colors">
+              <path
+                d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7246A7] rounded-full border-2 border-primary1"></span>
+          </button>
           <Link to="/dashboard">
             <FontAwesomeIcon
               className="me-6 bg-black rounded-sm p-[4px] w-4 h-4"
