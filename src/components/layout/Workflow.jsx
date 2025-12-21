@@ -251,12 +251,12 @@ const MindNode = () => {
 
       if (elements) {
         if (elements.edges[0] != null) {
-          ctx.setSelectedEdge(elements.edges[0]);
+          ctx.setSelectedEdgeId(elements.edges[0].id);
         } else {
-          ctx.setSelectedEdge(null);
+          ctx.setSelectedEdgeId(null);
         }
         if (elements.nodes[0] != null) {
-          ctx.setSelectedNode(elements.nodes[0]);
+          ctx.setSelectedNodeId(elements.nodes[0].id);
           setNodeType(elements.nodes[0].type);
 
           if (elements.nodes[0].data.tool.command) {
@@ -281,7 +281,7 @@ const MindNode = () => {
           }
         } else {
           setCommand("");
-          ctx.setSelectedNode(null);
+          ctx.setSelectedNodeId(null);
           setNodeType("");
           clearTimeout(commandTimerRef.current);
         }
@@ -348,7 +348,7 @@ const MindNode = () => {
         ctx.setEdges((edges) => edges.filter((edge) => edge.source !== nodeIdToRemove && edge.target !== nodeIdToRemove));
 
         // Clear the selected node
-        ctx.setSelectedNode(null);
+        ctx.setSelectedNodeId(null);
       }
       if (event.keyCode === 46 && ctx.selectedEdge) {
         const edgeIdToRemove = ctx.selectedEdge.id;
@@ -356,7 +356,7 @@ const MindNode = () => {
         ctx.setEdges((edges) => edges.filter((edge) => edge.id !== edgeIdToRemove));
 
         // Clear the selected edge
-        ctx.setSelectedEdge(null);
+        ctx.setSelectedEdgeId(null);
       }
     },
     [ctx]

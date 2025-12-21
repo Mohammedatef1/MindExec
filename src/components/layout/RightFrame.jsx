@@ -439,7 +439,7 @@ const RightFrame = () => {
                                   className="sr-only"
                                   checked={input.active}
                                   onChange={() => {
-                                    toggle(key);
+                                    toggleInput(key);
                                   }}
                                 />
                                 <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${input.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>

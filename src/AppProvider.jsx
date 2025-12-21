@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEdgesState, useNodesState } from "reactflow";
 import AppContext from "./AppContext";
 import MindExecNode from "./components/ui/MindExecNode";
+import { useMemo } from "react";
 
 const initialNodes = [];
 const initialEdges = [];
@@ -16,8 +17,23 @@ const AppProvider = ({ children }) => {
   const [showLeft, setShowLeft] = useState(true);
   const [showRight, setShowRight] = useState(true);
 
-  const [selectedNode, setSelectedNode] = useState(null);
-  const [selectedEdge, setSelectedEdge] = useState(null);
+  const [selectedNodeId, setSelectedNodeId] = useState(null);
+
+  const selectedNode = useMemo(() => {
+    const selectedNode = nodes.find((node) => node.id === selectedNodeId)
+
+    return selectedNode
+  }, [selectedNodeId, nodes])
+
+
+  const [selectedEdgeId, setSelectedEdgeId] = useState(null);
+
+  const selectedEdge = useMemo(() => {
+    const edge = edges.find((edge) => edge.id === selectedEdgeId)
+
+    return edge
+  }, [selectedEdgeId, edges])
+
   const [reactFlowInstance, setReactFlowInstance, onInstanceChange] = useState(null);
   const [builder, setBuilder] = useState(true);
   const [runStart, setRunStart] = useState(false);
@@ -81,7 +97,7 @@ const AppProvider = ({ children }) => {
       });
   }
 
-  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode, setSelectedNode, reactFlowInstance, setReactFlowInstance, onInstanceChange, test, setTest, selectedEdge, setSelectedEdge, generateCommands, builder, setBuilder, runStart, setRunStart, showLeft, showRight, setShowLeft, setShowRight, runEnd, setRunEnd, workflowMetadata, setWorkflowMetadata }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ value, setValue, addNode, nodes, edges, setEdges, setNodes, onEdgesChange, onNodesChange, selectedNode, selectedNodeId, setSelectedNodeId, reactFlowInstance, setReactFlowInstance, onInstanceChange, test, setTest, selectedEdge, selectedEdgeId, setSelectedEdgeId, generateCommands, builder, setBuilder, runStart, setRunStart, showLeft, showRight, setShowLeft, setShowRight, runEnd, setRunEnd, workflowMetadata, setWorkflowMetadata }}>{children}</AppContext.Provider>;
 };
 
 export default AppProvider;
