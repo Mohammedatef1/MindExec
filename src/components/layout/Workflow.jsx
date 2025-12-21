@@ -75,18 +75,13 @@ const MindNode = () => {
     const { source, sourceHandle, target, targetHandle } = params;
 
     ctx.setNodes((nodes) => nodes.map((node) => {
-        // only mutate the target node
+
         if (node.id !== target) return node;
 
-        // find source node
         const sourceNode = nodes.find((n) => n.id === source);
         if (!sourceNode) return node;
 
-        // extract value from source output
-        const sourceValue =
-          sourceNode.data?.tool?.outputs?.[sourceHandle]?.value ??
-          sourceNode.data?.inputs?.[sourceHandle]?.value ??
-          sourceNode.data?.value;
+        const sourceValue = sourceNode.data?.tool?.outputs?.[sourceHandle]?.value
 
         if (sourceValue === undefined) return node;
 
@@ -94,18 +89,21 @@ const MindNode = () => {
           ...node,
           data: {
             ...node.data,
-            inputs: {
-              ...node.data.inputs,
-              [targetHandle]: {
-                ...node.data.inputs[targetHandle],
-                value: sourceValue,
-                connected: true,
-                source: {
-                  nodeId: source,
-                  handle: sourceHandle,
+            tool: {
+              ...node.data.tool,
+              inputs: {
+                ...node.data.tool.inputs,
+                [targetHandle]: {
+                  ...node.data.tool.inputs[targetHandle],
+                  value: sourceValue,
+                  connected: true,
+                  source: {
+                    nodeId: source,
+                    handle: sourceHandle,
+                  },
                 },
               },
-            },
+            }
           },
         };
       })
@@ -351,28 +349,86 @@ const MindNode = () => {
     console.log(params.target);
   }, []);
 
+  const removeInputBindingFromEdge = (edge, nodes) => {
+    const { target, targetHandle } = edge;
+
+    return nodes.map((node) => {
+      if (node.id !== target) return node;
+
+      const input = node.data?.tool.inputs?.[targetHandle];
+      if (!input) return node;
+
+      console.log("excuted")
+
+      return {
+        ...node,
+        data: {
+          ...node.data,
+          tool: {
+            ...node.data.tool,
+            inputs: {
+              ...node.data.tool.inputs,
+              [targetHandle]: {
+                ...input,
+                source: undefined,
+                value: undefined,
+                connected: false
+              },
+            },
+          }
+        },
+      };
+    });
+  }
+
+
   const handleKeyDown = useCallback(
     (event) => {
       // Check if the pressed key is the Del key (key code 46)
+      if (event.keyCode === 46 && ctx.selectedEdge) {
+        const edgeToRemove = ctx.selectedEdge;
+
+        ctx.setNodes((nodes) =>
+          removeInputBindingFromEdge(edgeToRemove, nodes)
+        );
+
+        ctx.setEdges((edges) =>
+          edges.filter((edge) => edge.id !== edgeToRemove.id)
+        );
+
+        ctx.setSelectedEdgeId(null);
+      }
+
       if (event.keyCode === 46 && ctx.selectedNode) {
         const nodeIdToRemove = ctx.selectedNode.id;
 
-        // Remove the selected node from the nodes array
-        ctx.setNodes((nodes) => nodes.filter((node) => node.id !== nodeIdToRemove));
+        ctx.setNodes((nodes) => {
+          // get edges connected to this node
+          const connectedEdges = ctx.edges.filter(
+            (edge) =>
+              edge.source === nodeIdToRemove ||
+              edge.target === nodeIdToRemove
+          );
 
-        // You may also want to remove related edges if needed
-        ctx.setEdges((edges) => edges.filter((edge) => edge.source !== nodeIdToRemove && edge.target !== nodeIdToRemove));
+          // clean all bindings caused by these edges
+          let updatedNodes = nodes;
+          connectedEdges.forEach((edge) => {
+            updatedNodes = removeInputBindingFromEdge(edge, updatedNodes);
+          });
 
-        // Clear the selected node
+          // finally remove the node itself
+          return updatedNodes.filter((node) => node.id !== nodeIdToRemove);
+        });
+
+        ctx.setEdges((edges) =>
+          edges.filter(
+            (edge) =>
+              edge.source !== nodeIdToRemove &&
+              edge.target !== nodeIdToRemove
+          )
+        );
+
         ctx.setSelectedNodeId(null);
-      }
-      if (event.keyCode === 46 && ctx.selectedEdge) {
-        const edgeIdToRemove = ctx.selectedEdge.id;
-
-        ctx.setEdges((edges) => edges.filter((edge) => edge.id !== edgeIdToRemove));
-
-        // Clear the selected edge
-        ctx.setSelectedEdgeId(null);
       }
     },
     [ctx]
