@@ -31,7 +31,7 @@ const LeftFrame = () => {
   }, [searchWord]);
 
   const allTools = useMemo(() => {
-    const combined = [...SCRIPTS, ...SPLITTERS, TOOLS];
+    const combined = [...SCRIPTS, ...SPLITTERS, ...TOOLS];
     
     const uniqueTools = combined.filter((tool, index, self) =>
       index === self.findIndex((t) => t.name === tool.name)
