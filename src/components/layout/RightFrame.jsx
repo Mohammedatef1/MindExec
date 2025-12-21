@@ -19,12 +19,21 @@ const RightFrame = () => {
   useEffect(() => {
     if (ctx.selectedNode) {
       if (ctx.selectedNode.type === "inputNode") {
-        if (ctx.selectedNode.data.tool.type === "boolean") {
-          setIsChecked(ctx.selectedNode.data.label === "true" ? true : false);
+        const nodeType = ctx.selectedNode.data.tool.type;
+        if (nodeType === "boolean") {
+          const boolValue = ctx.selectedNode.data.tool.outputs?.[nodeType]?.value ?? 
+                           (ctx.selectedNode.data.label === "true");
+          setIsChecked(boolValue);
         } else {
-          setInput(ctx.selectedNode.data.label);
+          const stringValue = ctx.selectedNode.data.tool.outputs?.[nodeType]?.value ?? 
+                             ctx.selectedNode.data.label ?? "";
+          setInput(stringValue);
         }
       }
+    } else {
+      // Reset when no node selected
+      setInput("");
+      setIsChecked(false);
     }
   }, [ctx.selectedNode]);
 
@@ -81,68 +90,74 @@ const RightFrame = () => {
   const transition = {
     ease: [0.12, 0, 0.39, 0],
   };
- const onStringChange = useCallback(
+  
+  const onStringChange = useCallback(
     (e) => {
       const value = e.target.value;
       const nodeId = ctx.selectedNode.id;
+      const nodeType = ctx.selectedNode.data.tool.type;
 
       setInput(value);
 
+      const outgoingEdges = ctx.edges.filter(
+        (e) => e.source === nodeId
+      );
+
       ctx.setNodes((nodes) =>
         nodes.map((node) => {
-          if (node.id !== nodeId) return node;
-
+          // 1. Update the input node itself
+          if (node.id === nodeId) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                label: value,
+                value,
+                tool: {
+                  ...node.data.tool,
+                  outputs: {
+                    ...node.data.tool.outputs,
+                    [nodeType]: {
+                      type: nodeType,
+                      value
+                    }
+                  }
+                }
+              }
+            };
+          }
+      
+          // 2. Update connected target nodes
+          const edge = outgoingEdges.find(
+            (e) => e.target === node.id
+          );
+      
+          if (!edge) return node;
+      
+          const inputKey = edge.targetHandle;
+          const inputDef = node.data.tool.inputs?.[inputKey];
+      
+          if (!inputDef || !inputDef.active) return node;
+      
           return {
             ...node,
             data: {
               ...node.data,
-              label: value,
               tool: {
                 ...node.data.tool,
                 inputs: {
                   ...node.data.tool.inputs,
-                  value: value,
-                },
-              },
-            },
+                  [inputKey]: {
+                    ...inputDef,
+                    value
+                  }
+                }
+              }
+            }
           };
         })
       );
-
-      ctx.setNodes((nodes) =>
-        nodes.map((node) => {
-          const incomingEdges = ctx.edges.filter(
-            (edge) =>
-              edge.source === nodeId &&
-              edge.target === node.id
-          );
-
-          if (incomingEdges.length === 0) return node;
-
-          const updatedInputs = { ...node.data.tool.inputs };
-
-          incomingEdges.forEach((edge) => {
-            const targetInput = updatedInputs[edge.targetHandle];
-            if (!targetInput || !targetInput.active) return;
-
-            updatedInputs[edge.targetHandle] = {
-              ...targetInput,
-              value,
-            };
-          });
-
-          return {
-            ...node,
-            data: {
-              ...node.data,
-              tool: {
-                ...node.data.tool,
-                inputs: updatedInputs,
-              },
-            },
-          };
-        })
-      );
+      
     },
     [ctx]
   );
@@ -151,64 +166,70 @@ const RightFrame = () => {
   const handleCheckboxChange = useCallback(() => {
     const value = !isChecked;
     const nodeId = ctx.selectedNode.id;
+    const nodeType = ctx.selectedNode.data.tool.type;
+    const stringValue = value ? "true" : "false";
 
     setIsChecked(value);
 
+    const outgoingEdges = ctx.edges.filter(
+      (e) => e.source === nodeId
+    );
+
     ctx.setNodes((nodes) =>
       nodes.map((node) => {
-        if (node.id !== nodeId) return node;
-
+        // 1. Update the input node itself
+        if (node.id === nodeId) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              label: stringValue,
+              value,
+              tool: {
+                ...node.data.tool,
+                outputs: {
+                  ...node.data.tool.outputs,
+                  [nodeType]: {
+                    type: nodeType,
+                    value
+                  }
+                }
+              }
+            }
+          };
+        }
+    
+        // 2. Update connected target nodes
+        const edge = outgoingEdges.find(
+          (e) => e.target === node.id
+        );
+    
+        if (!edge) return node;
+    
+        const inputKey = edge.targetHandle;
+        const inputDef = node.data.tool.inputs?.[inputKey];
+    
+        if (!inputDef || !inputDef.active) return node;
+    
         return {
           ...node,
           data: {
             ...node.data,
-            label: value ? "true" : "false",
             tool: {
               ...node.data.tool,
               inputs: {
                 ...node.data.tool.inputs,
-                value: value,
-              },
-            },
-          },
+                [inputKey]: {
+                  ...inputDef,
+                  value
+                }
+              }
+            }
+          }
         };
       })
     );
-
-    ctx.setNodes((nodes) =>
-      nodes.map((node) => {
-        const incomingEdges = ctx.edges.filter(
-          (edge) =>
-            edge.source === nodeId &&
-            edge.target === node.id
-        );
-
-        if (incomingEdges.length === 0) return node;
-
-        const updatedInputs = { ...node.data.tool.inputs };
-
-        incomingEdges.forEach((edge) => {
-          const targetInput = updatedInputs[edge.targetHandle];
-          if (!targetInput || !targetInput.active) return;
-
-          updatedInputs[edge.targetHandle] = {
-            ...targetInput,
-            value,
-          };
-        });
-
-        return {
-          ...node,
-          data: {
-            ...node.data,
-            tool: {
-              ...node.data.tool,
-              inputs: updatedInputs,
-            },
-          },
-        };
-      })
-    );
+    
   }, [ctx, isChecked]);
 
 
@@ -261,7 +282,7 @@ const RightFrame = () => {
                       onChange={handleCheckboxChange}
                     />
                     <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${isChecked ? "bg-primary" : "bg-[#CCCCCE]"}`}>
-                      <span className={`dot h-18px] w-[18px] rounded-full duration-200 ${isChecked ? "translate-x-6" : ""} ${isChecked ? "bg-blue-500" : "bg-white"}`}></span>
+                      <span className={`dot h-[18px] w-[18px] rounded-full duration-200 ${isChecked ? "translate-x-6" : ""} ${isChecked ? "bg-blue-500" : "bg-white"}`}></span>
                     </span>
                   </label>
                 </div>
