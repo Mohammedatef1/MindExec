@@ -11,46 +11,44 @@
         "label": "gau",
         "tool": {
           "name": "gau-1",
-          "label": "gau",
+          "type": "tool",
           "category": "",
-          "baseCommand": "print_input http://testphp.vulnweb.com/ | gau --threads 10 --blacklist ttf,woff,svg,png,jpg,gif | tee out/gau-1/output.txt",
-          "inputs": {
-            "blacklist": {
-              "type": "string",
-              "active": true,
-              "flag": "-ack"
-            },
-            "target": {
-              "type": "string",
-              "active": true,
-              "flag": "-acs"
-            },
-            "threads": {
-              "type": "string",
-              "active": true,
-              "flag": "-ac"
-            }
+          "finalCommand": "print_input http://testphp.vulnweb.com/ | gau --threads 10 --blacklist ttf,woff,svg,png,jpg,gif | tee out/gau-1/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
+            "-ack": "ttf,woff,svg,png,jpg,gif",
+            "-acs": "http://testphp.vulnweb.com/",
+            "-ac": "10"
           },
-          "outputs": {
-            "file": {
-              "type": "file",
+          "parameters": [
+            {
+              "name": "blacklist",
+              "type": "string",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "target",
+              "type": "string",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "threads",
+              "type": "string",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
-              "-ack": "ttf,woff,svg,png,jpg,gif",
-              "-acs": "http://testphp.vulnweb.com/",
-              "-ac": "10"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -73,15 +71,13 @@
         "label": "http://testphp.vulnweb.com/",
         "tool": {
           "name": "string-input-1",
-          "label": "string-input",
-          "category": "",
           "type": "string",
-          "outputs": {
-            "string": {
-              "type": "string",
-              "value": "http://testphp.vulnweb.com/"
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -104,15 +100,13 @@
         "label": "10",
         "tool": {
           "name": "string-input-2",
-          "label": "string-input",
-          "category": "",
           "type": "string",
-          "outputs": {
-            "string": {
-              "type": "string",
-              "value": "10"
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -135,15 +129,13 @@
         "label": "ttf,woff,svg,png,jpg,gif",
         "tool": {
           "name": "string-input-3",
-          "label": "string-input",
-          "category": "",
           "type": "string",
-          "outputs": {
-            "string": {
-              "type": "string",
-              "value": "ttf,woff,svg,png,jpg,gif"
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -166,15 +158,13 @@
         "label": "fqdn",
         "tool": {
           "name": "string-input-4",
-          "label": "string-input",
-          "category": "",
           "type": "string",
-          "outputs": {
-            "string": {
-              "type": "string",
-              "value": "fqdn"
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -197,15 +187,13 @@
         "label": "20",
         "tool": {
           "name": "string-input-5",
-          "label": "string-input",
-          "category": "",
           "type": "string",
-          "outputs": {
-            "string": {
-              "type": "string",
-              "value": "20"
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -224,15 +212,13 @@
         "label": "true",
         "tool": {
           "name": "boolean-input-1",
-          "label": "boolean-input",
-          "category": "",
           "type": "boolean",
-          "outputs": {
-            "boolean": {
-              "type": "boolean",
-              "value": "true"
+          "parameters": [
+            {
+              "name": "boolean",
+              "type": "boolean"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -249,38 +235,34 @@
         "label": "generate-line-patches",
         "tool": {
           "name": "generate-line-patches-1",
-          "label": "generate-line-patches",
+          "type": "tool",
           "category": "",
-          "baseCommand": "BATCH_SIZE=200\n\n    find in -type f -exec cat {} + > /tmp/merged.txt\n    FILE_SIZE=$(wc /tmp/merged.txt | awk '{print $1}')\n    for ((i=1;i<=FILE_SIZE;i+=BATCH_SIZE))\n    do\n       echo $i,$(($i+$BATCH_SIZE))\n    done | tee out/output.txt",
-          "inputs": {
-            "file": {
-              "type": "file",
-              "active": true,
-              "flag": "-ack"
-            },
-            "folder": {
-              "type": "folder",
-              "active": true,
-              "flag": "-acs"
-            }
+          "finalCommand": "BATCH_SIZE=200\n\n    find in -type f -exec cat {} + > /tmp/merged.txt\n    FILE_SIZE=$(wc /tmp/merged.txt | awk '{print $1}')\n    for ((i=1;i<=FILE_SIZE;i+=BATCH_SIZE))\n    do\n       echo $i,$(($i+$BATCH_SIZE))\n    done | tee out/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "outputs": {
-            "file": {
+          "parameters": [
+            {
+              "name": "file",
               "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "folder",
+              "type": "folder",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -303,53 +285,55 @@
         "label": "katana",
         "tool": {
           "name": "katana-1",
-          "label": "katana",
+          "type": "tool",
           "category": "",
-          "baseCommand": "katana -no-color -system-chrome -u http://testphp.vulnweb.com/ -headless -concurrency 20  -field-scope fqdn -extension-filter ttf,woff,svg,png,jpg,gif -output out/katana-1/output.txt",
-          "inputs": {
-            "concurrency": {
-              "type": "string",
-              "active": true,
-              "flag": "-ack"
-            },
-            "extintion-filter": {
-              "type": "string",
-              "active": true,
-              "flag": "-acs"
-            },
-            "field-scope": {
-              "type": "string",
-              "active": true,
-              "flag": "-ac"
-            },
-            "url": {
-              "type": "string",
-              "active": true,
-              "flag": "-ac"
-            },
-            "headless": {
-              "type": "boolean",
-              "active": true,
-              "flag": "-ac"
-            }
+          "finalCommand": "katana -no-color -system-chrome -u http://testphp.vulnweb.com/ -headless -concurrency 20  -field-scope fqdn -extension-filter ttf,woff,svg,png,jpg,gif -output out/katana-1/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "outputs": {
-            "file": {
-              "type": "file",
+          "parameters": [
+            {
+              "name": "concurrency",
+              "type": "string",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "extintion-filter",
+              "type": "string",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "field-scope",
+              "type": "string",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "url",
+              "type": "string",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "headless",
+              "type": "boolean",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -372,38 +356,34 @@
         "label": "sort-uniq",
         "tool": {
           "name": "sort-uniq-1",
-          "label": "sort-uniq",
+          "type": "tool",
           "category": "",
-          "baseCommand": "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
-          "inputs": {
-            "file": {
-              "type": "file",
-              "active": true,
-              "flag": "-ack"
-            },
-            "folder": {
-              "type": "folder",
-              "active": true,
-              "flag": "-acs"
-            }
+          "finalCommand": "find in -type f -exec cat {} +  | sort -n | uniq | tee out/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "outputs": {
-            "file": {
+          "parameters": [
+            {
+              "name": "file",
               "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "folder",
+              "type": "folder",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -420,43 +400,41 @@
         "label": "urldedupe",
         "tool": {
           "name": "urldedupe-1",
-          "label": "urldedupe",
+          "type": "tool",
           "category": "",
-          "baseCommand": "./urldedupe -u in/sort-uniq-1/output.txt -qs -s | tee out/urldedupe-1/output.txt",
-          "inputs": {
-            "query-string-only": {
-              "type": "boolean",
-              "active": true,
-              "flag": "-ack"
-            },
-            "remove-similar-urls": {
-              "type": "boolean",
-              "active": true,
-              "flag": "-acs"
-            },
-            "urls-files": {
-              "type": "file",
-              "active": true,
-              "flag": "-ac"
-            }
+          "finalCommand": "./urldedupe -u in/sort-uniq-1/output.txt -qs -s | tee out/urldedupe-1/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "outputs": {
-            "file": {
+          "parameters": [
+            {
+              "name": "query-string-only",
+              "type": "boolean",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "remove-similar-urls",
+              "type": "boolean",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "urls-files",
               "type": "file",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -479,15 +457,13 @@
         "label": "true",
         "tool": {
           "name": "boolean-input-2",
-          "label": "boolean-input",
-          "category": "",
           "type": "boolean",
-          "outputs": {
-            "boolean": {
-              "type": "boolean",
-              "value": "true"
+          "parameters": [
+            {
+              "name": "boolean",
+              "type": "boolean"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -510,33 +486,27 @@
         "label": "file-spliter",
         "tool": {
           "name": "file-spliter-1",
-          "label": "file-spliter",
+          "type": "tool",
           "category": "",
-          "baseCommand": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt",
-          "inputs": {
-            "multiple": {
-              "type": "file",
-              "active": true,
-              "flag": "-ack"
-            }
+          "finalCommand": "",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "outputs": {
-            "file": {
+          "parameters": [
+            {
+              "name": "multiple",
               "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -559,32 +529,34 @@
         "label": "batch-output",
         "tool": {
           "name": "batch-output-1",
-          "label": "batch-output",
+          "type": "tool",
           "category": "",
-          "baseCommand": "find in -type f -exec cat {} + | sed -n in/file-splitter-1:itemp | tee out/batch-output-1/item/output.txt",
-          "inputs": {
-            "batch": {
-              "type": "file",
-              "active": true,
-              "flag": "-ack"
-            },
-            "file": {
-              "type": "file",
-              "active": true,
-              "flag": "-acs"
-            }
+          "finalCommand": "find in -type f -exec cat {} + | sed -n in/file-splitter-1:itemp | tee out/batch-output-1/item/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          "parameters": [
+            {
+              "name": "batch",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
             },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+            {
+              "name": "file",
+              "type": "file",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            }
+          ]
         }
       },
       "width": 80,
@@ -607,63 +579,69 @@
         "label": "nuclei",
         "tool": {
           "name": "nuclei-1",
-          "label": "nuclei",
+          "type": "tool",
           "category": "",
-          "baseCommand": "nuclei -no-color -stats -templates in/git-input-1/ -list in/batch-output-1/batch-output-1:item/output.txt -scan-all-ips -follow-redirects -concurrency 50 -output out/nuclei-2/item/output.txt",
-          "inputs": {
-            "parallel-templates-execution": {
-              "type": "string",
-              "active": true,
-              "flag": "-ack"
-            },
-            "target": {
-              "type": "string",
-              "active": true,
-              "flag": "-acs"
-            },
-            "follow-redirects": {
-              "type": "boolean",
-              "active": true,
-              "flag": "-ac"
-            },
-            "scan-all-ips": {
-              "type": "boolean",
-              "active": true,
-              "flag": "-ack"
-            },
-            "stat": {
-              "type": "boolean",
-              "active": true,
-              "flag": "-acs"
-            },
-            "tempelates": {
-              "type": "folder",
-              "active": true,
-              "flag": "-ac"
-            },
-            "urls-list": {
-              "type": "file",
-              "active": true,
-              "flag": "-ac"
-            }
+          "finalCommand": "nuclei -no-color -stats -templates in/git-input-1/ -list in/batch-output-1/batch-output-1:item/output.txt -scan-all-ips -follow-redirects -concurrency 50 -output out/nuclei-2/item/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "outputs": {
-            "folder": {
+          "parameters": [
+            {
+              "name": "parallel-templates-execution",
+              "type": "string",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "target",
+              "type": "string",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "follow-redirects",
+              "type": "boolean",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "scan-all-ips",
+              "type": "boolean",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
+            },
+            {
+              "name": "stat",
+              "type": "boolean",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            },
+            {
+              "name": "tempelates",
               "type": "folder",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
+              "active": true
+            },
+            {
+              "name": "urls-list",
+              "type": "file",
+              "command": "-ac",
+              "description": " Automatically calibrate filtering options (default: false)",
               "active": true
             }
-          },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
-            },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+          ]
         }
       },
       "width": 80,
@@ -686,15 +664,13 @@
         "label": "50",
         "tool": {
           "name": "string-input-6",
-          "label": "string-input",
-          "category": "",
           "type": "string",
-          "outputs": {
-            "string": {
-              "type": "string",
-              "value": "50"
+          "parameters": [
+            {
+              "name": "string",
+              "type": "string"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -717,15 +693,13 @@
         "label": "true",
         "tool": {
           "name": "boolean-input-3",
-          "label": "boolean-input",
-          "category": "",
           "type": "boolean",
-          "outputs": {
-            "boolean": {
-              "type": "boolean",
-              "value": "true"
+          "parameters": [
+            {
+              "name": "boolean",
+              "type": "boolean"
             }
-          }
+          ]
         }
       },
       "width": 40,
@@ -748,32 +722,34 @@
         "label": "recursively-cat-all",
         "tool": {
           "name": "recursively-cat-all-1",
-          "label": "recursively-cat-all",
+          "type": "tool",
           "category": "",
-          "baseCommand": "find in -type f -exec cat {} + | tee out/output.txt",
-          "inputs": {
-            "file": {
-              "type": "file",
-              "active": true,
-              "flag": "-ack"
-            },
-            "folder": {
-              "type": "folder",
-              "active": true,
-              "flag": "-acs"
-            }
+          "finalCommand": "find in -type f -exec cat {} + | tee out/output.txt",
+          "ontput": "",
+          "stdout": "",
+          "stderr": " ",
+          "status": "proccessing...",
+          "duration": "",
+          "command": {
+            "initialComand": "",
+            "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
           },
-          "_legacy": {
-            "command": {
-              "initialComand": "",
-              "command": "ffuf -u HOST/WORD -w out/ffuf-multi-1/output.txt:HOST -w :WORD -o out/ffuf-multi-1/output.txt"
+          "parameters": [
+            {
+              "name": "file",
+              "type": "file",
+              "command": "-ack",
+              "description": " Autocalibration keyword (default: FUZZ)",
+              "active": true
             },
-            "stdout": "",
-            "stderr": " ",
-            "status": "proccessing...",
-            "duration": "",
-            "ontput": ""
-          }
+            {
+              "name": "folder",
+              "type": "folder",
+              "command": "-acs",
+              "description": " Autocalibration strategy: \"basic\" or \"advanced\" (default: basic)",
+              "active": true
+            }
+          ]
         }
       },
       "width": 80,
@@ -796,15 +772,13 @@
         "label": "fuzzing-templates.git",
         "tool": {
           "name": "folder-input-1",
-          "label": "folder-input",
-          "category": "",
           "type": "folder",
-          "outputs": {
-            "folder": {
-              "type": "folder",
-              "value": "fuzzing-templates.git"
+          "parameters": [
+            {
+              "name": "folder",
+              "type": "folder"
             }
-          }
+          ]
         }
       },
       "width": 40,
