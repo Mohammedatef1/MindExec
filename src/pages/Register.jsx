@@ -6,8 +6,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
+import LoginSvg from "../components/icons/LoginSvg";
 // import GoogleLogo from "../components/icons/GoogleLogo";
-import { LoginSvg } from "./Login";
+
 
 const Signup = () => {
   const {
