@@ -2,7 +2,7 @@ import { faCircleInfo, faMagnifyingGlass } from "@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { scripts, spliter, tools } from "../../assets/Data";
+import { TOOLS_REGISTRY, SCRIPTS_REGISTRY, SPLITTERS_REGISTRY } from "../../assets/Data";
 import ArrowIcon from "../icons/ArrowIcon";
 import BooleanIcon from "../icons/BooleanIcon";
 import FileIcon from "../icons/FileIcon";
@@ -12,6 +12,10 @@ import StringIcon from "../icons/StringIcon";
 import ToolIcon from "../icons/ToolIcon";
 
 import "../../components/index.css";
+
+const TOOLS = Object.values(TOOLS_REGISTRY)
+const SCRIPTS = Object.values(SCRIPTS_REGISTRY)
+const SPLITTERS = Object.values(SPLITTERS_REGISTRY)
 
 const LeftFrame = () => {
   const [library, setLibrary] = useState(true);
@@ -27,7 +31,7 @@ const LeftFrame = () => {
   }, [searchWord]);
 
   const allTools = useMemo(() => {
-    const combined = [...scripts, ...spliter, ...tools];
+    const combined = [...SCRIPTS, ...SPLITTERS, ...TOOLS];
     
     const uniqueTools = combined.filter((tool, index, self) =>
       index === self.findIndex((t) => t.name === tool.name)
@@ -222,7 +226,7 @@ const LeftFrame = () => {
                     id="scripts"
                     className={`bg-black px-4 origin-top overflow-hidden`}>
                     <ul className="text-white">
-                      {scripts.map((tool) => (
+                      {SCRIPTS.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
@@ -260,7 +264,7 @@ const LeftFrame = () => {
                     transition={transition}
                     className={`bg-black px-6 origin-top overflow-hidden`}>
                     <ul className="text-white">
-                      {spliter.map((tool) => (
+                      {SPLITTERS.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
@@ -299,7 +303,7 @@ const LeftFrame = () => {
                     transition={transition}
                     className="bg-black px-6 origin-top overflow-hidden">
                     <ul className="text-white">
-                      {tools.map((tool) => (
+                      {TOOLS.map((tool) => (
                         <li
                           key={tool.name}
                           data-min={5}
@@ -328,48 +332,109 @@ const LeftFrame = () => {
           <ul className="text-white text-center">
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "String", { name: "string-input", type: "string", parameters: [{ name: "string", type: "string" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "String", {
+                  name: "string",
+                  type: "string",
+                  outputs: {
+                    "string": {
+                      type: "string",
+                      value: "string"
+                    }
+                  },
+                })
+              }
+            >
               <GripDots className="scale-150" />
               <StringIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">String</p>
-                <p className="text-sm text-main">String input for tool parameters.</p>
+                <p className="text-sm text-main">
+                  String input for tool parameters.
+                </p>
               </div>
             </li>
+
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "true", { name: "boolean-input", type: "boolean", parameters: [{ name: "boolean", type: "boolean" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "Boolean", {
+                  name: "boolean",
+                  type: "boolean",
+                  outputs: {
+                    "boolean": {
+                      type: "boolean",
+                      value: true
+                    }
+                  },
+                })
+              }
+            >
               <GripDots />
               <BooleanIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">Boolean</p>
-                <p className="text-sm text-main">Boolean switcher for tool parameters.</p>
+                <p className="text-sm text-main">
+                  Boolean switcher for tool parameters.
+                </p>
               </div>
             </li>
+
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "File", { name: "file", type: "file-input", parameters: [{ name: "file", type: "file" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "File", {
+                  name: "file",
+                  type: "file",
+                  outputs: {
+                    "file": {
+                      type: "file",
+                      value: "file"
+                    }
+                  },
+                })
+              }
+            >
               <GripDots />
               <FileIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">File</p>
-                <p className="text-sm text-main ">Import file from url, or select files from storage.</p>
+                <p className="text-sm text-main">
+                  Import file from URL or select from storage.
+                </p>
               </div>
             </li>
+
+            {/* Folder input */}
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "Folder", { name: "folder-input", type: "folder", parameters: [{ name: "folder", type: "folder" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "Folder", {
+                  name: "folder",
+                  type: "folder",
+                  outputs: {
+                    "folder": {
+                      type: "folder",
+                      value: "folder"
+                    }
+                  },
+                })
+              }
+            >
               <GripDots />
               <FolderIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">Folder</p>
-                <p className="text-sm text-main">Input git repository as a folder.</p>
+                <p className="text-sm text-main">
+                  Input git repository as a folder.
+                </p>
               </div>
             </li>
+
           </ul>
         </div>
       )}

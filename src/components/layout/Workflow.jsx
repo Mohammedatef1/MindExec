@@ -54,8 +54,13 @@ const MindNode = () => {
 
   const isValidConnection = useCallback(
     (connection) => {
-      const valid = ctx.reactFlowInstance.getNode(connection.target).data.tool.parameters.find((e) => e.name === connection.targetHandle).type == connection.sourceHandle;
-      return valid;  
+      console.log(connection)
+      console.log("source", ctx.reactFlowInstance.getNode(connection.source))
+      const sourceType = ctx.reactFlowInstance.getNode(connection.source).data.tool.outputs[connection.sourceHandle].type
+      const targetType = ctx.reactFlowInstance.getNode(connection.target).data.tool.inputs[connection.targetHandle].type
+
+      const valid = targetType == sourceType
+      return valid;
     },
     [ctx, ctx.reactFlowInstance]
   );
@@ -100,6 +105,7 @@ const MindNode = () => {
       if (workflowId) {
         const loadedData = await loadMindMap(workflowId);
         if (loadedData) {
+          console.log("loaded data", loadedData)
           ctx.setNodes(loadedData.nodes);
           ctx.setEdges(loadedData.edges);
           setSavedNodes(loadedData.nodes);
@@ -239,20 +245,18 @@ const MindNode = () => {
 
   const commandTimerRef = useRef();
 
-  //const debouncedGenerateCommands = debounce(ctx.generateCommands, 300);
-
   const onSelectionChange = useCallback(
     (elements) => {
       console.log(elements);
 
       if (elements) {
         if (elements.edges[0] != null) {
-          ctx.setSelectedEdge(elements.edges[0]);
+          ctx.setSelectedEdgeId(elements.edges[0].id);
         } else {
-          ctx.setSelectedEdge(null);
+          ctx.setSelectedEdgeId(null);
         }
         if (elements.nodes[0] != null) {
-          ctx.setSelectedNode(elements.nodes[0]);
+          ctx.setSelectedNodeId(elements.nodes[0].id);
           setNodeType(elements.nodes[0].type);
 
           if (elements.nodes[0].data.tool.command) {
@@ -277,12 +281,11 @@ const MindNode = () => {
           }
         } else {
           setCommand("");
-          ctx.setSelectedNode(null);
+          ctx.setSelectedNodeId(null);
           setNodeType("");
           clearTimeout(commandTimerRef.current);
         }
       }
-      //ctx.generateCommands();
     },
     [ctx.reactFlowInstance]
   );
@@ -296,8 +299,6 @@ const MindNode = () => {
       const toolString = event.dataTransfer.getData("tool");
       const tool = JSON.parse(toolString);
 
-      console.log(tool);
-
       // check if the dropped element is valid
       if (typeof type === "undefined" || !type) {
         return;
@@ -308,19 +309,23 @@ const MindNode = () => {
         y: event.clientY,
       });
 
+      let id = ""
+
       for (let i = 1; i < 100; i++) {
         if (!ctx.reactFlowInstance.getNode(`${tool.name}-${i}`)) {
-          tool.name = `${tool.name}-${i}`;
+          id = `${tool.name}-${i}`;
           break;
         }
       }
 
       const newNode = {
-        id: `${tool.name}`,
+        id,
         type: type,
         position,
         data: { label: label, tool: tool },
       };
+
+      console.log("New node", newNode)
 
       ctx.setNodes((nds) => nds.concat(newNode));
     },
@@ -344,7 +349,7 @@ const MindNode = () => {
         ctx.setEdges((edges) => edges.filter((edge) => edge.source !== nodeIdToRemove && edge.target !== nodeIdToRemove));
 
         // Clear the selected node
-        ctx.setSelectedNode(null);
+        ctx.setSelectedNodeId(null);
       }
       if (event.keyCode === 46 && ctx.selectedEdge) {
         const edgeIdToRemove = ctx.selectedEdge.id;
@@ -352,7 +357,7 @@ const MindNode = () => {
         ctx.setEdges((edges) => edges.filter((edge) => edge.id !== edgeIdToRemove));
 
         // Clear the selected edge
-        ctx.setSelectedEdge(null);
+        ctx.setSelectedEdgeId(null);
       }
     },
     [ctx]

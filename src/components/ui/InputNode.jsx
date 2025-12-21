@@ -9,9 +9,9 @@ const InputNode = ({ isConnectable, data }) => {
   const ctx = useContext(AppContext);
 
   useEffect(() => {
-    setColor(colorController(data.tool.parameters[0].type));
+    setColor(colorController(data.tool.type));
     console.log("excuted");
-  }, [data.tool.parameters]);
+  }, [data.tool.type]);
 
   const colorController = (parameterType) => {
     switch (parameterType) {
@@ -75,25 +75,22 @@ const InputNode = ({ isConnectable, data }) => {
         data-testrender={ctx.test}
         style={{ color: color }}
         className=" absolute bottom-[-16px]  max-w-[80px] truncate text-center text-[10px]">
-        {data.label}
+        {String(data.tool.outputs[data.tool.type].value)}
       </p>
       <div className="absolute right-[-13px] flex flex-col items-center gap-3 justify-center min-h-full transform translate-y-[4px]">
-        {data.tool.parameters.map((parameter) => (
-          <Handle
-            key={parameter.name}
-            type="source"
-            id={parameter.name}
-            className="transition-primary"
-            position={Position.Right}
-            style={{ width: 11, height: 11, position: "unset", borderRadius: "999px", border: `solid 2px ${color}`, background: isHoverd ? `${color}` : "black" }}
-            onConnect={(params) => {
-              console.log("handle onConnect", params);
-              console.log(parameter.name);
-            }}
-            isConnectable={isConnectable}>
-            <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute left-[13px] top-[-10px]`}>{parameter.name}</p>
-          </Handle>
-        ))}
+        <Handle
+          type="source"
+          id={data.tool.name}
+          className="transition-primary"
+          position={Position.Right}
+          style={{ width: 11, height: 11, position: "unset", borderRadius: "999px", border: `solid 2px ${color}`, background: isHoverd ? `${color}` : "black" }}
+          onConnect={(params) => {
+            console.log("handle onConnect", params);
+            console.log(data.tool.name);
+          }}
+          isConnectable={isConnectable}>
+          <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute left-[13px] top-[-10px]`}>{data.tool.name}</p>
+        </Handle>
       </div>
     </div>
   );

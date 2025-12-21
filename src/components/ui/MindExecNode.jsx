@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Handle, Position } from "reactflow";
 import AppContext from "../../AppContext";
-const MindExexNode = ({ isConnectable, data }) => {
-  const [isHoverd, setIsHoved] = useState(false);
+const MindExecNode = ({ isConnectable, data }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
   const ctx = useContext(AppContext);
 
@@ -24,14 +24,14 @@ const MindExexNode = ({ isConnectable, data }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="absolute left-[-13px] flex flex-col items-center gap-3 justify-center min-h-full transform translate-y-[5px]">
-        {data.tool.parameters
-          .filter((e) => e.active)
-          .map((parameter) => (
+        {Object.entries(data.tool.inputs)
+          .filter(([, input]) => input.active)
+          .map(([key, input]) => (
             <Handle
-              key={parameter.name}
+              key={key}
               data-testrender={ctx.test}
               type="target"
-              id={parameter.name}
+              id={key}
               className="transition-primary transition-curtain"
               position={Position.Left}
               style={{
@@ -41,16 +41,16 @@ const MindExexNode = ({ isConnectable, data }) => {
                 borderRadius: "999px",
                 borderStyle: "solid",
                 borderWidth: "2px",
-                borderColor: colorController(parameter.type),
+                borderColor: colorController(input.type),
                 background: "transparent",
               }}
               onConnect={(params) => {
                 console.log("handle onConnect", params);
-                console.log(parameter.name);
+                console.log(key);
               }}
               isConnectable={isConnectable}
               isConnectableStart={false}>
-              <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute right-[17px] top-[-8px]`}>{parameter.name}</p>
+              <p className={`text-white min-w-max ${isHovered ? "" : "opacity-0"} transition-opacity absolute right-[17px] top-[-8px]`}>{key}</p>
             </Handle>
           ))}
       </div>
@@ -58,10 +58,10 @@ const MindExexNode = ({ isConnectable, data }) => {
       <div>
         <svg
           onMouseEnter={() => {
-            setIsHoved(true);
+            setIsHovered(true);
           }}
           onMouseLeave={() => {
-            setIsHoved(false);
+            setIsHovered(false);
           }}
           xmlns="http://www.w3.org/2000/svg"
           width="80"
@@ -104,7 +104,7 @@ const MindExexNode = ({ isConnectable, data }) => {
           style={{ width: 11, height: 11, borderRadius: "999px", position: "unset", border: "none", background: colorController("file") }}
           onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}>
-          <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute left-[17px] top-[-8px]`}>file</p>
+          <p className={`text-white min-w-max ${isHovered ? "" : "opacity-0"} transition-opacity absolute left-[17px] top-[-8px]`}>file</p>
         </Handle>
         <Handle
           type="source"
@@ -114,10 +114,10 @@ const MindExexNode = ({ isConnectable, data }) => {
           style={{ width: 11, height: 11, borderRadius: "999px", position: "unset", border: "none", background: colorController("folder") }}
           onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}>
-          <p className={`text-white min-w-max ${isHoverd ? "" : "opacity-0"} transition-opacity absolute left-[17px] top-[-8px]`}>folder</p>
+          <p className={`text-white min-w-max ${isHovered ? "" : "opacity-0"} transition-opacity absolute left-[17px] top-[-8px]`}>folder</p>
         </Handle>
       </div>
     </div>
   );
 };
-export default MindExexNode;
+export default MindExecNode;

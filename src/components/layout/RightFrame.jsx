@@ -5,7 +5,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../../AppContext";
 import { formatRelativeTime } from "../../lib/utils";
 
-const RightFrme = () => {
+const RightFrame = () => {
   const [parameters, setParameters] = useState(true);
 
   const [parametersIsOpen, setParametersIsOpen] = useState(true);
@@ -28,18 +28,47 @@ const RightFrme = () => {
     }
   }, [ctx.selectedNode]);
 
-  const toggle = useCallback(
-    (parameterName) => {
-      ctx.reactFlowInstance.getNode(ctx.selectedNode.id).data.tool.parameters.find((e) => e.name === parameterName).active = !ctx.reactFlowInstance.getNode(ctx.selectedNode.id).data.tool.parameters.find((e) => e.name === parameterName).active;
-      console.log(ctx.reactFlowInstance.getNode(ctx.selectedNode.id).data.tool.parameters.find((e) => e.name === parameterName));
+  const toggleInput = useCallback(
+    (inputName) => {
+      const nodeId = ctx.selectedNode.id;
 
-      if (ctx.edges.filter((edge) => edge.target === ctx.selectedNode.id && edge.targetHandle === parameterName)[0]) {
-        const edgeIdToRemove = ctx.edges.filter((edge) => edge.target === ctx.selectedNode.id && edge.targetHandle === parameterName)[0].id;
-        ctx.setEdges((edges) => edges.filter((edge) => edge.id !== edgeIdToRemove));
-      }
+      ctx.setNodes((nodes) =>
+        nodes.map((node) => {
+          if (node.id !== nodeId) return node;
 
-      console.log(parameterName);
-      ctx.setTest(Math.random());
+          const inputs = node.data.tool.inputs;
+          const input = inputs[inputName];
+
+          if (!input) return node;
+
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              tool: {
+                ...node.data.tool,
+                inputs: {
+                  ...inputs,
+                  [inputName]: {
+                    ...input,
+                    active: !input.active,
+                  },
+                },
+              },
+            },
+          };
+        })
+      );
+
+      ctx.setEdges((edges) =>
+        edges.filter(
+          (edge) =>
+            !(
+              edge.target === nodeId &&
+              edge.targetHandle === inputName
+            )
+        )
+      );
     },
     [ctx]
   );
@@ -52,33 +81,136 @@ const RightFrme = () => {
   const transition = {
     ease: [0.12, 0, 0.39, 0],
   };
-  const onStringChange = (e) => {
-    setInput(e.target.value);
-    ctx.reactFlowInstance.getNode(ctx.selectedNode.id).data.label = e.target.value;
-    ctx.setTest(Math.random());
-    console.log(ctx.edges.filter((edge) => edge.source === ctx.selectedNode.id));
-    ctx.edges
-      .filter((edge) => edge.source === ctx.selectedNode.id)
-      .forEach((edge) => {
-        const command = ctx.reactFlowInstance.getNode(edge.target).data.tool.parameters.find((e) => e.name === edge.targetHandle).command;
+ const onStringChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      const nodeId = ctx.selectedNode.id;
 
-        ctx.reactFlowInstance.getNode(edge.target).data.tool.command[command] = e.target.value;
-      });
-  };
+      setInput(value);
 
-  const handleCheckboxChange = () => {
-    let booleanValue = !isChecked;
-    setIsChecked(!isChecked);
-    ctx.reactFlowInstance.getNode(ctx.selectedNode.id).data.label = booleanValue ? "true" : "false";
-    ctx.setTest(Math.random());
-    ctx.edges
-      .filter((edge) => edge.source === ctx.selectedNode.id)
-      .forEach((edge) => {
-        const command = ctx.reactFlowInstance.getNode(edge.target).data.tool.parameters.find((e) => e.name === edge.targetHandle).command;
-        //console.log(command)
-        ctx.reactFlowInstance.getNode(edge.target).data.tool.command[command] = booleanValue;
-      });
-  };
+      ctx.setNodes((nodes) =>
+        nodes.map((node) => {
+          if (node.id !== nodeId) return node;
+
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              label: value,
+              tool: {
+                ...node.data.tool,
+                inputs: {
+                  ...node.data.tool.inputs,
+                  value: value,
+                },
+              },
+            },
+          };
+        })
+      );
+
+      ctx.setNodes((nodes) =>
+        nodes.map((node) => {
+          const incomingEdges = ctx.edges.filter(
+            (edge) =>
+              edge.source === nodeId &&
+              edge.target === node.id
+          );
+
+          if (incomingEdges.length === 0) return node;
+
+          const updatedInputs = { ...node.data.tool.inputs };
+
+          incomingEdges.forEach((edge) => {
+            const targetInput = updatedInputs[edge.targetHandle];
+            if (!targetInput || !targetInput.active) return;
+
+            updatedInputs[edge.targetHandle] = {
+              ...targetInput,
+              value,
+            };
+          });
+
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              tool: {
+                ...node.data.tool,
+                inputs: updatedInputs,
+              },
+            },
+          };
+        })
+      );
+    },
+    [ctx]
+  );
+
+
+  const handleCheckboxChange = useCallback(() => {
+    const value = !isChecked;
+    const nodeId = ctx.selectedNode.id;
+
+    setIsChecked(value);
+
+    ctx.setNodes((nodes) =>
+      nodes.map((node) => {
+        if (node.id !== nodeId) return node;
+
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            label: value ? "true" : "false",
+            tool: {
+              ...node.data.tool,
+              inputs: {
+                ...node.data.tool.inputs,
+                value: value,
+              },
+            },
+          },
+        };
+      })
+    );
+
+    ctx.setNodes((nodes) =>
+      nodes.map((node) => {
+        const incomingEdges = ctx.edges.filter(
+          (edge) =>
+            edge.source === nodeId &&
+            edge.target === node.id
+        );
+
+        if (incomingEdges.length === 0) return node;
+
+        const updatedInputs = { ...node.data.tool.inputs };
+
+        incomingEdges.forEach((edge) => {
+          const targetInput = updatedInputs[edge.targetHandle];
+          if (!targetInput || !targetInput.active) return;
+
+          updatedInputs[edge.targetHandle] = {
+            ...targetInput,
+            value,
+          };
+        });
+
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            tool: {
+              ...node.data.tool,
+              inputs: updatedInputs,
+            },
+          },
+        };
+      })
+    );
+  }, [ctx, isChecked]);
+
 
   return (
     <div className="bg-primary1 h-full transition-none pt-8">
@@ -120,7 +252,7 @@ const RightFrme = () => {
                 <label className="relative inline-flex items-center text-gray-200">True is a valid value</label>
 
                 <div className=" scale-75">
-                  <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-[1px]">
+                  <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-px">
                     <input
                       type="checkbox"
                       name="autoSaver"
@@ -129,7 +261,7 @@ const RightFrme = () => {
                       onChange={handleCheckboxChange}
                     />
                     <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${isChecked ? "bg-primary" : "bg-[#CCCCCE]"}`}>
-                      <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${isChecked ? "translate-x-6" : ""} ${isChecked ? "bg-blue-500" : "bg-white"}`}></span>
+                      <span className={`dot h-18px] w-[18px] rounded-full duration-200 ${isChecked ? "translate-x-6" : ""} ${isChecked ? "bg-blue-500" : "bg-white"}`}></span>
                     </span>
                   </label>
                 </div>
@@ -147,7 +279,7 @@ const RightFrme = () => {
                 setParameters(true);
               }}
               className={`uppercase w-1/2 border-2 rounded-[4px] border-black text-center py-2 transition-primary ${parameters ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
-              Parameters
+              Inputs
             </button>
             <button
               onClick={() => {
@@ -166,7 +298,7 @@ const RightFrme = () => {
                 onBlur={() => {
                   setSearchFocused(false);
                 }}
-                className={`bg-black border-[1px] transition-primary ${searchFocused ? "border-white" : "border-black"}   my-6 hover:border-gray-200 mx-6 rounded-[4px] `}>
+                className={`bg-black border transition-primary ${searchFocused ? "border-white" : "border-black"}   my-6 hover:border-gray-200 mx-6 rounded-[4px] `}>
                 <FontAwesomeIcon
                   className="text-white ps-3"
                   icon={faMagnifyingGlass}
@@ -205,25 +337,24 @@ const RightFrme = () => {
                       id="scripts"
                       className={`bg-black px-6 overflow-hidden`}>
                       <ul className="text-white">
-                        {ctx.selectedNode.data.tool.parameters.map((parameter) => (
+                        {Object.entries(ctx.selectedNode.data.tool.inputs).map(([key, input]) => (
                           <li
-                            key={parameter.name}
-                            id="script 1"
+                            key={key}
                             className="py-2 first:pt-4 last:pb-4">
-                            {parameter.name}
+                            {key}
                             <div className="float-right scale-75">
-                              <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-[1px]">
+                              <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-px">
                                 <input
                                   type="checkbox"
                                   name="autoSaver"
                                   className="sr-only"
-                                  checked={parameter.active}
+                                  checked={input.active}
                                   onChange={() => {
-                                    toggle(parameter.name);
+                                    toggleInput(key);
                                   }}
                                 />
-                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${parameter.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
-                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${parameter.active ? "translate-x-6" : ""} ${parameter.active ? "bg-blue-500" : "bg-white"}`}></span>
+                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${input.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
+                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${input.active ? "translate-x-6" : ""} ${input.active ? "bg-blue-500" : "bg-white"}`}></span>
                                 </span>
                               </label>
                             </div>
@@ -294,25 +425,25 @@ const RightFrme = () => {
                       id="scripts"
                       className={`bg-black px-6 overflow-hidden`}>
                       <ul className="text-white">
-                        {ctx.selectedNode.data.tool.parameters.map((parameter) => (
+                        {Object.entries(ctx.selectedNode.data.tool.inputs).map(([key, input]) => (
                           <li
-                            key={parameter.name}
+                            key={key}
                             id="script 1"
                             className="py-2 first:pt-4 last:pb-4">
-                            {parameter.name}
+                            {key}
                             <div className="float-right scale-75">
                               <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-[1px]">
                                 <input
                                   type="checkbox"
                                   name="autoSaver"
                                   className="sr-only"
-                                  checked={parameter.active}
+                                  checked={input.active}
                                   onChange={() => {
-                                    toggle(parameter.name);
+                                    toggleInput(key);
                                   }}
                                 />
-                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${parameter.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
-                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${parameter.active ? "translate-x-6" : ""} ${parameter.active ? "bg-blue-500" : "bg-white"}`}></span>
+                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${input.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
+                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${input.active ? "translate-x-6" : ""} ${input.active ? "bg-blue-500" : "bg-white"}`}></span>
                                 </span>
                               </label>
                             </div>
@@ -331,4 +462,4 @@ const RightFrme = () => {
   );
 };
 
-export default RightFrme;
+export default RightFrame;
