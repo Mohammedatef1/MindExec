@@ -75,7 +75,7 @@ const InputNode = ({ isConnectable, data }) => {
         data-testrender={ctx.test}
         style={{ color: color }}
         className=" absolute bottom-[-16px]  max-w-[80px] truncate text-center text-[10px]">
-        {String(data.tool.inputs.value)}
+        {String(data.tool.outputs[data.tool.type].value)}
       </p>
       <div className="absolute right-[-13px] flex flex-col items-center gap-3 justify-center min-h-full transform translate-y-[4px]">
         <Handle

@@ -54,11 +54,13 @@ const MindNode = () => {
 
   const isValidConnection = useCallback(
     (connection) => {
-      const sourceType = ctx.reactFlowInstance.getNode(connection.source).data.tool.type
+      console.log(connection)
+      console.log("source", ctx.reactFlowInstance.getNode(connection.source))
+      const sourceType = ctx.reactFlowInstance.getNode(connection.source).data.tool.outputs[connection.sourceHandle].type
       const targetType = ctx.reactFlowInstance.getNode(connection.target).data.tool.inputs[connection.targetHandle].type
 
       const valid = targetType == sourceType
-      return valid;  
+      return valid;
     },
     [ctx, ctx.reactFlowInstance]
   );
@@ -297,8 +299,6 @@ const MindNode = () => {
       const toolString = event.dataTransfer.getData("tool");
       const tool = JSON.parse(toolString);
 
-      console.log("tool", tool);
-
       // check if the dropped element is valid
       if (typeof type === "undefined" || !type) {
         return;
@@ -309,19 +309,23 @@ const MindNode = () => {
         y: event.clientY,
       });
 
+      let id = ""
+
       for (let i = 1; i < 100; i++) {
         if (!ctx.reactFlowInstance.getNode(`${tool.name}-${i}`)) {
-          tool.name = `${tool.name}-${i}`;
+          id = `${tool.name}-${i}`;
           break;
         }
       }
 
       const newNode = {
-        id: `${tool.name}`,
+        id,
         type: type,
         position,
         data: { label: label, tool: tool },
       };
+
+      console.log("New node", newNode)
 
       ctx.setNodes((nds) => nds.concat(newNode));
     },

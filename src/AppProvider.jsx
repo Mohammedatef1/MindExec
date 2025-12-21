@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEdgesState, useNodesState } from "reactflow";
 import AppContext from "./AppContext";
 import { useMemo } from "react";
+import { useEffect } from "react";
 
 const initialNodes = [];
 const initialEdges = [];
@@ -32,6 +33,10 @@ const AppProvider = ({ children }) => {
 
     return edge
   }, [selectedEdgeId, edges])
+
+  useEffect(()=> {
+    console.log("workflow state", {nodes, edges})
+  }, [nodes, edges])
 
   const [reactFlowInstance, setReactFlowInstance, onInstanceChange] = useState(null);
   const [builder, setBuilder] = useState(true);

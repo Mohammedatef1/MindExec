@@ -335,10 +335,13 @@ const LeftFrame = () => {
               draggable
               onDragStart={(event) =>
                 onDragStart(event, "inputNode", "String", {
-                  name: "string-input",
+                  name: "string",
                   type: "string",
-                  inputs: {
-                    value: "string"
+                  outputs: {
+                    "string": {
+                      type: "string",
+                      value: "string"
+                    }
                   },
                 })
               }
@@ -358,10 +361,13 @@ const LeftFrame = () => {
               draggable
               onDragStart={(event) =>
                 onDragStart(event, "inputNode", "Boolean", {
-                  name: "boolean-input",
+                  name: "boolean",
                   type: "boolean",
-                  inputs: {
-                    value: true
+                  outputs: {
+                    "boolean": {
+                      type: "boolean",
+                      value: true
+                    }
                   },
                 })
               }
@@ -381,10 +387,13 @@ const LeftFrame = () => {
               draggable
               onDragStart={(event) =>
                 onDragStart(event, "inputNode", "File", {
-                  name: "file-input",
+                  name: "file",
                   type: "file",
-                  inputs: {
-                    value: ""
+                  outputs: {
+                    "file": {
+                      type: "file",
+                      value: "file"
+                    }
                   },
                 })
               }
@@ -405,10 +414,13 @@ const LeftFrame = () => {
               draggable
               onDragStart={(event) =>
                 onDragStart(event, "inputNode", "Folder", {
-                  name: "folder-input",
+                  name: "folder",
                   type: "folder",
-                  inputs: {
-                    value: ""
+                  outputs: {
+                    "folder": {
+                      type: "folder",
+                      value: "folder"
+                    }
                   },
                 })
               }

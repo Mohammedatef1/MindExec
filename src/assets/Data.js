@@ -8,6 +8,17 @@ export const TOOLS_REGISTRY = {
     category: "fuzzing",
     baseCommand: "ffuf",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
       "auto-calibration-keyword": {
         active: true,
@@ -33,11 +44,22 @@ export const TOOLS_REGISTRY = {
   /* =========================
      rex
      ========================= */
-  "rex": {
+  rex: {
     name: "rex",
     label: "rex",
     category: "static-code-analysis",
     baseCommand: "rex",
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
 
     inputs: {
       "directory-to-scan": {
@@ -61,11 +83,22 @@ export const TOOLS_REGISTRY = {
   /* =========================
      airixss
      ========================= */
-  "airixss": {
+  airixss: {
     name: "airixss",
     label: "airixss",
     category: "scanner",
     baseCommand: "airixss",
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
 
     inputs: {
       concurrency: {
@@ -91,11 +124,22 @@ export const TOOLS_REGISTRY = {
   /* =========================
      gau
      ========================= */
-  "gau": {
+  gau: {
     name: "gau",
     label: "gau",
     category: "crawler",
     baseCommand: "gau",
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
 
     inputs: {
       target: {
@@ -121,11 +165,22 @@ export const TOOLS_REGISTRY = {
   /* =========================
      katana
      ========================= */
-  "katana": {
+  katana: {
     name: "katana",
     label: "katana",
     category: "crawler",
     baseCommand: "katana",
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
 
     inputs: {
       url: {
@@ -175,11 +230,22 @@ export const TOOLS_REGISTRY = {
   /* =========================
      urldedupe
      ========================= */
-  "urldedupe": {
+  urldedupe: {
     name: "urldedupe",
     label: "urldedupe",
     category: "processing",
     baseCommand: "./urldedupe",
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
 
     inputs: {
       "query-string-only": {
@@ -211,6 +277,17 @@ export const TOOLS_REGISTRY = {
     category: "processing",
     baseCommand: "batch-output",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
       batch: {
         active: true,
@@ -222,14 +299,25 @@ export const TOOLS_REGISTRY = {
       },
     },
   },
-   /* =========================
+  /* =========================
      nuclei
      ========================= */
-  "nuclei": {
+  nuclei: {
     name: "nuclei",
     label: "nuclei",
     category: "scanner",
     baseCommand: "nuclei",
+
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
 
     inputs: {
       "parallel-templates-execution": {
@@ -282,6 +370,17 @@ export const TOOLS_REGISTRY = {
     category: "static-code-analysis",
     baseCommand: "httpx-screenshot",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
       "directory-to-scan": {
         active: true,
@@ -310,70 +409,102 @@ export const TOOLS_REGISTRY = {
     category: "static-code-analysis",
     baseCommand: "404checker",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      csprecon
      ========================= */
-  "csprecon": {
+  csprecon: {
     name: "csprecon",
     label: "csprecon",
     category: "static-code-analysis",
     baseCommand: "csprecon",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      zdns
      ========================= */
-  "zdns": {
+  zdns: {
     name: "zdns",
     label: "zdns",
     category: "static-code-analysis",
     baseCommand: "zdns",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      jaeles
      ========================= */
-  "jaeles": {
+  jaeles: {
     name: "jaeles",
     label: "jaeles",
     category: "static-code-analysis",
     baseCommand: "jaeles",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
@@ -386,51 +517,75 @@ export const TOOLS_REGISTRY = {
     category: "static-code-analysis",
     baseCommand: "sourcegraph-scan",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      fallparams
      ========================= */
-  "fallparams": {
+  fallparams: {
     name: "fallparams",
     label: "fallparams",
     category: "static-code-analysis",
     baseCommand: "fallparams",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      whatwaf
      ========================= */
-  "whatwaf": {
+  whatwaf: {
     name: "whatwaf",
     label: "whatwaf",
     category: "static-code-analysis",
     baseCommand: "whatwaf",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
@@ -443,13 +598,21 @@ export const TOOLS_REGISTRY = {
     category: "static-code-analysis",
     baseCommand: "bigip-scanner",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
@@ -462,72 +625,104 @@ export const TOOLS_REGISTRY = {
     category: "static-code-analysis",
     baseCommand: "add-subdomains",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      xsubfind3r
      ========================= */
-  "xsubfind3r": {
+  xsubfind3r: {
     name: "xsubfind3r",
     label: "xsubfind3r",
     category: "static-code-analysis",
     baseCommand: "xsubfind3r",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      cookiemonster
      ========================= */
-  "cookiemonster": {
+  cookiemonster: {
     name: "cookiemonster",
     label: "cookiemonster",
     category: "static-code-analysis",
     baseCommand: "cookiemonster",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
     },
   },
 
   /* =========================
      searchsploit
      ========================= */
-  "searchsploit": {
+  searchsploit: {
     name: "searchsploit",
     label: "searchsploit",
     category: "static-code-analysis",
     baseCommand: "searchsploit",
 
-    inputs: {
-      "directory-to-scan": { active: true,
-        type: "folder", flag: "-d" },
-      "gh-token": { active: true,
-        type: "string", flag: "-t" },
-      "github-repo": { active: true,
-        type: "string", flag: "-g" },
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
     },
-  }
+
+    inputs: {
+      "directory-to-scan": { active: true, type: "folder", flag: "-d" },
+      "gh-token": { active: true, type: "string", flag: "-t" },
+      "github-repo": { active: true, type: "string", flag: "-g" },
+    },
+  },
 };
 
 export const SCRIPTS_REGISTRY = {
@@ -540,11 +735,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "sort | uniq",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -557,11 +761,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "generate-line-patches",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -574,28 +787,46 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "cat",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
   /* =========================
      sort
      ========================= */
-  "sort": {
+  sort: {
     name: "sort",
     label: "sort",
     category: "processing",
     baseCommand: "sort",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -608,11 +839,20 @@ export const SCRIPTS_REGISTRY = {
     category: "dataset",
     baseCommand: "load-aws-ip-ranges",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -625,11 +865,20 @@ export const SCRIPTS_REGISTRY = {
     category: "dataset",
     baseCommand: "load-gcp-ip-ranges",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -642,11 +891,20 @@ export const SCRIPTS_REGISTRY = {
     category: "dataset",
     baseCommand: "get-subdomains-from-trickest-cloud-dataset",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -659,11 +917,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "parse-nuclei-output-into-technologies",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -676,11 +943,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "remove-excessive-ports",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -693,11 +969,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "parse-wpscan-output-into-findings",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -710,11 +995,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "parse-joomscan-output-into-findings",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -727,11 +1021,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "remove-duplicate-jsonlines-records",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -744,11 +1047,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "parse-ffuf-output-into-findings",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -761,14 +1073,23 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "split-jsonlines-into-files-based-on-field-value",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
-    /* =========================
+  /* =========================
      parse-zgrab2-tls-output
      ========================= */
   "parse-zgrab2-tls-output": {
@@ -777,11 +1098,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "parse-zgrab2-tls-output",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -794,11 +1124,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "remove-default-http-ports-from-urls",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -811,11 +1150,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "find-hostnames-in-dnsx-results",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -828,11 +1176,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "find-extra-assets-in-httpx-results",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -845,11 +1202,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "filter-jsonlines-by-field-keyword",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -862,11 +1228,20 @@ export const SCRIPTS_REGISTRY = {
     category: "integration",
     baseCommand: "add-urls-to-zap-automation-plan",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -879,11 +1254,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "generate-number-of-batches",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -896,11 +1280,20 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "file-to-variable",
 
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
+    },
+
     inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
     },
   },
 
@@ -913,13 +1306,22 @@ export const SCRIPTS_REGISTRY = {
     category: "processing",
     baseCommand: "martians-nuclei-rover",
 
-    inputs: {
-      file: { active: true,
-        type: "file" },
-      folder: { active: true,
-        type: "folder" },
+    outputs: {
+      file: {
+        active: true,
+        type: "file",
+      },
+      folder: {
+        active: true,
+        type: "folder",
+      },
     },
-  }
+
+    inputs: {
+      file: { active: true, type: "file" },
+      folder: { active: true, type: "folder" },
+    },
+  },
 };
 
 export const SPLITTERS_REGISTRY = {
