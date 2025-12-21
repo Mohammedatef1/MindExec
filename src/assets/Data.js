@@ -12,10 +12,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -54,10 +56,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -93,10 +97,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -134,10 +140,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -175,10 +183,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -240,10 +250,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -281,10 +293,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -312,10 +326,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -374,10 +390,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -413,10 +431,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -440,10 +460,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -467,10 +489,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -494,10 +518,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -521,10 +547,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -548,10 +576,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -575,10 +605,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -602,10 +634,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -629,10 +663,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -656,10 +692,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -683,10 +721,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -710,10 +750,12 @@ export const TOOLS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -739,10 +781,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -765,10 +809,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -791,10 +837,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -817,10 +865,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -843,10 +893,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -869,10 +921,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -895,10 +949,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -921,10 +977,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -947,10 +1005,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -973,10 +1033,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -999,10 +1061,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1025,10 +1089,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1051,10 +1117,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1077,10 +1145,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1102,10 +1172,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1128,10 +1200,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1154,10 +1228,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1180,10 +1256,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1206,10 +1284,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1232,10 +1312,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1258,10 +1340,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1284,10 +1368,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1310,10 +1396,12 @@ export const SCRIPTS_REGISTRY = {
       file: {
         active: true,
         type: "file",
+        value: "file"
       },
       folder: {
         active: true,
         type: "folder",
+        value: "folder"
       },
     },
 
@@ -1347,6 +1435,7 @@ export const SPLITTERS_REGISTRY = {
         active: true,
         type: "file",
         multiple: true,
+        value: "file"
       },
     },
   },

@@ -12,7 +12,6 @@ import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { loadMindMap, saveMindMap } from "../Storage";
 import UnsavedChangesModal from "../ui/UnsavedChangesModal";
 import WorkflowNameModal from "../ui/WorkflowNameModal";
-//import { debounce } from 'lodash';
 import InputNode from "../ui/InputNode";
 import MindExecNode from "../ui/MindExecNode";
 import WorkflowButton from "../ui/WorkflowButton";
@@ -70,35 +69,49 @@ const MindNode = () => {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
-  const onConnect = useCallback(
-    (params) => {
-      ctx.setEdges((eds) => addEdge(params, eds));
-      console.log(params);
-      // eslint-disable-next-line no-unused-vars
-      const { sourceHandle, source, target, targetHandle } = params;
-      /*
-      let value;
-      console.log(ctx.reactFlowInstance.getNode(source));
-      if (ctx.reactFlowInstance.getNode(source).data.tool.type == "boolean") {
-        const label = ctx.reactFlowInstance.getNode(source).data.label;
-        if (label == "true") {
-          value = true;
-        } else if (label == "false") {
-          value = false;
-        }
-      } else if (ctx.reactFlowInstance.getNode(source).type == "mindExecNode" && sourceHandle == "folder") {
-        value = `in/${source}/output`;
-      } else if (ctx.reactFlowInstance.getNode(source).type == "mindExecNode" && sourceHandle == "file") {
-        value = `in/${source}/output.txt`;
-      } else {
-        value = ctx.reactFlowInstance.getNode(source).data.label;
-      }
-      const command = ctx.reactFlowInstance.getNode(target).data.tool.parameters.find((e) => e.name === targetHandle).command;
-      ctx.reactFlowInstance.getNode(target).data.tool.command[command] = value;
-      */
-    },
-    [ctx.setEdges, ctx, ctx.reactFlowInstance]
-  );
+  const onConnect = useCallback((params) => {
+    ctx.setEdges((eds) => addEdge(params, eds));
+
+    const { source, sourceHandle, target, targetHandle } = params;
+
+    ctx.setNodes((nodes) => nodes.map((node) => {
+
+        if (node.id !== target) return node;
+
+        const sourceNode = nodes.find((n) => n.id === source);
+        if (!sourceNode) return node;
+
+        const sourceValue = sourceNode.data?.tool?.outputs?.[sourceHandle]?.value
+
+        if (sourceValue === undefined) return node;
+
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            tool: {
+              ...node.data.tool,
+              inputs: {
+                ...node.data.tool.inputs,
+                [targetHandle]: {
+                  ...node.data.tool.inputs[targetHandle],
+                  value: sourceValue,
+                  connected: true,
+                  source: {
+                    nodeId: source,
+                    handle: sourceHandle,
+                  },
+                },
+              },
+            }
+          },
+        };
+      })
+    );
+  },
+  [ctx]
+);
+
 
   useEffect(() => {
     const loadWorkflow = async () => {
@@ -336,28 +349,86 @@ const MindNode = () => {
     console.log(params.target);
   }, []);
 
+  const removeInputBindingFromEdge = (edge, nodes) => {
+    const { target, targetHandle } = edge;
+
+    return nodes.map((node) => {
+      if (node.id !== target) return node;
+
+      const input = node.data?.tool.inputs?.[targetHandle];
+      if (!input) return node;
+
+      console.log("excuted")
+
+      return {
+        ...node,
+        data: {
+          ...node.data,
+          tool: {
+            ...node.data.tool,
+            inputs: {
+              ...node.data.tool.inputs,
+              [targetHandle]: {
+                ...input,
+                source: undefined,
+                value: undefined,
+                connected: false
+              },
+            },
+          }
+        },
+      };
+    });
+  }
+
+
   const handleKeyDown = useCallback(
     (event) => {
       // Check if the pressed key is the Del key (key code 46)
+      if (event.keyCode === 46 && ctx.selectedEdge) {
+        const edgeToRemove = ctx.selectedEdge;
+
+        ctx.setNodes((nodes) =>
+          removeInputBindingFromEdge(edgeToRemove, nodes)
+        );
+
+        ctx.setEdges((edges) =>
+          edges.filter((edge) => edge.id !== edgeToRemove.id)
+        );
+
+        ctx.setSelectedEdgeId(null);
+      }
+
       if (event.keyCode === 46 && ctx.selectedNode) {
         const nodeIdToRemove = ctx.selectedNode.id;
 
-        // Remove the selected node from the nodes array
-        ctx.setNodes((nodes) => nodes.filter((node) => node.id !== nodeIdToRemove));
+        ctx.setNodes((nodes) => {
+          // get edges connected to this node
+          const connectedEdges = ctx.edges.filter(
+            (edge) =>
+              edge.source === nodeIdToRemove ||
+              edge.target === nodeIdToRemove
+          );
 
-        // You may also want to remove related edges if needed
-        ctx.setEdges((edges) => edges.filter((edge) => edge.source !== nodeIdToRemove && edge.target !== nodeIdToRemove));
+          // clean all bindings caused by these edges
+          let updatedNodes = nodes;
+          connectedEdges.forEach((edge) => {
+            updatedNodes = removeInputBindingFromEdge(edge, updatedNodes);
+          });
 
-        // Clear the selected node
+          // finally remove the node itself
+          return updatedNodes.filter((node) => node.id !== nodeIdToRemove);
+        });
+
+        ctx.setEdges((edges) =>
+          edges.filter(
+            (edge) =>
+              edge.source !== nodeIdToRemove &&
+              edge.target !== nodeIdToRemove
+          )
+        );
+
         ctx.setSelectedNodeId(null);
-      }
-      if (event.keyCode === 46 && ctx.selectedEdge) {
-        const edgeIdToRemove = ctx.selectedEdge.id;
-
-        ctx.setEdges((edges) => edges.filter((edge) => edge.id !== edgeIdToRemove));
-
-        // Clear the selected edge
-        ctx.setSelectedEdgeId(null);
       }
     },
     [ctx]

@@ -6,8 +6,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../client";
+import LoginSvg from "../components/icons/LoginSvg";
 // import GoogleLogo from "../components/icons/GoogleLogo";
-import { LoginSvg } from "./Login";
+
 
 const Signup = () => {
   const {
@@ -100,29 +101,6 @@ const Signup = () => {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    },
-  };
-
   const errorVariants = {
     hidden: { opacity: 0, y: -10, height: 0 },
     visible: {
@@ -137,13 +115,9 @@ const Signup = () => {
   };
 
   return (
-    <motion.div
-      className="flex flex-wrap w-full relative"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}>
-      <motion.div
-        variants={itemVariants}
+    <div
+      className="flex flex-wrap w-full relative">
+      <div
         className="hidden lg:flex w-full lg:w-1/2 min-h-screen bg-primary1 flex-col justify-center px-[7%] bg-gradient-primary relative">
         <h1 className="text-white text-[40px] font-bold ">
           Unleash your Scanning
@@ -152,9 +126,8 @@ const Signup = () => {
         </h1>
         <p className="text-main mt-4 text-md z-10">Empowering Security Engineers, Penetration Testers, and Bug Bounty Hunters to design their workflows using pre-configured tools in a mind map format and execute it easily.</p>
         <LoginSvg className="absolute bottom-0 left-0 pointer-events-none" />
-      </motion.div>
-      <motion.div
-        variants={itemVariants}
+      </div>
+      <div
         className="w-full lg:w-1/2 min-h-screen bg-black flex justify-center items-center px-4 md:px-7 lg:px-10 py-10">
         <div className="w-full max-w-[440px]">
           <h2 className="text-[40px] text-main font-bold mb-10">Create Your Account</h2>
@@ -279,8 +252,8 @@ const Signup = () => {
             </p>
           </form>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
