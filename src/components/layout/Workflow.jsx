@@ -243,8 +243,6 @@ const MindNode = () => {
 
   const commandTimerRef = useRef();
 
-  //const debouncedGenerateCommands = debounce(ctx.generateCommands, 300);
-
   const onSelectionChange = useCallback(
     (elements) => {
       console.log(elements);
@@ -286,7 +284,6 @@ const MindNode = () => {
           clearTimeout(commandTimerRef.current);
         }
       }
-      //ctx.generateCommands();
     },
     [ctx.reactFlowInstance]
   );
