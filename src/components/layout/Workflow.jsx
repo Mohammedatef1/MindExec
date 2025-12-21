@@ -12,7 +12,6 @@ import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { loadMindMap, saveMindMap } from "../Storage";
 import UnsavedChangesModal from "../ui/UnsavedChangesModal";
 import WorkflowNameModal from "../ui/WorkflowNameModal";
-//import { debounce } from 'lodash';
 import InputNode from "../ui/InputNode";
 import MindExecNode from "../ui/MindExecNode";
 import WorkflowButton from "../ui/WorkflowButton";
@@ -70,35 +69,51 @@ const MindNode = () => {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
-  const onConnect = useCallback(
-    (params) => {
-      ctx.setEdges((eds) => addEdge(params, eds));
-      console.log(params);
-      // eslint-disable-next-line no-unused-vars
-      const { sourceHandle, source, target, targetHandle } = params;
-      /*
-      let value;
-      console.log(ctx.reactFlowInstance.getNode(source));
-      if (ctx.reactFlowInstance.getNode(source).data.tool.type == "boolean") {
-        const label = ctx.reactFlowInstance.getNode(source).data.label;
-        if (label == "true") {
-          value = true;
-        } else if (label == "false") {
-          value = false;
-        }
-      } else if (ctx.reactFlowInstance.getNode(source).type == "mindExecNode" && sourceHandle == "folder") {
-        value = `in/${source}/output`;
-      } else if (ctx.reactFlowInstance.getNode(source).type == "mindExecNode" && sourceHandle == "file") {
-        value = `in/${source}/output.txt`;
-      } else {
-        value = ctx.reactFlowInstance.getNode(source).data.label;
-      }
-      const command = ctx.reactFlowInstance.getNode(target).data.tool.parameters.find((e) => e.name === targetHandle).command;
-      ctx.reactFlowInstance.getNode(target).data.tool.command[command] = value;
-      */
-    },
-    [ctx.setEdges, ctx, ctx.reactFlowInstance]
-  );
+  const onConnect = useCallback((params) => {
+    ctx.setEdges((eds) => addEdge(params, eds));
+
+    const { source, sourceHandle, target, targetHandle } = params;
+
+    ctx.setNodes((nodes) => nodes.map((node) => {
+        // only mutate the target node
+        if (node.id !== target) return node;
+
+        // find source node
+        const sourceNode = nodes.find((n) => n.id === source);
+        if (!sourceNode) return node;
+
+        // extract value from source output
+        const sourceValue =
+          sourceNode.data?.tool?.outputs?.[sourceHandle]?.value ??
+          sourceNode.data?.inputs?.[sourceHandle]?.value ??
+          sourceNode.data?.value;
+
+        if (sourceValue === undefined) return node;
+
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            inputs: {
+              ...node.data.inputs,
+              [targetHandle]: {
+                ...node.data.inputs[targetHandle],
+                value: sourceValue,
+                connected: true,
+                source: {
+                  nodeId: source,
+                  handle: sourceHandle,
+                },
+              },
+            },
+          },
+        };
+      })
+    );
+  },
+  [ctx]
+);
+
 
   useEffect(() => {
     const loadWorkflow = async () => {
