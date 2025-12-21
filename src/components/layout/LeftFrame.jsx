@@ -332,48 +332,97 @@ const LeftFrame = () => {
           <ul className="text-white text-center">
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "String", { name: "string-input", type: "string", parameters: [{ name: "string", type: "string" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "String", {
+                  name: "string-input",
+                  type: "string",
+                  inputs: {
+                    value: "string"
+                  },
+                })
+              }
+            >
               <GripDots className="scale-150" />
               <StringIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">String</p>
-                <p className="text-sm text-main">String input for tool parameters.</p>
+                <p className="text-sm text-main">
+                  String input for tool parameters.
+                </p>
               </div>
             </li>
+
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "true", { name: "boolean-input", type: "boolean", parameters: [{ name: "boolean", type: "boolean" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "Boolean", {
+                  name: "boolean-input",
+                  type: "boolean",
+                  inputs: {
+                    value: true
+                  },
+                })
+              }
+            >
               <GripDots />
               <BooleanIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">Boolean</p>
-                <p className="text-sm text-main">Boolean switcher for tool parameters.</p>
+                <p className="text-sm text-main">
+                  Boolean switcher for tool parameters.
+                </p>
               </div>
             </li>
+
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "File", { name: "file", type: "file-input", parameters: [{ name: "file", type: "file" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "File", {
+                  name: "file-input",
+                  type: "file",
+                  inputs: {
+                    value: ""
+                  },
+                })
+              }
+            >
               <GripDots />
               <FileIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">File</p>
-                <p className="text-sm text-main ">Import file from url, or select files from storage.</p>
+                <p className="text-sm text-main">
+                  Import file from URL or select from storage.
+                </p>
               </div>
             </li>
+
+            {/* Folder input */}
             <li
               className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              onDragStart={(event) => onDragStart(event, "inputNode", "Folder", { name: "folder-input", type: "folder", parameters: [{ name: "folder", type: "folder" }] })}
-              draggable>
+              draggable
+              onDragStart={(event) =>
+                onDragStart(event, "inputNode", "Folder", {
+                  name: "folder-input",
+                  type: "folder",
+                  inputs: {
+                    value: ""
+                  },
+                })
+              }
+            >
               <GripDots />
               <FolderIcon />
               <div className="ps-2 text-left w-[80%]">
                 <p className="mb-2 text-lg">Folder</p>
-                <p className="text-sm text-main">Input git repository as a folder.</p>
+                <p className="text-sm text-main">
+                  Input git repository as a folder.
+                </p>
               </div>
             </li>
+
           </ul>
         </div>
       )}
