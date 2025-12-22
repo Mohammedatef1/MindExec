@@ -9,22 +9,27 @@ function Nav() {
   const ctx = useContext(AppContext);
 
   return (
-    <header className="border-b border-primary-light w-full">
-      <nav className="flex items-center text-white-400 bg-primary1">
-        <div className="flex-1 p-4 gap-4 flex items-center ">
+    <header className="w-full border-b border-primary-light bg-black">
+      <nav className="mx-auto flex h-16 items-stretch px-4 text-white-400 bg-primary1">
+        {/* Left: product + workflow identity */}
+        <div className="flex flex-1 items-center gap-4">
           <Link to="/">
             <MindExecLogo />
           </Link>
-          <div className="flex items-center justify-center ps-4">
+
+          <div className="h-8 w-px bg-zinc-800" />
+
+          <div className="flex items-center gap-3 rounded-md border border-zinc-800 bg-black/40 px-3 py-1.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
+              width="32"
+              height="32"
               viewBox="0 0 40 40"
-              fill="none">
+              fill="none"
+              className="shrink-0">
               <path
                 d="M22.1413 3.54422L36.4759 17.9211C37.6433 19.092 37.6433 20.9866 36.4759 22.1575L22.2085 36.4669C21.0403 37.6386 19.144 37.6432 17.9701 36.4773L3.55112 22.1568C2.3731 20.9868 2.36937 19.0825 3.5428 17.9079L17.8945 3.54214C19.0671 2.36836 20.9698 2.36929 22.1413 3.54422Z"
-                fill="#0E0E0E"
+                fill="#050505"
                 stroke="#FEA82F"
                 strokeWidth="2"
               />
@@ -49,58 +54,68 @@ function Nav() {
                 fill="#0E0E0E"
               />
             </svg>
-            <p className="text-white font-bold text-md ms-2 me-4">{ctx.workflowMetadata?.name}</p>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
+                Current workflow
+              </span>
+              <p className="max-w-xs truncate text-sm font-medium text-zinc-100">
+                {ctx.workflowMetadata?.name || "Untitled workflow"}
+              </p>
+            </div>
           </div>
         </div>
-        <div className="flex justify-center mt-auto">
-          <button
-            onClick={() => {
-              ctx.setBuilder(true);
-              ctx.setShowLeft(true);
-            }}
-            className={`uppercase border-2 rounded-tl-[4px] active border-black px-12 py-2 ${ctx.builder ? "text-white bg-black" : "text-gray-200 cursor-pointer"}`}>
-            Builder
-          </button>
-          <button
-            onClick={() => {
-              ctx.setBuilder(false);
-              ctx.setShowLeft(false);
-            }}
-            className={`uppercase border-2 rounded-tl-[4px] active border-black px-12 py-2  ${!ctx.builder ? "text-white bg-black" : "text-gray-200 flex cursor-pointer"} flex items-center gap-2 justify-between relative`}>
-            <label className="cursor-pointer">runs</label>
-            {ctx.runStart && (
-              <div className="loading-container transition-curtain absolute right-3 inline">
-                <div
-                  style={{ width: "25px", height: "25px" }}
-                  className="loading-circle"></div>
-              </div>
-            )}
-          </button>
-        </div>
-        <div className="flex-1 p-4 flex items-center justify-end gap-3">
-          <button className="relative p-2 rounded-lg hover:bg-primary-light/10 transition-colors group">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="text-gray-300 group-hover:text-white transition-colors">
-              <path
-                d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
-                fill="currentColor"
-              />
-            </svg>
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7246A7] rounded-full border-2 border-primary1"></span>
-          </button>
-          <Link to="/dashboard">
-            <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-600/10 hover:bg-red-600/20 active:bg-red-600/30 text-red-400 hover:text-red-300 active:text-red-200 transition-all duration-200 border border-red-600/20 hover:border-red-600/40 active:border-red-600/50 focus:outline-none focus:ring-2 focus:ring-red-600/50">
-              <FontAwesomeIcon 
-                icon={faX} 
-                className="text-sm"
-              />
+
+        {/* Center: primary navigation tabs */}
+        <div className="flex items-center justify-center px-4">
+          <div className="min-w-64 inline-flex items-center gap-1 rounded-md border border-zinc-800 bg-black/40 px-1 py-1">
+            <button
+              onClick={() => {
+                ctx.setBuilder(true);
+                ctx.setShowLeft(true);
+              }}
+              className={`w-1/2 relative px-6 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
+                ${ctx.builder ? "bg-black text-zinc-50 border border-zinc-700" : "text-zinc-400 border border-transparent hover:text-zinc-100"}
+              `}>
+              <span>Builder</span>
             </button>
-          </Link>
+            <button
+              onClick={() => {
+                ctx.setBuilder(false);
+                ctx.setShowLeft(false);
+              }}
+              className={`w-1/2 relative px-6 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
+                ${!ctx.builder ? "bg-black text-zinc-50 border border-zinc-700" : "text-zinc-400 border border-transparent hover:text-zinc-100"}
+              `}>
+              <span>Runs</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Right: actions */}
+        <div className="flex flex-1 items-center justify-end gap-3">
+          <div className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-black/40 px-2 py-1.5">
+            <button className="relative p-1.5 rounded-md hover:bg-primary-light/10 focus:outline-none focus:ring-1 focus:ring-primary-light/60 transition-colors group">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="text-gray-300 group-hover:text-white transition-colors">
+                <path
+                  d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-[#7246A7] border border-black" />
+            </button>
+            <Link to="/dashboard">
+              <button className="flex items-center gap-2 rounded-md border border-red-600/40 bg-red-600/10 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-600/20 hover:text-red-200 focus:outline-none focus:ring-1 focus:ring-red-600/60 transition-colors">
+                <FontAwesomeIcon icon={faX} className="text-xs" />
+                <span className="hidden sm:inline">Exit</span>
+              </button>
+            </Link>
+          </div>
         </div>
       </nav>
     </header>

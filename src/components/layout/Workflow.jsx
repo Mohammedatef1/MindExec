@@ -17,6 +17,7 @@ import MindExecNode from "../ui/MindExecNode";
 import UnsavedChangesModal from "../ui/UnsavedChangesModal";
 import WorkflowButton from "../ui/WorkflowButton";
 import WorkflowNameModal from "../ui/WorkflowNameModal";
+import useCommands from "../../hooks/useCommands";
 
 const nodeTypes = {
   mindExecNode: MindExecNode,
@@ -256,51 +257,43 @@ const MindNode = () => {
   };
   const defaultEdgeOptions = { style: connectionLineStyle };
 
-  const commandTimerRef = useRef();
+  const { generateForNode } = useCommands();
 
   const onSelectionChange = useCallback(
     (elements) => {
-      console.log(elements);
-
-      if (elements) {
-        if (elements.edges[0] != null) {
-          ctx.setSelectedEdgeId(elements.edges[0].id);
-        } else {
-          ctx.setSelectedEdgeId(null);
-        }
-        if (elements.nodes[0] != null) {
-          ctx.setSelectedNodeId(elements.nodes[0].id);
-          setNodeType(elements.nodes[0].type);
-
-          if (elements.nodes[0].data.tool.command) {
-            //console.log(elements.nodes[0].data.tool.finalCommand);
-            const initialText = elements.nodes[0].data.tool.finalCommand;
-            let i = 0;
-
-            clearTimeout(commandTimerRef.current);
-
-            const timerId = setInterval(() => {
-              setCommand(initialText.slice(0, i));
-              i++;
-
-              if (i > initialText.length) {
-                clearInterval(timerId);
-              }
-            }, 10);
-            commandTimerRef.current = timerId;
-          } else {
-            setCommand("");
-            clearTimeout(commandTimerRef.current);
-          }
-        } else {
-          setCommand("");
-          ctx.setSelectedNodeId(null);
-          setNodeType("");
-          clearTimeout(commandTimerRef.current);
-        }
+      if (elements?.edges?.[0]) {
+        ctx.setSelectedEdgeId(elements.edges[0].id);
+      } else {
+        ctx.setSelectedEdgeId(null);
       }
+
+      const selectedNode = elements?.nodes?.[0];
+
+      if (!selectedNode) {
+        ctx.setSelectedNodeId(null);
+        setNodeType("");
+        setCommand("");
+        return;
+      }
+
+      ctx.setSelectedNodeId(selectedNode.id);
+      setNodeType(selectedNode.type);
+
+      if (selectedNode.type === "inputNode") {
+        setCommand("");
+        return;
+      }
+
+      const generatedCommand = generateForNode(selectedNode);
+
+      if (!generatedCommand) {
+        setCommand("");
+        return;
+      }
+
+      setCommand(generatedCommand)
     },
-    [ctx.reactFlowInstance]
+    [ctx.selectedNode, generateForNode]
   );
 
   const onDrop = useCallback(
@@ -558,13 +551,12 @@ const MindNode = () => {
             stderr
           </p>
         )}
-        <p
-          onClick={() => {
-            setCommandIsOpen(!commandIsOpen);
-          }}
-          className="w-auto ">
-          5
-        </p>
+        <div
+          // onClick={() => {
+          //   setCommandIsOpen(!commandIsOpen);
+          // }}
+          className="w-auto flex-1">
+        </div>
       </div>
       {activeSec == "command" && (
         <div className={`bg-primary1  h-[calc(40%-2.5rem)] ${!commandIsOpen ? "translate-y-full" : ""} transition-primary transition-curtain`}>
