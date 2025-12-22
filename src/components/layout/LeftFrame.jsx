@@ -12,6 +12,7 @@ import StringIcon from "../icons/StringIcon";
 import ToolIcon from "../icons/ToolIcon";
 
 import "../../components/index.css";
+import DraggableInputItem from "../ui/DraggableInputItem";
 
 const TOOLS = Object.values(TOOLS_REGISTRY);
 const SCRIPTS = Object.values(SCRIPTS_REGISTRY);
@@ -21,6 +22,8 @@ const LeftFrame = () => {
   const [library, setLibrary] = useState(true);
   const [searchWord, setSearchWord] = useState("");
   const [debouncedSearchWord, setDebouncedSearchWord] = useState("");
+  const [draggingItem, setDraggingItem] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -78,15 +81,22 @@ const LeftFrame = () => {
       throw new Error("Expected SVG inside draggable item");
     }
 
-    const dragSvg = svg.cloneNode(true);
+    setDraggingItem(tool.type || tool.name);
 
+    const dragSvg = svg.cloneNode(true);
+    
     dragSvg.style.position = "absolute";
     dragSvg.style.top = "-1000px";
     dragSvg.style.left = "-1000px";
+    dragSvg.style.opacity = "0.9";
+    
+    const originalTransform = dragSvg.style.transform || "";
+    dragSvg.style.transform = `${originalTransform} scale(1.1)`;
 
     document.body.appendChild(dragSvg);
 
     const { width, height } = svg.getBoundingClientRect();
+    // Center the icon under cursor
     event.dataTransfer.setDragImage(dragSvg, width / 2, height / 2);
     
     event.dataTransfer.setData("application/reactflow", type);
@@ -96,8 +106,15 @@ const LeftFrame = () => {
     event.dataTransfer.effectAllowed = "move";
     
     setTimeout(() => {
-      document.body.removeChild(dragSvg);
+      if (document.body.contains(dragSvg)) {
+        document.body.removeChild(dragSvg);
+      }
+      setDraggingItem(null);
     }, 0);
+  };
+
+  const handleDragEnd = () => {
+    setDraggingItem(null);
   };
 
   return (
@@ -180,15 +197,28 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
+                          className="group py-2.5 px-3 first:mt-2 last:mb-3 rounded-lg transition-all duration-300 ease-out cursor-move flex items-center gap-3 border border-transparent relative"
                           onDragStart={(event) => handleDragStart(event, "mindExecNode", tool)}
+                          onDragEnd={handleDragEnd}
                           draggable>
-                          <GripDots />
-                          <ToolIcon className="tool-icon scale-75" />
-                          <p className="flex-1">{tool.name}</p>
+                          <div className="opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                            <GripDots />
+                          </div>
+                          <div>
+                            <ToolIcon className="tool-icon scale-75" />
+                          </div>
+                          <p className="flex-1 text-sm font-medium group-hover:text-white transition-colors duration-300">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
+                            className="ms-auto text-gray-400 group-hover:text-gray-300 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                          />
+                          <div
+                            className="absolute inset-0 rounded-lg pointer-events-none transition-all duration-300 opacity-0 group-hover:opacity-100"
+                            style={{
+                              backgroundColor: "rgba(114, 70, 167, 0.08)",
+                              borderColor: "rgba(114, 70, 167, 0.2)",
+                              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(114, 70, 167, 0.1)",
+                            }}
                           />
                         </li>
                       ))}
@@ -225,15 +255,28 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
+                          className="group py-2.5 px-3 first:mt-2 last:mb-3 rounded-lg transition-all duration-300 ease-out cursor-move flex items-center gap-3 border border-transparent relative"
                           onDragStart={(event) => handleDragStart(event, "mindExecNode", tool)}
+                          onDragEnd={handleDragEnd}
                           draggable>
-                          <GripDots />
-                          <ToolIcon className="tool-icon scale-75 min-w-[40px] min-h-[40px]" />
-                          <p className="flex-1">{tool.name}</p>
+                          <div className="opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                            <GripDots />
+                          </div>
+                          <div>
+                            <ToolIcon className="tool-icon scale-75 min-w-[40px] min-h-[40px]" />
+                          </div>
+                          <p className="flex-1 text-sm font-medium group-hover:text-white transition-colors duration-300">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
+                            className="ms-auto text-gray-400 group-hover:text-gray-300 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                          />
+                          <div
+                            className="absolute inset-0 rounded-lg pointer-events-none transition-all duration-300 opacity-0 group-hover:opacity-100"
+                            style={{
+                              backgroundColor: "rgba(114, 70, 167, 0.08)",
+                              borderColor: "rgba(114, 70, 167, 0.2)",
+                              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(114, 70, 167, 0.1)",
+                            }}
                           />
                         </li>
                       ))}
@@ -263,15 +306,28 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
+                          className="group py-2.5 px-3 first:mt-2 last:mb-3 rounded-lg transition-all duration-300 ease-out cursor-move flex items-center gap-3 border border-transparent relative "
                           onDragStart={(event) => handleDragStart(event, "mindExecNode", tool)}
+                          onDragEnd={handleDragEnd}
                           draggable>
-                          <GripDots />
-                          <ToolIcon className="tool-icon scale-75" />
-                          <p className="flex-1">{tool.name}</p>
+                          <div className="opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                            <GripDots />
+                          </div>
+                          <div>
+                            <ToolIcon className="tool-icon scale-75" />
+                          </div>
+                          <p className="flex-1 text-sm font-medium group-hover:text-white transition-colors duration-300">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
+                            className="ms-auto text-gray-400 group-hover:text-gray-300 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                          />
+                          <div
+                            className="absolute inset-0 rounded-lg pointer-events-none transition-all duration-300 opacity-0 group-hover:opacity-100"
+                            style={{
+                              backgroundColor: "rgba(114, 70, 167, 0.08)",
+                              borderColor: "rgba(114, 70, 167, 0.2)",
+                              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(114, 70, 167, 0.1)",
+                            }}
                           />
                         </li>
                       ))}
@@ -302,15 +358,28 @@ const LeftFrame = () => {
                         <li
                           key={tool.name}
                           data-min={5}
-                          className="py-2 px-2 first:mt-2 last:mb-3 rounded-lg transition-all duration-200 cursor-move hover:bg-gray-700 active:bg-gray-600 flex items-center gap-2 border border-transparent hover:border-gray-600"
+                          className="group py-2.5 px-3 first:mt-2 last:mb-3 rounded-lg transition-all duration-300 ease-out cursor-move flex items-center gap-3 border border-transparent relative "
                           onDragStart={(event) => handleDragStart(event, "mindExecNode", tool)}
+                          onDragEnd={handleDragEnd}
                           draggable>
-                          <GripDots />
-                          <ToolIcon className="tool-icon scale-75" />
-                          <p className="flex-1">{tool.name}</p>
+                          <div className="opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                            <GripDots />
+                          </div>
+                          <div>
+                            <ToolIcon className="tool-icon scale-75" />
+                          </div>
+                          <p className="flex-1 text-sm font-medium group-hover:text-white transition-colors duration-300">{tool.name}</p>
                           <FontAwesomeIcon
                             icon={faCircleInfo}
-                            className="ms-auto text-gray-400 hover:text-gray-300 transition-colors duration-200"
+                            className="ms-auto text-gray-400 group-hover:text-gray-300 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                          />
+                          <div
+                            className="absolute inset-0 rounded-lg pointer-events-none transition-all duration-300 opacity-0 group-hover:opacity-100"
+                            style={{
+                              backgroundColor: "rgba(114, 70, 167, 0.08)",
+                              borderColor: "rgba(114, 70, 167, 0.2)",
+                              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(114, 70, 167, 0.1)",
+                            }}
                           />
                         </li>
                       ))}
@@ -324,10 +393,12 @@ const LeftFrame = () => {
       )}
       {!library && (
         <div className="m-6 transition-curtain">
-          <ul className="text-white text-center">
-            <li
-              className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              draggable
+          <ul className="text-white text-center space-y-3">
+            <DraggableInputItem
+              type="string"
+              name="String"
+              description="String input for tool parameters."
+              icon={<StringIcon className="tool-icon" />}
               onDragStart={(event) =>
                 handleDragStart(event, "inputNode", {
                   name: "string",
@@ -339,18 +410,19 @@ const LeftFrame = () => {
                     },
                   },
                 })
-              }>
-              <GripDots className="scale-150" />
-              <StringIcon className="tool-icon" />
-              <div className="ps-2 text-left w-[80%]">
-                <p className="mb-2 text-lg">String</p>
-                <p className="text-sm text-main">String input for tool parameters.</p>
-              </div>
-            </li>
+              }
+              onDragEnd={handleDragEnd}
+              isDragging={draggingItem === "string"}
+              isHovered={hoveredItem === "string"}
+              onMouseEnter={() => setHoveredItem("string")}
+              onMouseLeave={() => setHoveredItem(null)}
+            />
 
-            <li
-              className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              draggable
+            <DraggableInputItem
+              type="boolean"
+              name="Boolean"
+              description="Boolean switcher for tool parameters."
+              icon={<BooleanIcon className="tool-icon" />}
               onDragStart={(event) =>
                 handleDragStart(event, "inputNode", {
                   name: "boolean",
@@ -362,18 +434,19 @@ const LeftFrame = () => {
                     },
                   },
                 })
-              }>
-              <GripDots />
-              <BooleanIcon className="tool-icon" />
-              <div className="ps-2 text-left w-[80%]">
-                <p className="mb-2 text-lg">Boolean</p>
-                <p className="text-sm text-main">Boolean switcher for tool parameters.</p>
-              </div>
-            </li>
+              }
+              onDragEnd={handleDragEnd}
+              isDragging={draggingItem === "boolean"}
+              isHovered={hoveredItem === "boolean"}
+              onMouseEnter={() => setHoveredItem("boolean")}
+              onMouseLeave={() => setHoveredItem(null)}
+            />
 
-            <li
-              className="py-2 px-2 first:mt-2 last:mb-3 mb-4 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              draggable
+            <DraggableInputItem
+              type="file"
+              name="File"
+              description="Import file from URL or select from storage."
+              icon={<FileIcon className="tool-icon" />}
               onDragStart={(event) =>
                 handleDragStart(event, "inputNode", {
                   name: "file",
@@ -385,19 +458,19 @@ const LeftFrame = () => {
                     },
                   },
                 })
-              }>
-              <GripDots />
-              <FileIcon className="tool-icon" />
-              <div className="ps-2 text-left w-[80%]">
-                <p className="mb-2 text-lg">File</p>
-                <p className="text-sm text-main">Import file from URL or select from storage.</p>
-              </div>
-            </li>
+              }
+              onDragEnd={handleDragEnd}
+              isDragging={draggingItem === "file"}
+              isHovered={hoveredItem === "file"}
+              onMouseEnter={() => setHoveredItem("file")}
+              onMouseLeave={() => setHoveredItem(null)}
+            />
 
-            {/* Folder input */}
-            <li
-              className="py-2 px-2 first:mt-2 last:mb-3 rounded-[4px] transition-primary cursor-move hover:bg-gray-600 flex items-center gap-2"
-              draggable
+            <DraggableInputItem
+              type="folder"
+              name="Folder"
+              description="Input git repository as a folder."
+              icon={<FolderIcon className="tool-icon" />}
               onDragStart={(event) =>
                 handleDragStart(event, "inputNode", {
                   name: "folder",
@@ -409,14 +482,13 @@ const LeftFrame = () => {
                     },
                   },
                 })
-              }>
-              <GripDots />
-              <FolderIcon className="tool-icon" />
-              <div className="ps-2 text-left w-[80%]">
-                <p className="mb-2 text-lg">Folder</p>
-                <p className="text-sm text-main">Input git repository as a folder.</p>
-              </div>
-            </li>
+              }
+              onDragEnd={handleDragEnd}
+              isDragging={draggingItem === "folder"}
+              isHovered={hoveredItem === "folder"}
+              onMouseEnter={() => setHoveredItem("folder")}
+              onMouseLeave={() => setHoveredItem(null)}
+            />
           </ul>
         </div>
       )}

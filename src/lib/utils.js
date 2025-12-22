@@ -37,3 +37,13 @@ export function formatRelativeTime(dateString) {
     return diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
   }
 }
+
+export const getInputAccentColor = (type) => {
+  const colors = {
+    string: "#AC3CF3",
+    boolean: "#1781D0",
+    file: "#D08517",
+    folder: "#D1C413",
+  };
+  return colors[type] || "#7246A7";
+};
