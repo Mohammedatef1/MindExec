@@ -1,18 +1,26 @@
-import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../../AppContext";
 import { formatRelativeTime, getInputAccentColor } from "../../lib/utils";
 
-const RightFrame = () => {
-  const [parameters, setParameters] = useState(true);
+const menuVars = {
+  initial: { opacity: 0, height: 0 },
+  animate: { opacity: 1, height: "auto" },
+  exit: { opacity: 0, height: 0 },
+};
 
-  const [parametersIsOpen, setParametersIsOpen] = useState(true);
+const transition = {
+  ease: [0.12, 0, 0.39, 0],
+};
+
+const RightFrame = () => {
+
+  const [inputsOpen, setInputsOpen] = useState(true);
 
   const ctx = useContext(AppContext);
 
-  const [searchFocused, setSearchFocused] = useState(false);
   const [input, setInput] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
@@ -82,15 +90,6 @@ const RightFrame = () => {
     [ctx]
   );
 
-  const menuVars = {
-    initial: { opacity: 0, height: 0 },
-    animate: { opacity: 1, height: "auto" },
-    exit: { opacity: 0, height: 0 },
-  };
-  const transition = {
-    ease: [0.12, 0, 0.39, 0],
-  };
-  
   const onStringChange = useCallback(
     (e) => {
       const value = e.target.value;
@@ -403,190 +402,85 @@ const RightFrame = () => {
       )}
 
       {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && ctx.builder && (
-        <div className="transition-curtain mt-8">
-          <div className=" bg-black mx-6 rounded-[4px]">
+        <div className="transition-curtain mt-8 px-4">
+          <div className="rounded-lg border border-zinc-800 bg-black/50 shadow-sm overflow-hidden">
+            {/* Header */}
             <button
-              onClick={() => {
-                setParameters(true);
-              }}
-              className={`uppercase w-1/2 border-2 rounded-[4px] border-black text-center py-2 transition-primary ${parameters ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
-              Inputs
-            </button>
-            <button
-              onClick={() => {
-                setParameters(false);
-              }}
-              className={`uppercase w-1/2 border-2 rounded-[4px]    border-black text-center py-2 transition-primary ${!parameters ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
-              Config
-            </button>
-          </div>
-          {parameters && (
-            <div className="transition-curtain">
-              <div
-                onFocus={() => {
-                  setSearchFocused(true);
-                }}
-                onBlur={() => {
-                  setSearchFocused(false);
-                }}
-                className={`bg-black border transition-primary ${searchFocused ? "border-white" : "border-black"}   my-6 hover:border-gray-200 mx-6 rounded-[4px] `}>
-                <FontAwesomeIcon
-                  className="text-white ps-3"
-                  icon={faMagnifyingGlass}
-                />
-                <input
-                  className="rounded-[4px] w-4/5 text-white bg-black py-1 ps-3 outline-none"
-                  placeholder="Search parameters"
-                  type="text"
-                />
+              type="button"
+              className="w-full flex items-center justify-between px-4 py-3 text-left bg-black border-b border-zinc-800 hover:bg-zinc-950 transition-colors"
+              onClick={() => setInputsOpen(!inputsOpen)}>
+              <div className="flex flex-col gap-1">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
+                  Node inputs
+                </p>
+                <p className="text-sm font-medium text-zinc-100 truncate">
+                  {ctx.selectedNode.data.label || ctx.selectedNode.data.tool?.name || "Active node"}
+                </p>
               </div>
-              <div
-                id="options"
-                className="mt-10">
-                <div
-                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary cursor-pointer hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
-                  onClick={() => {
-                    setParametersIsOpen(!parametersIsOpen);
-                  }}>
-                  <h2>Parameters</h2>
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setParametersIsOpen(!parametersIsOpen);
-                    }}
-                    className="text-white ps-3"
-                    icon={faAngleDown}
-                  />
-                </div>
-                <AnimatePresence>
-                  {parametersIsOpen && (
-                    <motion.div
-                      variants={menuVars}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={transition}
-                      id="scripts"
-                      className={`bg-black px-6 overflow-hidden`}>
-                      <ul className="text-white">
-                        {Object.entries(ctx.selectedNode.data.tool.inputs).map(([key, input]) => (
-                          <li
-                            key={key}
-                            className="py-2 first:pt-4 last:pb-4">
-                            {key}
-                            <div className="float-right scale-75">
-                              <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-px">
-                                <input
-                                  type="checkbox"
-                                  name="autoSaver"
-                                  className="sr-only"
-                                  checked={input.active}
-                                  onChange={() => {
-                                    toggleInput(key);
-                                  }}
-                                />
-                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${input.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
-                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${input.active ? "translate-x-6" : ""} ${input.active ? "bg-blue-500" : "bg-white"}`}></span>
-                                </span>
-                              </label>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          )}
+              <FontAwesomeIcon
+                icon={faAngleDown}
+                className={`text-zinc-300 transition-transform duration-150 ${inputsOpen ? "rotate-180" : ""}`}
+              />
+            </button>
 
-          {!parameters && (
-            <div className="m-6 transition-curtain">
-              <ul className="text-white text-center">
-                <li className="p-4 my-1 bg-zinc-800 transition-primary hover:bg-zinc-950 rounded-md cursor-move">String</li>
-                <li className="p-4 my-1 bg-zinc-800 transition-primary hover:bg-zinc-950 rounded-md cursor-move">Boolen</li>
-                <li className="p-4 my-1 bg-zinc-800 transition-primary hover:bg-zinc-950 rounded-md cursor-move">File</li>
-                <li className="p-4 my-1 bg-zinc-800 transition-primary hover:bg-zinc-950 rounded-md cursor-move">Folder</li>
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
-      {ctx.selectedNode && ctx.selectedNode.type == "mindExecNode" && !ctx.builder && (
-        <div
-          data-test={ctx.test}
-          className="transition-curtain">
-          <div className="px-4">
-            {ctx.selectedNode.data.tool.status == "succeeded" && <span className="uppercase py-1 px-4 rounded-lg text-[#00dfaf] bg-[#122633]">succeeded</span>}
-            {ctx.selectedNode.data.tool.status == "proccessing..." && <span className="uppercase py-1 px-4 rounded-lg text-[#ff920e] bg-[#241a22]">proccessing...</span>}
-            <p className="mt-4 text-xl text-white ">{ctx.selectedNode.data.label}</p>
-            <p className=" text-sm text-main">{ctx.selectedNode.id}</p>
-            {ctx.selectedNode.data.tool.status == "succeeded" && <div className="w-full mx-auto text-[#17ccfd] bg-[#122633] py-2 mt-8 border-2 border-[#17ccfd] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
-            {ctx.selectedNode.data.tool.status == "proccessing..." && <div className="w-full mx-auto text-[#ff920e] bg-[#241a22] py-2 mt-8 border-2 border-[#ff920e] text-center uppercase">{ctx.selectedNode.data.tool.status}</div>}
-            <p className="mt-4 text-lg text-[#678eb4]">
-              Duration <span className="ps-1 text-main">{ctx.selectedNode.data.tool.duration}</span>
-            </p>
-          </div>
-          {parameters && (
-            <div className="transition-curtain">
-              <div
-                id="options"
-                className="mt-10">
-                <div
-                  className={`px-4 py-3 border-t-2 border-b-2 transition-primary cursor-pointer hover:bg-black border-black ${parametersIsOpen ? "bg-black" : ""} text-gray-200 uppercase flex items-center justify-between`}
-                  onClick={() => {
-                    setParametersIsOpen(!parametersIsOpen);
-                  }}>
-                  <h2>Parameters</h2>
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setParametersIsOpen(!parametersIsOpen);
-                    }}
-                    className="text-white ps-3"
-                    icon={faAngleDown}
-                  />
-                </div>
-                <AnimatePresence>
-                  {parametersIsOpen && (
-                    <motion.div
-                      variants={menuVars}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      transition={transition}
-                      id="scripts"
-                      className={`bg-black px-6 overflow-hidden`}>
-                      <ul className="text-white">
+            <AnimatePresence initial={false}>
+              {inputsOpen && (
+                <motion.div
+                  key="inputs-panel"
+                  variants={menuVars}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={transition}
+                  className="bg-black/60 overflow-hidden">
+                  <div className="p-3">
+                    {Object.keys(ctx.selectedNode.data.tool.inputs || {}).length === 0 ? (
+                      <div className="rounded-md border border-dashed border-zinc-700/80 bg-black/40 px-3 py-4 text-xs text-zinc-500 text-center">
+                        This node has no configurable inputs.
+                      </div>
+                    ) : (
+                      <ul className="divide-y divide-zinc-800/80 rounded-md border border-zinc-800 bg-black/40">
                         {Object.entries(ctx.selectedNode.data.tool.inputs).map(([key, input]) => (
                           <li
                             key={key}
-                            id="script 1"
-                            className="py-2 first:pt-4 last:pb-4">
-                            {key}
-                            <div className="float-right scale-75">
-                              <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center translate-y-[1px]">
-                                <input
-                                  type="checkbox"
-                                  name="autoSaver"
-                                  className="sr-only"
-                                  checked={input.active}
-                                  onChange={() => {
-                                    toggleInput(key);
-                                  }}
-                                />
-                                <span className={`slider  flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${input.active ? "bg-primary" : "bg-[#CCCCCE]"}`}>
-                                  <span className={`dot h-[18px] w-[18px] rounded-full  duration-200 ${input.active ? "translate-x-6" : ""} ${input.active ? "bg-blue-500" : "bg-white"}`}></span>
-                                </span>
-                              </label>
+                            className="flex items-center justify-between px-3 py-2.5 hover:bg-zinc-900/60 transition-colors">
+                            <div className="flex flex-col gap-0.5 pr-3">
+                              <p className="text-sm font-medium text-zinc-100">{key}</p>
+                              <p className="text-[11px] text-zinc-500">
+                                {input.active ? "Connected input" : "Inactive input"}
+                              </p>
                             </div>
+                            <label className="autoSaverSwitch relative inline-flex cursor-pointer select-none items-center">
+                              <input
+                                type="checkbox"
+                                name="autoSaver"
+                                className="sr-only"
+                                checked={input.active}
+                                onChange={() => {
+                                  toggleInput(key);
+                                }}
+                              />
+                              <span
+                                className={`slider flex h-[22px] w-[42px] items-center rounded-full p-1 border transition-colors duration-150 ${
+                                  input.active
+                                    ? "bg-primary border-primary-light"
+                                    : "bg-zinc-700/70 border-zinc-500"
+                                }`}>
+                                <span
+                                  className={`dot h-[14px] w-[14px] rounded-full bg-white shadow-sm transition-all duration-150 ${
+                                    input.active ? "translate-x-[16px] bg-blue-400" : ""
+                                  }`}></span>
+                              </span>
+                            </label>
                           </li>
                         ))}
                       </ul>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          )}
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       )}
     </div>
