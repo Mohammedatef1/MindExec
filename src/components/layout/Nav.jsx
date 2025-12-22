@@ -67,28 +67,26 @@ function Nav() {
 
         {/* Center: primary navigation tabs */}
         <div className="flex items-center justify-center px-4">
-          <div className="inline-flex items-center gap-1 rounded-md border border-zinc-800 bg-black/40 px-1 py-1">
+          <div className="min-w-64 inline-flex items-center gap-1 rounded-md border border-zinc-800 bg-black/40 px-1 py-1">
             <button
               onClick={() => {
                 ctx.setBuilder(true);
                 ctx.setShowLeft(true);
               }}
-              className={`relative px-6 py-2   text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
+              className={`w-1/2 relative px-6 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
                 ${ctx.builder ? "bg-black text-zinc-50 border border-zinc-700" : "text-zinc-400 border border-transparent hover:text-zinc-100"}
               `}>
               <span>Builder</span>
-              {ctx.builder && <span className="absolute inset-x-4 -bottom-[2px] h-px bg-primary-light/80" />}
             </button>
             <button
               onClick={() => {
                 ctx.setBuilder(false);
                 ctx.setShowLeft(false);
               }}
-              className={`relative px-6 py-2 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150 flex items-center gap-2
+              className={`w-1/2 relative px-6 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
                 ${!ctx.builder ? "bg-black text-zinc-50 border border-zinc-700" : "text-zinc-400 border border-transparent hover:text-zinc-100"}
               `}>
               <span>Runs</span>
-              {!ctx.builder && <span className="absolute inset-x-4 -bottom-[2px] h-px bg-primary-light/80" />}
             </button>
           </div>
         </div>
