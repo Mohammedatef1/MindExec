@@ -26,7 +26,7 @@ const DraggableInputItem = ({
       className={`
         group relative py-3 px-3 rounded-lg cursor-move
         flex items-center gap-3
-        transition-all duration-300 ease-out
+        transition-colors duration-200 ease-out
         border border-transparent
         ${isDragging ? "opacity-50" : ""}
         ${isHovered 
@@ -37,7 +37,7 @@ const DraggableInputItem = ({
 
       <div
         className={`
-          transition-all duration-300 ease-out
+          transition-opacity duration-200 ease-out
           ${isHovered ? "opacity-100" : "opacity-60 group-hover:opacity-80"}
         `}
         style={{
@@ -48,13 +48,11 @@ const DraggableInputItem = ({
 
       {/* Icon with subtle glow on hover */}
       <div
-        className={`
-          transition-all duration-300 ease-out
-        `}
         style={{
           filter: isHovered
             ? `drop-shadow(0 0 8px ${glowColor}) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))`
             : "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
+          transition: "filter 0.2s ease-out",
         }}>
         {icon}
       </div>
@@ -80,7 +78,7 @@ const DraggableInputItem = ({
       <div
         className={`
           absolute right-0 top-0 bottom-0 rounded-r-lg
-          transition-all duration-300 ease-out
+          transition-opacity duration-200 ease-out
           ${isHovered ? "opacity-100 w-[3px]" : "opacity-0 w-0"}
         `}
         style={{ backgroundColor: accentColor }}

@@ -9,14 +9,14 @@ import toast from "react-hot-toast";
 import { useBlocker, useSearchParams } from "react-router-dom";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { loadMindMap, saveMindMap } from "../Storage";
-import UnsavedChangesModal from "../ui/UnsavedChangesModal";
-import WorkflowNameModal from "../ui/WorkflowNameModal";
-import InputNode from "../ui/InputNode";
-import MindExecNode from "../ui/MindExecNode";
-import WorkflowButton from "../ui/WorkflowButton";
 import exampleWorkflow from "../../assets/exampleWorkflow.json";
 import useWorkflow from "../../hooks/useWorkflow";
+import { loadMindMap, saveMindMap } from "../Storage";
+import InputNode from "../ui/InputNode";
+import MindExecNode from "../ui/MindExecNode";
+import UnsavedChangesModal from "../ui/UnsavedChangesModal";
+import WorkflowButton from "../ui/WorkflowButton";
+import WorkflowNameModal from "../ui/WorkflowNameModal";
 
 const nodeTypes = {
   mindExecNode: MindExecNode,
@@ -477,7 +477,7 @@ const MindNode = () => {
             onConnectStart={onConnectStart}>
             <Controls
               position="top-left"
-              className="text-white z-20 bg-white rounded-md hover:rounded-md flex flex-row-reverse controls"
+              className="z-20 controls-dark"
             />
             <div className="w-full h-full relative">
               <div className="z-20 absolute flex gap-3 top-3 left-1/2 transform -translate-x-1/2 ">

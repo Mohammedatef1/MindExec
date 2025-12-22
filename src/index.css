@@ -148,9 +148,62 @@ body {
   padding: 10px 20px;
 }
 
+.controls-dark {
+  background: #171717;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 2px;
+}
+
+.controls-dark button,
+.controls-dark .react-flow__controls-button {
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  color: #d4d4d4;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.controls-dark button:hover,
+.controls-dark .react-flow__controls-button:hover {
+  background: rgba(114, 70, 167, 0.15);
+  color: #7246A7;
+}
+
+.controls-dark button svg,
+.controls-dark .react-flow__controls-button svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.controls-dark button:disabled,
+.controls-dark .react-flow__controls-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.controls-dark button:disabled:hover,
+.controls-dark .react-flow__controls-button:disabled:hover {
+  background: transparent;
+  color: #d4d4d4;
+}
+
 .test1 {
-  background-color: #171717 !important;
-  padding: 16px !important;
+  background-color: #171717;
+  padding: 16px;
 }
 
 .nav-link{
