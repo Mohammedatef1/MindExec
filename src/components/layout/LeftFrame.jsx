@@ -118,26 +118,32 @@ const LeftFrame = () => {
   };
 
   return (
-    <div className={`bg-primary1 h-full pt-16`}>
-      <div className=" bg-black mx-6 rounded-[4px] whitespace-nowrap">
-        <button
-          onClick={() => {
-            setLibrary(true);
-          }}
-          className={`uppercase w-1/2 border-2 rounded-[4px] border-black px-1 py-2 transition-primary ${library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
-          library
-        </button>
-        <button
-          onClick={() => {
-            setLibrary(false);
-          }}
-          className={`uppercase w-1/2 border-2 rounded-[4px]    border-black px-1 py-2 transition-primary ${!library ? "bg-black text-white" : "text-gray-200 bg-primary1"}`}>
-          inputs
-        </button>
+    <div className="bg-primary1 h-full pt-16">
+      <div className="px-2 flex justify-center">
+        <div className="max-w-64 w-full inline-flex items-center gap-1 rounded-md border border-zinc-800 bg-black/40 px-1 py-1">
+          <button
+            onClick={() => {
+              setLibrary(true);
+            }}
+            className={`w-1/2 relative px-2 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
+              ${library ? "bg-black text-zinc-50 border border-zinc-700" : "text-zinc-400 border border-transparent hover:text-zinc-100"}
+            `}>
+            <span>Library</span>
+          </button>
+          <button
+            onClick={() => {
+              setLibrary(false);
+            }}
+            className={`w-1/2 relative px-2 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-md transition-colors duration-150
+              ${!library ? "bg-black text-zinc-50 border border-zinc-700" : "text-zinc-400 border border-transparent hover:text-zinc-100"}
+            `}>
+            <span>Inputs</span>
+          </button>
+        </div>
       </div>
       {library && (
         <div className="transition-curtain">
-          <div className="relative p-6">
+          <div className="relative px-2 my-6 flex justify-center">
             <div
               onFocus={() => {
                 setSearchFocused(true);
@@ -145,7 +151,7 @@ const LeftFrame = () => {
               onBlur={() => {
                 setSearchFocused(false);
               }}
-              className={`bg-black border-2 transition-all duration-200 rounded-lg flex items-center gap-2 px-3 py-2.5 ${searchFocused ? "border-[#7246A7]" : "border-gray-700 hover:border-gray-500"}`}>
+              className={`max-w-64 w-full bg-black border transition-all duration-200 rounded-lg flex items-center gap-2 px-3 py-2.5 ${searchFocused ? "border-[#7246A7]" : "border-zinc-700 hover:border-gray-500"}`}>
               <FontAwesomeIcon
                 className={`transition-colors duration-200 ${searchFocused ? "text-[#7246A7]" : "text-gray-400"}`}
                 icon={faMagnifyingGlass}
