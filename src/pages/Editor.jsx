@@ -6,29 +6,23 @@ import LeftFrame from "../components/layout/LeftFrame";
 import MindMap from "../components/layout/MindMap";
 import Nav from "../components/layout/Nav";
 import RightFrame from "../components/layout/RightFrame";
-import useCollapsingPanel from "../hooks/useCollapsingPanel";
 
 const Editor = () => {
   const ctx = useContext(AppContext);
 
-  const leftPanel = useCollapsingPanel(ctx.showLeft)
-  const rightPanel = useCollapsingPanel(ctx.showRight)
-
   const toggleLeft = () => {
-    leftPanel.onToggle()
     ctx.setShowLeft(!ctx.showLeft)
   };
 
   const toggleRight = () => {
-    rightPanel.onToggle()
     ctx.setShowRight(!ctx.showRight)
   };
 
   const getGridTemplateColumns = () => {
-    if (ctx.showLeft && ctx.showRight) return "1fr 3fr 1fr";
-    if (ctx.showLeft && !ctx.showRight) return "1fr 4fr 0fr";
-    if (!ctx.showLeft && ctx.showRight) return "0fr 4fr 1fr";
-    return "0fr 1fr 0fr";
+    const leftPanelColumnWidth = ctx.showLeft ? 'var(--panel-width)' : '0px';
+    const rightPanelColumnWidth = ctx.showRight ? 'var(--panel-width)' : '0px';
+
+    return `${leftPanelColumnWidth} 1fr ${rightPanelColumnWidth}`;
   };
 
   return (
@@ -37,8 +31,8 @@ const Editor = () => {
       <section
         className="w-full flex-1 grid transition-all duration-500"
         style={{ gridTemplateColumns: getGridTemplateColumns() }}>
-        <div ref={leftPanel.ref} className="relative min-w-0">
-          <LeftFrame minWidth={leftPanel.minWidth} />
+        <div className="relative min-w-0">
+          <LeftFrame />
           <button
             className="absolute top-1 right-1 z-20 p-2 rounded-lg text-white hover:bg-primary-light/10 transition-colors group"
             onClick={toggleLeft}>
@@ -70,8 +64,8 @@ const Editor = () => {
             </div>
           </button>
         </div>
-        <div ref={rightPanel.ref} className="relative min-w-0">
-          <RightFrame minWidth={rightPanel.minWidth} />
+        <div className="relative min-w-0">
+          <RightFrame />
           <button
             className="absolute top-1 left-1 z-20 p-2 rounded-lg text-white hover:bg-primary-light/10 transition-colors group"
             onClick={toggleRight}>

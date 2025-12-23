@@ -15,7 +15,7 @@ const transition = {
   ease: [0.12, 0, 0.39, 0],
 };
 
-const RightFrame = ({minWidth}) => {
+const RightFrame = () => {
 
   const [inputsOpen, setInputsOpen] = useState(true);
 
@@ -234,7 +234,7 @@ const RightFrame = ({minWidth}) => {
 
   return (
     <div style={{
-      minWidth: minWidth ?? 0 
+      minWidth: 'var(--panel-width)'
     }} className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
@@ -255,7 +255,7 @@ const RightFrame = ({minWidth}) => {
 
             return (
               <div className="rounded-lg border border-zinc-800 bg-black/40 px-4 py-3 shadow-sm">
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center justify-between">
                   <div>
                     <p
                       className="text-xs font-semibold tracking-[0.22em] text-zinc-400 uppercase"
@@ -314,7 +314,7 @@ const RightFrame = ({minWidth}) => {
 
           {ctx.selectedNode.data.tool.type === "string" && (
             <div className="space-y-3 rounded-lg border border-zinc-800 bg-black/40 px-4 py-3">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
                   Value
                 </p>
@@ -351,7 +351,7 @@ const RightFrame = ({minWidth}) => {
 
           {ctx.selectedNode.data.tool.type === "boolean" && (
             <div className="space-y-4 rounded-lg border border-zinc-800 bg-black/40 px-4 py-3">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
                   Value
                 </p>
