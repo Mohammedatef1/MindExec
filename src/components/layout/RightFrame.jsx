@@ -15,7 +15,7 @@ const transition = {
   ease: [0.12, 0, 0.39, 0],
 };
 
-const RightFrame = () => {
+const RightFrame = ({minWidth}) => {
 
   const [inputsOpen, setInputsOpen] = useState(true);
 
@@ -233,12 +233,14 @@ const RightFrame = () => {
 
 
   return (
-    <div className="bg-primary1 h-full transition-none pt-8">
+    <div style={{
+      minWidth: minWidth ?? 0 
+    }} className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
-          <h2 className="font-bold uppercase text-white mb-4 truncate">Workflow Details</h2>
+          <h2 className="font-bold uppercase text-white mb-4">Workflow Details</h2>
           {ctx.workflowMetadata?.created_at ? 
-            <p className="text-primary-light font-bold truncate">
+            <p className="text-primary-light font-bold">
               Created:<span className="text-gray-300 px-2">{formatRelativeTime(ctx.workflowMetadata.created_at)}</span>
             </p>
           : null}

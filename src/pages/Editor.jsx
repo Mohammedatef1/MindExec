@@ -6,12 +6,23 @@ import LeftFrame from "../components/layout/LeftFrame";
 import MindMap from "../components/layout/MindMap";
 import Nav from "../components/layout/Nav";
 import RightFrame from "../components/layout/RightFrame";
+import useCollapsingPanel from "../hooks/useCollapsingPanel";
 
 const Editor = () => {
   const ctx = useContext(AppContext);
 
-  const toggleLeft = () => ctx.setShowLeft(!ctx.showLeft);
-  const toggleRight = () => ctx.setShowRight(!ctx.showRight);
+  const leftPanel = useCollapsingPanel(ctx.showLeft)
+  const rightPanel = useCollapsingPanel(ctx.showRight)
+
+  const toggleLeft = () => {
+    leftPanel.onToggle()
+    ctx.setShowLeft(!ctx.showLeft)
+  };
+
+  const toggleRight = () => {
+    rightPanel.onToggle()
+    ctx.setShowRight(!ctx.showRight)
+  };
 
   const getGridTemplateColumns = () => {
     if (ctx.showLeft && ctx.showRight) return "1fr 3fr 1fr";
@@ -26,8 +37,8 @@ const Editor = () => {
       <section
         className="w-full flex-1 grid transition-all duration-500"
         style={{ gridTemplateColumns: getGridTemplateColumns() }}>
-        <div className="relative min-w-0">
-          <LeftFrame />
+        <div ref={leftPanel.ref} className="relative min-w-0">
+          <LeftFrame minWidth={leftPanel.minWidth} />
           <button
             className="absolute top-1 right-1 z-20 p-2 rounded-lg text-white hover:bg-primary-light/10 transition-colors group"
             onClick={toggleLeft}>
@@ -59,8 +70,8 @@ const Editor = () => {
             </div>
           </button>
         </div>
-        <div className="relative min-w-0">
-          <RightFrame />
+        <div ref={rightPanel.ref} className="relative min-w-0">
+          <RightFrame minWidth={rightPanel.minWidth} />
           <button
             className="absolute top-1 left-1 z-20 p-2 rounded-lg text-white hover:bg-primary-light/10 transition-colors group"
             onClick={toggleRight}>
