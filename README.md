@@ -1,119 +1,111 @@
-## MindExec – Visual Web Vulnerability Workflow Builder
+# MindExec – Visual Web Vulnerability Workflow Builder
 
-MindExec is a **visual workflow builder for web vulnerability scanning**.  
-It lets security engineers, penetration testers, and bug bounty hunters **design scan workflows as a mind map**, configure each step, and generate executable commands/scripts from those workflows.
-
-The app is built with **React + Vite**, styled with **Tailwind CSS**, and uses **Supabase** for authentication and user management.
+MindExec is a React application that provides a visual, graph-based editor for designing security tool workflows. The core value proposition is replacing manual, error-prone CLI command composition with a structured, visual workflow model that resolves into deterministic, executable command-line instructions.
 
 ---
 
-## Table of Contents
+## What is MindExec?
 
-- **Overview**
-- **Core Features**
-- **Architecture & Tech Stack**
-- **Environment Configuration**
-- **Getting Started**
-- **Available Scripts**
-- **Build & Deployment**
-- **Project Structure**
-- **Security Notes**
-- **Contributing**
-- **License**
+MindExec enables security engineers, penetration testers, and bug bounty hunters to:
 
----
+- **Visually assemble workflows** as node graphs, where nodes represent tools, scripts, and data inputs
+- **Model data flow** through edges that connect outputs to inputs with type validation
+- **Generate executable CLI commands** automatically from the graph structure
 
-## Overview
+The system is not a generic React Flow demonstration. It implements domain-specific logic for:
+- Tool metadata management (base commands, flags, input/output types)
+- Graph-based command generation that resolves node connections into CLI strings
+- Type-safe edge validation ensuring compatible data flow between nodes
 
-MindExec provides:
-
-- A **marketing / landing page** that explains the product and its value.
-- An authenticated **dashboard** that summarizes latest runs and workflows.
-- A powerful **Editor** where users build workflows visually using a mind map interface.
-- A **command-generation engine** that converts nodes in the mind map into final tool commands ready for execution in your own environment.
-
-<!-- > MindExec itself does **not** execute vulnerability scans on your infrastructure; it focuses on **orchestration, visualization, and script generation**. Execution of generated commands is intentionally left to your own controlled environment. -->
+Users build workflows by dragging tools and inputs onto a canvas, connecting them via edges, and configuring parameters. The editor generates the final command-line instructions that can be executed in controlled environments.
 
 ---
 
-## Core Features
+## Editor Design
 
-- **User Authentication**
-  - Email/password authentication powered by Supabase.
-  - Registration, login, logout, and session handling.
+The editor uses a three-panel layout optimized for working with security tool workflows:
 
-- **Dashboard**
-  - Personalized view with user metadata (name/initials).
-  - Quick access to:
-    - **Latest Runs** (conceptual view).
-    - **Recent Workflows** 
+### Three-Panel Layout
 
-- **Visual Workflow Editor (Mind Map)**
-  - Built on top of `reactflow` / `react-flow-renderer`.
-  - Three-pane layout:
-    - **Left frame**: node library / tools.
-    - **Center**: mind map canvas.
-    - **Right frame**: node/tool configuration.
-  - Toggleable left/right panels for focused editing.
+- **Left Panel (Library)**: Tool and input node library with searchable categories (Scripts, Splitters, Tools). Supports drag-and-drop onto the canvas.
+- **Center Panel (Canvas)**: React Flow-based graph canvas where users assemble workflows. Nodes can be positioned, connected, and selected.
+- **Right Panel (Configuration)**: Selection-driven configuration panel that adapts to the active node type:
+  - For tool nodes: displays configurable inputs with toggle switches
+  - For input nodes: provides value editors (string textarea, boolean toggle, file/folder selectors)
 
-- **Command / Script Generation**
-  - Each `mindExecNode` holds a `tool.command` definition.
-  - The engine:
-    - Starts from an initial command (`initialComand`).
-    - Iterates through configured options and flags.
-    - Memoizes identical configurations for efficiency.
-    - Appends an output path (`out/<node-id>/output.txt`).
-  - Result: a **fully composed command string** stored on each node to be executed.
+### Collapsible Panels
 
-- **Responsive, Production-Ready UI**
-  - Tailwind CSS with a custom theme and typography scale.
-  - Dark UI tailored for security tooling.
-  - Animations and micro-interactions with Framer Motion and icon systems.
+Both left and right panels can be collapsed to maximize canvas real estate. When collapsed, floating toggle buttons appear on the canvas edges to restore panels. This design accommodates workflows with many nodes while maintaining access to configuration options.
 
-- **Routing & Navigation**
-  - Client-side routing via `react-router-dom`.
-  - Protected routes for:
-    - `/dashboard`
-    - `/editor`
-  - Public routes:
-    - `/` (Home)
-    - `/login`
-    - `/register`
+### Real-Time Command Preview
+
+The editor includes a command preview panel that displays the generated CLI command for the selected node. This preview updates in real-time as users:
+- Modify node connections
+- Configure input values
+- Toggle input activation states
+
+The command generation engine (`src/lib/commandEngine.js`) traverses the graph, resolves input values from connected nodes, and composes the final command string with appropriate flags and arguments.
 
 ---
 
-## Architecture & Tech Stack
+## Key Technical Concepts
 
-- **Frontend**
-  - `React 18`
-  - `Vite`
-  - `reactflow` / `react-flow-renderer`
-  - `React Router DOM`
-  - `Tailwind CSS` 
-  - `Framer Motion`
-  - `lucide-react`
-  - `react-hook-form`
-  - `react-hot-toast`
+### Graph-Based State Modeling
 
-- **Backend as a Service**
-  - `@supabase/supabase-js`
+The application models workflows as a graph structure:
+- **Nodes**: Represent tools, scripts, or input sources. Each node holds metadata including base command, input/output definitions, and current configuration state.
+- **Edges**: Represent data flow connections. Edges connect source outputs to target inputs with type validation.
+- **Selection State**: Tracks the currently selected node/edge to drive the configuration panel updates.
+<!-- - **Lifecycle Flags**: Manages editor modes (builder vs. runner) and workflow execution state. -->
+
+State is managed globally via React Context (`AppContext`, `AppProvider`) to ensure consistent updates across the three-panel layout.
+
+### Command Generation Engine
+
+The command generation system (`src/lib/commandEngine.js`) implements deterministic CLI composition:
+
+1. **Input Resolution**: For each node, resolves input values by traversing incoming edges to source nodes
+2. **Flag Composition**: Iterates through active inputs and appends appropriate flags based on input type (boolean flags vs. value flags)
+3. **Command Assembly**: Combines base command with resolved flags into a final executable string
+
+The engine handles:
+- Type validation between connected nodes
+- Default value fallbacks for unconnected inputs
+- Boolean flag handling (presence vs. absence)
+- Value flag formatting (flag + value pairs)
+
+### Global State Management
+
+Workflow state (nodes, edges, selection, panel visibility) is centralized in `AppProvider` to ensure:
+- Predictable updates when nodes are added, removed, or modified
+- Consistent rendering across all editor components
+- Efficient re-renders through React Flow's built-in state hooks (`useNodesState`, `useEdgesState`)
 
 ---
 
-## Environment Configuration
+## Tech Stack
 
-MindExec relies on Supabase for auth. Configure the following environment variables in a `.env` file at the project root:
+- **React 18** - UI framework
+- **Vite** - Build tool and dev server
+- **React Flow** (`reactflow`) - Graph canvas and node rendering
+- **Supabase** - Authentication and user data persistence
+- **Tailwind CSS** - Styling with custom theme
+- **Framer Motion** - Animations and micro-interactions
+- **React Router DOM** - Client-side routing
+- **React Hook Form** - Form validation
+- **React Hot Toast** - User notifications
 
-```bash
-VITE_SUPABASE_URL=<your-supabase-project-url>
-VITE_SUPABASE_KEY=<your-supabase-anon-or-service-key>
-```
+<!-- ---
 
-**Notes**
+## Execution Disclaimer
 
-- For local development, `.env` is sufficient; Vite exposes any variable prefixed with `VITE_` to the client.
-- For production deployments (Vercel, Netlify, etc.), define the **same variable names** in your platform’s environment settings.
-- Never commit real secrets to version control. The public `anon` key is typically used in frontend apps, but you should still treat it carefully and enforce proper security rules in Supabase.
+**Important**: The workflow execution system is currently simulated. The editor focuses on:
+
+- Visual workflow design and modeling
+- Command generation and preview
+- Workflow persistence and management
+
+Execution of generated commands is intentionally left to external, controlled environments. The run simulation in `src/hooks/useWorkflow.js` demonstrates the intended execution flow but does not execute actual security scans. -->
 
 ---
 
@@ -122,130 +114,117 @@ VITE_SUPABASE_KEY=<your-supabase-anon-or-service-key>
 ### Prerequisites
 
 - **Node.js** (LTS recommended; e.g. `>= 18.x`)
-- **pnpm** or **npm** (the project includes a `packageManager` entry for `pnpm`, but you can also use npm)
+- **pnpm** or **npm**
 
-### 1. Clone the repository
+### Installation
 
+1. Clone the repository:
 ```bash
-git clone <YOUR_REPO_URL>
+git clone https://github.com/Mohammedatef1/MindExec.git
 cd MindExec
 ```
 
-### 2. Install dependencies
-
-Using `pnpm` (recommended):
-
+2. Install dependencies:
 ```bash
 pnpm install
-```
-
-Or using `npm`:
-
-```bash
+# or
 npm install
 ```
 
-### 3. Configure environment
+3. Configure environment variables:
 
-Create `.env` at the root and add:
-
+Create a `.env` file at the project root:
 ```bash
-VITE_SUPABASE_URL=...
-VITE_SUPABASE_KEY=...
+VITE_SUPABASE_URL=<your-supabase-project-url>
+VITE_SUPABASE_KEY=<your-supabase-anon-key>
 ```
 
-### 4. Run the development server
-
+4. Run the development server:
 ```bash
 pnpm dev
 # or
 npm run dev
 ```
 
-The app will be available at something like `http://localhost:5173/` (Vite’s default).
+The application will be available at `http://localhost:5173/` (Vite's default port).
 
----
+### Available Scripts
 
-## Available Scripts
-
-Defined in `package.json`:
-
-- **`pnpm dev` / `npm run dev`**
-  - Starts the Vite development server with hot module replacement.
-
-- **`pnpm build` / `npm run build`**
-  - Creates an optimized production build in the `dist` directory.
-
-- **`pnpm preview` / `npm run preview`**
-  - Serves the production build locally for testing.
-
-- **`pnpm lint` / `npm run lint`**
-  - Runs ESLint on `.js` and `.jsx` files.
-
-- **`pnpm deploy` / `npm run deploy`**
-  - Builds and deploys the project to GitHub Pages using `gh-pages`, serving from `dist`.
+- **`pnpm dev`** / **`npm run dev`** - Start development server with HMR
+- **`pnpm build`** / **`npm run build`** - Create production build
+- **`pnpm preview`** / **`npm run preview`** - Preview production build locally
+- **`pnpm lint`** / **`npm run lint`** - Run ESLint
 
 ---
 
 ## Project Structure
 
-High-level structure (simplified):
-
-```text
-MindExec/
-  ├─ public/               # Static assets (favicons, hero images, etc.)
-  ├─ src/
-  │  ├─ App.jsx            # Root app & routing definition
-  │  ├─ main.jsx           # ReactDOM entry (Vite)
-  │  ├─ client.js          # Supabase client configuration
-  │  ├─ AppContext.jsx     # Global React context
-  │  ├─ AppProvider.jsx    # Context provider + React Flow state & command generator
-  │  ├─ components/
-  │  │  ├─ Home/           # Landing page sections (hero, features, FAQ, etc.)
-  │  │  ├─ layout/         # Editor layout (Nav, LeftFrame, MindMap, RightFrame)
-  │  │  ├─ icons/          # SVG/icon components
-  │  │  └─ ui/             # Reusable UI components (nodes, buttons, inputs)
-  │  ├─ pages/
-  │  │  ├─ Home.jsx        # Public landing page
-  │  │  ├─ Login.jsx       # Auth: login
-  │  │  ├─ Register.jsx    # Auth: signup
-  │  │  ├─ Dashboard.jsx   # Authenticated dashboard
-  │  │  ├─ Editor.jsx      # Workflow editor (mind map)
-  │  │  ├─ ProtectedRoute.jsx
-  │  │  └─ ProtectedSignRoute.jsx
-  │  ├─ hooks/
-  │  │  └─ useActiveUser.jsx  # Current user logic via Supabase
-  │  ├─ lib/
-  │  │  └─ utils.js        # Utility helpers
-  │  └─ index.css          # Global styles + Tailwind layers
-  ├─ tailwind.config.js    # Tailwind configuration & custom plugin
-  ├─ vite.config.js        # Vite + React + path aliases
-  ├─ vercel.json           # SPA rewrites for Vercel
-  └─ package.json
 ```
+MindExec/
+├─ public/               # Static assets
+├─ src/
+│  ├─ App.jsx            # Root app & routing
+│  ├─ main.jsx           # ReactDOM entry point
+│  ├─ client.js          # Supabase client configuration
+│  ├─ AppContext.jsx     # Global context definition
+│  ├─ AppProvider.jsx    # Context provider & state management
+│  ├─ components/
+│  │  ├─ Home/           # Landing page components
+│  │  ├─ layout/         # Editor layout (Nav, LeftFrame, MindMap, RightFrame, Workflow)
+│  │  ├─ icons/          # SVG icon components
+│  │  └─ ui/             # Reusable UI (nodes, buttons, modals)
+│  ├─ pages/
+│  │  ├─ Home.jsx        # Public landing page
+│  │  ├─ Login.jsx       # Authentication: login
+│  │  ├─ Register.jsx    # Authentication: signup
+│  │  ├─ Dashboard.jsx   # Authenticated dashboard (workflow list)
+│  │  ├─ Editor.jsx      # Workflow editor entry point
+│  │  ├─ ProtectedRoute.jsx
+│  │  └─ ProtectedSignRoute.jsx
+│  ├─ hooks/
+│  │  ├─ useActiveUser.js    # Current user via Supabase
+│  │  ├─ useWorkflow.js      # Workflow execution (simulated)
+│  │  └─ useCommands.js      # Command generation utilities
+│  ├─ lib/
+│  │  ├─ commandEngine.js    # Core command generation logic
+│  │  └─ utils.js            # Utility helpers
+│  ├─ assets/
+│  │  └─ Data.js              # Tool registry and metadata
+│  └─ index.css              # Global styles + Tailwind layers
+├─ tailwind.config.js    # Tailwind configuration
+├─ vite.config.js        # Vite configuration
+└─ package.json
+```
+
+---
+
+## Environment Configuration
+
+MindExec requires Supabase for authentication and workflow persistence. Configure the following in `.env`:
+
+```bash
+VITE_SUPABASE_URL=<your-supabase-project-url>
+VITE_SUPABASE_KEY=<your-supabase-anon-key>
+```
+
+**Notes:**
+- Vite exposes variables prefixed with `VITE_` to the client
+- For production deployments, configure the same variables in your platform's environment settings
 
 ---
 
 ## Security Notes
 
-- **Execution Boundary**
-  - MindExec is intended to **generate and orchestrate commands**, not to execute arbitrary commands on shared infrastructure.
-  - Always execute generated commands in **isolated, authorized environments** under your control.
-
-- **Supabase Rules**
-  - Restrict access via **RLS (Row-Level Security)** policies in Supabase.
-  - Ensure only authenticated users can access their own data.
+- **Execution Boundary**: MindExec generates commands but does not execute them. Always run generated commands in isolated, authorized environments under your control.
 
 ---
 
 ## Contributing
 
-Contributions are welcome. For teams using this in production:
+Contributions are welcome. When contributing:
 
-- **Open an issue** or internal ticket describing the enhancement or bug.
-- **Create a feature branch** from `main`.
-- Add tests or basic coverage where reasonable.
-- Run `pnpm lint` (or `npm run lint`) and fix any reported issues.
-- Open a pull request and request review.
-
-
+1. Open an issue describing the enhancement or bug
+2. Create a feature branch from `main`
+3. Add tests where reasonable
+4. Run `pnpm lint` and fix any issues
+5. Open a pull request for review

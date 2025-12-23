@@ -10,14 +10,19 @@ import RightFrame from "../components/layout/RightFrame";
 const Editor = () => {
   const ctx = useContext(AppContext);
 
-  const toggleLeft = () => ctx.setShowLeft(!ctx.showLeft);
-  const toggleRight = () => ctx.setShowRight(!ctx.showRight);
+  const toggleLeft = () => {
+    ctx.setShowLeft(!ctx.showLeft)
+  };
+
+  const toggleRight = () => {
+    ctx.setShowRight(!ctx.showRight)
+  };
 
   const getGridTemplateColumns = () => {
-    if (ctx.showLeft && ctx.showRight) return "1fr 3fr 1fr";
-    if (ctx.showLeft && !ctx.showRight) return "1fr 4fr 0fr";
-    if (!ctx.showLeft && ctx.showRight) return "0fr 4fr 1fr";
-    return "0fr 1fr 0fr";
+    const leftPanelColumnWidth = ctx.showLeft ? 'var(--panel-width)' : '0px';
+    const rightPanelColumnWidth = ctx.showRight ? 'var(--panel-width)' : '0px';
+
+    return `${leftPanelColumnWidth} 1fr ${rightPanelColumnWidth}`;
   };
 
   return (

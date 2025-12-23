@@ -395,3 +395,13 @@ body {
 .social-item{
   background: linear-gradient(91.14deg, #072586 0%, #7246A7 115.7%);
 }
+
+:root {
+  --panel-width: 300px;
+}
+
+@media (max-width: 1280px) {
+  :root {
+    --panel-width: 260px;
+  }
+}

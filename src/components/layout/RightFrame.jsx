@@ -233,12 +233,14 @@ const RightFrame = () => {
 
 
   return (
-    <div className="bg-primary1 h-full transition-none pt-8">
+    <div style={{
+      minWidth: 'var(--panel-width)'
+    }} className="bg-primary1 h-full transition-none pt-8">
       {!ctx.selectedNode && (
         <div className="p-8 transition-curtain">
-          <h2 className="font-bold uppercase text-white mb-4 truncate">Workflow Details</h2>
+          <h2 className="font-bold uppercase text-white mb-4">Workflow Details</h2>
           {ctx.workflowMetadata?.created_at ? 
-            <p className="text-primary-light font-bold truncate">
+            <p className="text-primary-light font-bold">
               Created:<span className="text-gray-300 px-2">{formatRelativeTime(ctx.workflowMetadata.created_at)}</span>
             </p>
           : null}
@@ -253,7 +255,7 @@ const RightFrame = () => {
 
             return (
               <div className="rounded-lg border border-zinc-800 bg-black/40 px-4 py-3 shadow-sm">
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center justify-between">
                   <div>
                     <p
                       className="text-xs font-semibold tracking-[0.22em] text-zinc-400 uppercase"
@@ -312,7 +314,7 @@ const RightFrame = () => {
 
           {ctx.selectedNode.data.tool.type === "string" && (
             <div className="space-y-3 rounded-lg border border-zinc-800 bg-black/40 px-4 py-3">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
                   Value
                 </p>
@@ -349,7 +351,7 @@ const RightFrame = () => {
 
           {ctx.selectedNode.data.tool.type === "boolean" && (
             <div className="space-y-4 rounded-lg border border-zinc-800 bg-black/40 px-4 py-3">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
                   Value
                 </p>

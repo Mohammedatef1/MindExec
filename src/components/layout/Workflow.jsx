@@ -515,7 +515,6 @@ const MindNode = () => {
       </ReactFlowProvider>
 
       <div
-        //onClick={() => setCommandIsOpen(!commandIsOpen)}
         className="h-10 cursor-default bg-black border-t border-primary-light flex">
         <p
           className={`${activeSec == "command" ? "bg-primary1" : ""} cursor-pointer px-4 flex items-center w-fit uppercase tracking-widest font-bold spa  h-full text-center font-[Consolas] text-white`}
@@ -559,7 +558,7 @@ const MindNode = () => {
         </div>
       </div>
       {activeSec == "command" && (
-        <div className={`bg-primary1  h-[calc(40%-2.5rem)] ${!commandIsOpen ? "translate-y-full" : ""} transition-primary transition-curtain`}>
+        <div className={`bg-primary1 h-[calc(40%-2.5rem)] ${!commandIsOpen ? "translate-y-full" : ""} transition-primary transition-curtain`}>
           <p className="px-4 pt-4 font-[Consolas] font-bold text-slate-300">{commandLinePreview}</p>
           {command && (
             <SyntaxHighlighter
@@ -571,7 +570,7 @@ const MindNode = () => {
               {command}
             </SyntaxHighlighter>
           )}
-          {!command && nodeType == "inputNode" && <p className="flex text-stroke items-center justify-center font-[Consolas] text-slate-300 font-extrabold text-3xl h-[calc(100%-2.5rem)] transition-curtain">input node doesn&apos;t have command</p>}
+          {!command && nodeType == "inputNode" && <p className="flex text-stroke items-center px-4 justify-center font-[Consolas] text-slate-300 font-extrabold text-3xl h-[calc(100%-2.5rem)] transition-curtain">input node doesn&apos;t have command</p>}
           {!command && <p className="flex items-center justify-center font-[Consolas] text-slate-300 font-extrabold text-3xl h-[calc(100%-2.5rem)] transition-curtain">No node selected!</p>}
         </div>
       )}

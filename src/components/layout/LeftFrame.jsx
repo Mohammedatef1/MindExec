@@ -118,7 +118,9 @@ const LeftFrame = () => {
   };
 
   return (
-    <div className="bg-primary1 h-full pt-16">
+    <div style={{
+      minWidth: 'var(--panel-width)'
+    }} className="bg-primary1 h-full pt-16">
       <div className="px-2 flex justify-center">
         <div className="max-w-64 w-full inline-flex items-center gap-1 rounded-md border border-zinc-800 bg-black/40 px-1 py-1">
           <button
