@@ -362,7 +362,7 @@ const Dashboard = () => {
                                 {index + 1}
                               </span>
                             </div>
-                            <div className="flex items-center min-w-0">
+                            <div className="flex items-center max-w-40">
                               <Link
                                 to={`/editor?workflow=${workflow.id}`}
                                 className="text-white text-sm font-medium truncate hover:text-primary-light transition-colors duration-150">
@@ -493,19 +493,20 @@ const Dashboard = () => {
                         const isRecent = daysSinceUpdate < 7;
                         
                         return (
-                          <Link
+                          <div
                             key={workflow.id}
-                            to={`/editor?workflow=${workflow.id}`}
                             className="grid grid-cols-[40px_1fr_120px_80px_120px_100px] gap-4 px-3 py-2.5 rounded-lg border border-transparent hover:border-primary-light/20 hover:bg-primary-light/5 transition-all duration-150 group">
                             <div className="flex items-center">
                               <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
                                 {index + 1}
                               </span>
                             </div>
-                            <div className="flex items-center min-w-0">
-                              <span className="text-white text-sm font-medium truncate group-hover:text-primary-light transition-colors duration-150">
+                            <div className="flex items-center max-w-40">
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                className="text-white text-sm font-medium truncate hover:text-primary-light transition-colors duration-150">
                                 {workflow.name}
-                              </span>
+                              </Link>
                               {isRecent && (
                                 <span className="ml-2 w-1.5 h-1.5 rounded-full bg-primary-light opacity-60"></span>
                               )}
@@ -544,7 +545,7 @@ const Dashboard = () => {
                                 <FontAwesomeIcon icon={faTrash} className="text-sm" />
                               </button>
                             </div>
-                          </Link>
+                          </div>
                         );
                       })}
                     </div>
@@ -619,7 +620,7 @@ const Dashboard = () => {
                                 {index + 1}
                               </span>
                             </div>
-                            <div className="flex items-center min-w-0">
+                            <div className="flex items-center max-w-40">
                               <span className="text-white text-sm font-medium truncate group-hover:text-primary-light transition-colors duration-150">
                                 {workflow.name}
                               </span>
