@@ -1,4 +1,4 @@
-import { faPenToSquare, faPlus, faRightFromBracket, faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faClock, faExclamationCircle, faPenToSquare, faPlus, faRightFromBracket, faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -108,6 +108,10 @@ const Dashboard = () => {
     const daysSinceUpdate = (Date.now() - updated.getTime()) / (1000 * 60 * 60 * 24);
     return daysSinceUpdate < 7;
   });
+  
+  // Filter workflows that have been run
+  const workflowsWithRuns = workflows.filter(w => (w.runs_count || 0) > 0);
+  const totalRuns = workflows.reduce((sum, w) => sum + (w.runs_count || 0), 0);
 
   return (
     <div className="bg-primary1 h-screen flex flex-col">
@@ -241,7 +245,8 @@ const Dashboard = () => {
                 <p className="text-main mt-2 text-[12px]">All Runs</p>
               </li>
             </ul>
-            <ul className="w-full mb-10">
+            {/* TODO: Add Library and Setting sections */}
+            {/* <ul className="w-full mb-10">
               <li className="flex flex-col justify-between items-center py-[20px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -286,7 +291,7 @@ const Dashboard = () => {
                 </svg>
                 <p className="text-main mt-1 text-[12px]">Setting</p>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         <div className="flex-1 h-[calc(100vh-4rem)] overflow-auto">
@@ -538,6 +543,131 @@ const Dashboard = () => {
                                 className="text-gray-500 hover:text-red-400 transition-colors duration-150 p-1.5 rounded hover:bg-red-500/10">
                                 <FontAwesomeIcon icon={faTrash} className="text-sm" />
                               </button>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          {activeSec == "allRuns" && (
+            <div className="w-full min-h-full p-6 bg-[#060606] flex gap-6 overflow-auto">
+              <div className="w-full rounded-xl bg-[#0a0a0a] border border-primary-light/10 flex flex-col relative overflow-hidden">
+                {/* Subtle inner glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-light/5 via-transparent to-transparent pointer-events-none"></div>
+                
+                <div className="mt-6 mb-4 relative w-full px-6 z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h3 className="text-gray-200 text-base font-semibold">All Runs</h3>
+                      {totalRuns > 0 && (
+                        <p className="text-gray-500 text-xs mt-0.5">{totalRuns} {totalRuns === 1 ? 'run' : 'runs'} across {workflowsWithRuns.length} {workflowsWithRuns.length === 1 ? 'workflow' : 'workflows'}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10">
+                  {loading ? (
+                    <div className="flex flex-col items-center justify-center py-12 gap-3">
+                      <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
+                      <p className="text-gray-400 text-sm">Loading runs...</p>
+                    </div>
+                  ) : workflowsWithRuns.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="w-16 h-16 rounded-full bg-primary-light/10 flex items-center justify-center mb-4">
+                        <FontAwesomeIcon icon={faClock} className="text-primary-light text-xl" />
+                      </div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">No runs yet</p>
+                      <p className="text-gray-500 text-xs mb-4">Execute a workflow to see run history here</p>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setActiveSec("home")}
+                        className="px-4 py-2 bg-primary hover:bg-primary-light text-white rounded-lg transition-colors duration-150 text-sm font-medium">
+                        Go to Workflows
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {/* Table Header */}
+                      <div className="grid grid-cols-[40px_1fr_100px_80px_100px_80px] gap-4 px-3 py-2 mb-2 border-b border-white/5">
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider"></div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Workflow</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Last Run</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Total Runs</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Status</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Actions</div>
+                      </div>
+                      
+                      {/* Table Rows */}
+                      {workflowsWithRuns.map((workflow, index) => {
+                        const daysSinceUpdate = (Date.now() - new Date(workflow.updated_at).getTime()) / (1000 * 60 * 60 * 24);
+                        const isRecent = daysSinceUpdate < 7;
+                        // Mock status - in a real app, this would come from a runs table
+                        const status = isRecent ? "completed" : "completed";
+                        
+                        return (
+                          <Link
+                            key={workflow.id}
+                            to={`/editor?workflow=${workflow.id}`}
+                            className="grid grid-cols-[40px_1fr_100px_80px_100px_80px] gap-4 px-3 py-2.5 rounded-lg border border-transparent hover:border-primary-light/20 hover:bg-primary-light/5 transition-all duration-150 group">
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {index + 1}
+                              </span>
+                            </div>
+                            <div className="flex items-center min-w-0">
+                              <span className="text-white text-sm font-medium truncate group-hover:text-primary-light transition-colors duration-150">
+                                {workflow.name}
+                              </span>
+                              {isRecent && (
+                                <span className="ml-2 w-1.5 h-1.5 rounded-full bg-primary-light opacity-60"></span>
+                              )}
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">
+                                {formatRelativeTime(workflow.updated_at)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {workflow.runs_count || 0}
+                              </span>
+                            </div>
+                            <div className="flex items-center">
+                              <div className="flex items-center gap-1.5">
+                                {status === "completed" && (
+                                  <>
+                                    <FontAwesomeIcon icon={faCheckCircle} className="text-xs text-green-500" />
+                                    <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">Completed</span>
+                                  </>
+                                )}
+                                {status === "running" && (
+                                  <>
+                                    <FontAwesomeIcon icon={faSpinner} className="text-xs text-primary-light animate-spin" />
+                                    <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">Running</span>
+                                  </>
+                                )}
+                                {status === "failed" && (
+                                  <>
+                                    <FontAwesomeIcon icon={faExclamationCircle} className="text-xs text-red-500" />
+                                    <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">Failed</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                            <div 
+                              className="flex items-center justify-center gap-3"
+                              onClick={(e) => e.preventDefault()}>
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="text-gray-500 hover:text-primary-light transition-colors duration-150 p-1.5 rounded hover:bg-primary-light/10">
+                                <FontAwesomeIcon icon={faPenToSquare} className="text-sm" />
+                              </Link>
                             </div>
                           </Link>
                         );
