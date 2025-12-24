@@ -12,14 +12,14 @@ function Nav() {
     <header className="w-full border-b border-primary-light bg-black">
       <nav className="mx-auto flex h-16 items-stretch px-4 text-white-400 bg-primary1">
         {/* Left: product + workflow identity */}
-        <div className="flex flex-1 items-center gap-4">
-          <Link to="/">
+        <div className="flex flex-1 items-center gap-1 md:gap-4">
+          <Link to="/dashboard" className="shrink-0">
             <MindExecLogo />
           </Link>
 
           <div className="h-8 w-px bg-zinc-800" />
 
-          <div className="flex items-center gap-3 rounded-md border border-zinc-800 bg-black/40 px-3 py-1.5">
+          <div className="hidden md:flex items-center gap-3 rounded-md border border-zinc-800 bg-black/40 px-3 py-1.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -65,8 +65,7 @@ function Nav() {
           </div>
         </div>
 
-        {/* Center: primary navigation tabs */}
-        <div className="flex items-center justify-center px-4">
+        <div className="hidden md:flex items-center justify-center px-4">
           <div className="min-w-64 inline-flex items-center gap-1 rounded-md border border-zinc-800 bg-black/40 px-1 py-1">
             <button
               onClick={() => {
@@ -91,7 +90,6 @@ function Nav() {
           </div>
         </div>
 
-        {/* Right: actions */}
         <div className="flex flex-1 items-center justify-end gap-3">
           <div className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-black/40 px-2 py-1.5">
             <button className="relative p-1.5 rounded-md hover:bg-primary-light/10 focus:outline-none focus:ring-1 focus:ring-primary-light/60 transition-colors group">

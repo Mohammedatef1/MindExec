@@ -1,4 +1,4 @@
-import { faPenToSquare, faPlus, faRightFromBracket, faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faClock, faExclamationCircle, faPenToSquare, faPlus, faRightFromBracket, faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -101,38 +101,50 @@ const Dashboard = () => {
     }
   };
 
+  const totalWorkflows = workflows.length;
+  const recentWorkflows = workflows.slice(0, 5);
+  const hasRecentActivity = workflows.some(w => {
+    const updated = new Date(w.updated_at);
+    const daysSinceUpdate = (Date.now() - updated.getTime()) / (1000 * 60 * 60 * 24);
+    return daysSinceUpdate < 7;
+  });
+  
+  // Filter workflows that have been run
+  const workflowsWithRuns = workflows.filter(w => (w.runs_count || 0) > 0);
+  const totalRuns = workflows.reduce((sum, w) => sum + (w.runs_count || 0), 0);
+
   return (
     <div className="bg-primary1 h-screen flex flex-col">
-      <nav className="flex justify-between items-center border-b-[1px] border-red-primary p-[19px]">
+      <nav className="flex justify-between items-center border-b border-primary-light/20 px-5 h-16">
         <div>
           <MindExecLogo />
         </div>
         <div className="flex justify-center items-center gap-3 me-4">
           {/* Notification Icon */}
-          <button className="relative p-2 rounded-lg hover:bg-primary-light/10 transition-colors group">
+          <button className="relative p-2 rounded-lg hover:bg-white/5 transition-colors duration-150 group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
               height="22"
               viewBox="0 0 24 24"
               fill="none"
-              className="text-gray-300 group-hover:text-white transition-colors">
+              className="text-gray-400 group-hover:text-gray-300 transition-colors duration-150">
               <path
                 d="M8.645 20.5C8.86103 21.2219 9.30417 21.8549 9.90858 22.3049C10.513 22.755 11.2464 22.998 12 22.998C12.7536 22.998 13.487 22.755 14.0914 22.3049C14.6958 21.8549 15.139 21.2219 15.355 20.5H8.645ZM3 19.5H21V16.5L19 13.5V8.5C19 7.58075 18.8189 6.6705 18.4672 5.82122C18.1154 4.97194 17.5998 4.20026 16.9497 3.55025C16.2997 2.90024 15.5281 2.38463 14.6788 2.03284C13.8295 1.68106 12.9193 1.5 12 1.5C11.0807 1.5 10.1705 1.68106 9.32122 2.03284C8.47194 2.38463 7.70026 2.90024 7.05025 3.55025C6.40024 4.20026 5.88463 4.97194 5.53284 5.82122C5.18106 6.6705 5 7.58075 5 8.5V13.5L3 16.5V19.5Z"
                 fill="currentColor"
               />
             </svg>
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7246A7] rounded-full border-2 border-primary1"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-light rounded-full border-2 border-primary1"></span>
           </button>
 
           {/* User Profile Section */}
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg hover:bg-primary-light/10 transition-colors group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#360077] to-[#7246A7] flex items-center justify-center text-white font-semibold text-sm shadow-lg">
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-colors duration-150 group">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#360077] to-[#7246A7] flex items-center justify-center text-white font-semibold text-sm">
               {getInitials(user?.user?.user_metadata?.full_name)}
             </div>
             <div className="flex flex-col">
               <p className="text-white text-sm font-medium leading-tight">{capitalize(user?.user?.user_metadata?.full_name)}</p>
-              <p className="text-gray-400 text-xs leading-tight">User</p>
+              <p className="text-gray-500 text-xs leading-tight">User</p>
             </div>
           </div>
 
@@ -140,7 +152,7 @@ const Dashboard = () => {
           <button
             onClick={signOut}
             disabled={signingOut}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 transition-all border border-red-600/20 hover:border-red-600/40 group ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 transition-colors duration-150 border border-red-600/20 hover:border-red-600/30 group ${
               signingOut ? "opacity-60 cursor-not-allowed" : ""
             }`}>
             {signingOut ? (
@@ -151,22 +163,26 @@ const Dashboard = () => {
             ) : (
               <FontAwesomeIcon 
                 icon={faRightFromBracket} 
-                className="text-sm group-hover:translate-x-0.5 transition-transform"
+                className="text-sm"
               />
             )}
             <span className="text-sm font-medium">Sign Out</span>
           </button>
         </div>
       </nav>
-      <div className="flex flex-1">
-        <div className="border-r border-red-primary">
+      <div className="flex">
+        <div className="border-r border-primary-light/15">
           <div className="flex flex-col justify-between items-center h-full">
             <ul className="w-full">
               <li
                 onClick={() => {
                   setActiveSec("home");
                 }}
-                className={`flex flex-col transition-primary cursor-pointer justify-between items-center px-6 py-5 ${activeSec == "home" ? "bg-primary-light/20" : ""} `}>
+                className={`flex flex-col cursor-pointer justify-between items-center px-6 py-5 transition-colors duration-150 ${
+                  activeSec == "home" 
+                    ? "bg-primary-light/10 border-l-2 border-primary-light" 
+                    : "hover:bg-white/5"
+                }`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="32"
@@ -184,7 +200,11 @@ const Dashboard = () => {
                 onClick={() => {
                   setActiveSec("workflow");
                 }}
-                className={`flex flex-col transition-primary justify-between items-center py-[20px] cursor-pointer ${activeSec == "workflow" ? "bg-primary-light/20" : ""} `}>
+                className={`flex flex-col justify-between items-center py-[20px] cursor-pointer transition-colors duration-150 ${
+                  activeSec == "workflow" 
+                    ? "bg-primary-light/10 border-l-2 border-primary-light" 
+                    : "hover:bg-white/5"
+                }`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -206,7 +226,11 @@ const Dashboard = () => {
                 onClick={() => {
                   setActiveSec("allRuns");
                 }}
-                className={`flex transition-primary flex-col justify-between items-center  py-[20px] cursor-pointer ${activeSec == "allRuns" ? "bg-primary-light/20" : ""} `}>
+                className={`flex flex-col justify-between items-center py-[20px] cursor-pointer transition-colors duration-150 ${
+                  activeSec == "allRuns" 
+                    ? "bg-primary-light/10 border-l-2 border-primary-light" 
+                    : "hover:bg-white/5"
+                }`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -221,7 +245,8 @@ const Dashboard = () => {
                 <p className="text-main mt-2 text-[12px]">All Runs</p>
               </li>
             </ul>
-            <ul className="w-full mb-10">
+            {/* TODO: Add Library and Setting sections */}
+            {/* <ul className="w-full mb-10">
               <li className="flex flex-col justify-between items-center py-[20px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -266,146 +291,395 @@ const Dashboard = () => {
                 </svg>
                 <p className="text-main mt-1 text-[12px]">Setting</p>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
-        {activeSec == "home" && (
-          <div className="flex-1 p-6 bg-[#060606] flex gap-6">
-            <div className="w-3/5 border-2 rounded-lg border-red-primary flex flex-col  items-center ">
-              <div className="mt-11 relative w-full">
-                <p className="text-gray-200 text-center">Latest Runs</p>
-                <p className="text-gray-200 absolute -top-1 right-6 underline underline-offset-2">view all</p>
-              </div>
-              <RunsShape className="mb-6" />
-              <h2 className="text-white text-xl mb-4">Start your Automation Journey </h2>
-              <p className="text-muted mb-8 text-center w-4/5 text-sm ">Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows. It&apos;s designed to help you start quickly without the need to build from scratch. Need help? Check out our guides on executing a workflow and using workflows from the library</p>
-              <button className="px-6 py-3  rounded-lg text-xl text-main bg-[#360077]">Explore Workflows</button>
-            </div>
-            <div className="w-2/5 border-2 rounded-lg border-red-primary flex flex-col items-center">
-              <div className="mt-11 mb-12 relative w-full">
-                <p className="text-gray-200 text-center">Recent Workflow</p>
-                <div className="absolute -top-1 right-6 flex gap-3 items-center">
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="px-4 py-2 bg-[#360077] text-white rounded-lg hover:bg-[#4a0099] transition-colors flex items-center gap-2 text-sm">
-                    <FontAwesomeIcon icon={faPlus} />
-                    {/* <span>New Workflow</span> */}
-                  </button>
-                  {/* <p className="text-gray-200 underline underline-offset-2">view all</p> */}
+        <div className="flex-1 h-[calc(100vh-4rem)] overflow-auto scrollbar">
+          {activeSec == "home" && (
+            <div className="p-6 bg-[#060606] flex flex-col md:flex-row  gap-6 overflow-auto min-h-full">
+              {/* Recent Workflows Card */}
+              <div className="w-full md:w-3/5 rounded-xl bg-[#0a0a0a] border border-primary-light/10 flex flex-col relative overflow-hidden">
+                {/* Subtle inner glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-light/5 via-transparent to-transparent pointer-events-none"></div>
+                
+                <div className="mt-6 mb-4 relative w-full px-6 z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h3 className="text-gray-200 text-base font-semibold">Recent Workflows</h3>
+                      {totalWorkflows > 0 && (
+                        <p className="text-gray-500 text-xs mt-0.5">{totalWorkflows} {totalWorkflows === 1 ? 'workflow' : 'workflows'}</p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setIsModalOpen(true)}
+                      className="px-3 py-1.5 bg-primary hover:bg-primary-light text-white rounded-lg transition-colors duration-150 flex items-center gap-1.5 text-sm font-medium shadow-sm shadow-primary/20">
+                      <FontAwesomeIcon icon={faPlus} className="text-xs" />
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <table className="w-[90%] border-separate border-spacing-y-6">
-                <thead className="text-white decoration-none">
-                  <tr>
-                    <th className="py-2 text-transparent">logo</th>
-                    <th className="py-2 ">Workflow Name</th>
-                    <th className="py-2 ">Edited</th>
-                    <th className="py-2 ">Runs</th>
-                  </tr>
-                </thead>
-                <tbody className="p-2 text-center text-main">
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10 scrollbar-light">
                   {loading ? (
-                    <tr>
-                      <td colSpan="4" className="py-8">
-                        <div className="flex flex-col items-center justify-center gap-3">
-                          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-[#7246A7] text-2xl" />
-                          <p className="text-gray-400 text-sm">Loading workflows...</p>
-                        </div>
-                      </td>
-                    </tr>
+                    <div className="flex flex-col items-center justify-center py-12 gap-3">
+                      <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
+                      <p className="text-gray-400 text-sm">Loading workflows...</p>
+                    </div>
                   ) : workflows.length === 0 ? (
-                    <tr>
-                      <td colSpan="4" className="py-4 text-white">No workflows yet. Create one in the editor!</td>
-                    </tr>
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="w-16 h-16 rounded-full bg-primary-light/10 flex items-center justify-center mb-4">
+                        <FontAwesomeIcon icon={faPlus} className="text-primary-light text-xl" />
+                      </div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">No workflows yet</p>
+                      <p className="text-gray-500 text-xs mb-4">Create your first workflow to get started</p>
+                      <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-4 py-2 bg-primary hover:bg-primary-light text-white rounded-lg transition-colors duration-150 text-sm font-medium">
+                        Create Workflow
+                      </button>
+                    </div>
                   ) : (
-                    workflows.slice(0, 5).map((workflow, index) => (
-                      <tr key={workflow.id} className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-primary-light">
-                        <td className="py-2 mb-2">{index + 1}</td>
-                        <td className="py-2 mb-2 text-white">
-                          <Link to={`/editor?workflow=${workflow.id}`}>{workflow.name}</Link>
-                        </td>
-                        <td className="py-2 mb-2 text-[#A0A0A0]">{formatRelativeTime(workflow.updated_at)}</td>
-                        <td className="py-2 mb-2 text-[#A0A0A0]">{workflow.runs_count || 0}</td>
-                      </tr>
-                    ))
+                    <div className="space-y-2">
+                      {/* Table Header */}
+                      <div className="grid grid-cols-[40px_1fr_100px_60px_80px] gap-4 px-3 py-2 mb-2 border-b border-white/5">
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider"></div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Name</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Last Edited</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Runs</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Actions</div>
+                      </div>
+                      
+                      {/* Table Rows */}
+                      {recentWorkflows.map((workflow, index) => {
+                        const daysSinceUpdate = (Date.now() - new Date(workflow.updated_at).getTime()) / (1000 * 60 * 60 * 24);
+                        const isRecent = daysSinceUpdate < 7;
+                        
+                        return (
+                          <div
+                            key={workflow.id}
+                            className="grid grid-cols-[40px_1fr_100px_60px_80px] gap-4 px-3 py-2.5 rounded-lg border border-transparent hover:border-primary-light/20 hover:bg-primary-light/5 transition-all duration-150 group">
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {index + 1}
+                              </span>
+                            </div>
+                            <div className="flex items-center max-w-40">
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                className="text-white text-sm font-medium truncate hover:text-primary-light transition-colors duration-150">
+                                {workflow.name}
+                              </Link>
+                              {isRecent && (
+                                <span className="ml-2 w-1.5 h-1.5 rounded-full bg-primary-light opacity-60"></span>
+                              )}
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">
+                                {formatRelativeTime(workflow.updated_at)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {workflow.runs_count || 0}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center gap-3">
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                className="text-gray-500 hover:text-primary-light transition-colors duration-150 p-1.5 rounded hover:bg-primary-light/10">
+                                <FontAwesomeIcon icon={faPenToSquare} className="text-sm" />
+                              </Link>
+                              <button
+                                onClick={(e) => handleDeleteClick(workflow.id, workflow.name, e)}
+                                className="text-gray-500 hover:text-red-400 transition-colors duration-150 p-1.5 rounded hover:bg-red-500/10">
+                                <FontAwesomeIcon icon={faTrash} className="text-sm" />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-        {activeSec == "workflow" && (
-          <div className="w-full p-6 bg-[#060606] flex gap-6">
-            <div className="w-full border-2 rounded-lg border-red-primary  flex flex-col items-center">
-              <div className="mt-11 mb-12 relative w-full">
-                <p className="text-gray-200 text-center">Recent Workflow</p>
-                <div className="absolute -top-1 right-6 flex gap-3 items-center">
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="px-4 py-2 bg-[#360077] text-white rounded-lg hover:bg-[#4a0099] transition-colors flex items-center gap-2">
-                    <FontAwesomeIcon icon={faPlus} />
-                    <span>New Workflow</span>
-                  </button>
-                  {/* <p className="text-gray-200 underline underline-offset-2">view all</p> */}
                 </div>
               </div>
 
-              <table className="w-[90%] text-red-600 border-separate border-spacing-y-6">
-                <thead className="text-white decoration-none">
-                  <tr>
-                    <th className="py-2 text-transparent">logo</th>
-                    <th className="py-2 ">Workflow Name</th>
-                    <th className="py-2 ">Edited</th>
-                    <th className="py-2 ">Runs</th>
-                    <th className="py-2 ">Created by</th>
-                    <th className="py-2 ">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="p-2 text-center">
+              {/* Latest Runs Card */}
+              <div className="w-full md:w-2/5 rounded-xl bg-[#0a0a0a] border border-primary-light/10 flex flex-col items-center relative overflow-hidden">
+                {/* Subtle inner glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-light/5 via-transparent to-transparent pointer-events-none"></div>
+                
+                <div className="mt-8 relative w-full px-6 z-10">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-gray-200 text-base font-semibold">Latest Runs</h3>
+                    <button className="text-gray-400 hover:text-primary-light text-xs transition-colors duration-150 underline underline-offset-2">
+                      view all
+                    </button>
+                  </div>
+                  {hasRecentActivity && (
+                    <p className="text-gray-500 text-xs mt-1">Recent activity detected</p>
+                  )}
+                </div>
+                
+                <div className="flex-1 flex flex-col items-center justify-center py-8 px-6 z-10">
+                  <RunsShape className="mb-6 opacity-60" />
+                  <h2 className="text-white text-lg font-semibold mb-2 text-center">Start your Automation Journey</h2>
+                  <p className="text-gray-400 mb-6 text-center w-4/5 text-sm leading-relaxed">
+                    Start your journey by executing your first run. Our Workflow Library offers a variety of ready-to-launch workflows.
+                  </p>
+                  {/* <button className="px-6 py-2.5 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary-light transition-colors duration-150">
+                    Explore Workflows
+                  </button> */}
+                </div>
+              </div>
+
+            </div>
+          )}
+          {activeSec == "workflow" && (
+            <div className="w-full min-h-full p-6 bg-[#060606] flex gap-6 overflow-auto">
+              <div className="w-full rounded-xl bg-[#0a0a0a] border border-primary-light/10 flex flex-col relative overflow-hidden">
+                {/* Subtle inner glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-light/5 via-transparent to-transparent pointer-events-none"></div>
+                
+                <div className="mt-6 mb-4 relative w-full px-6 z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h3 className="text-gray-200 text-base font-semibold">All Workflows</h3>
+                      {totalWorkflows > 0 && (
+                        <p className="text-gray-500 text-xs mt-0.5">{totalWorkflows} {totalWorkflows === 1 ? 'workflow' : 'workflows'}</p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setIsModalOpen(true)}
+                      className="px-4 py-2 bg-primary hover:bg-primary-light text-white rounded-lg transition-colors duration-150 flex items-center gap-2 text-sm font-medium shadow-sm shadow-primary/20">
+                      <FontAwesomeIcon icon={faPlus} />
+                      <span>New Workflow</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10 scrollbar-light">
                   {loading ? (
-                    <tr>
-                      <td colSpan="6" className="py-8">
-                        <div className="flex flex-col items-center justify-center gap-3">
-                          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-[#7246A7] text-2xl" />
-                          <p className="text-gray-400 text-sm">Loading workflows...</p>
-                        </div>
-                      </td>
-                    </tr>
+                    <div className="flex flex-col items-center justify-center py-12 gap-3">
+                      <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
+                      <p className="text-gray-400 text-sm">Loading workflows...</p>
+                    </div>
                   ) : workflows.length === 0 ? (
-                    <tr>
-                      <td colSpan="6" className="py-4 text-white">No workflows yet. Create one in the editor!</td>
-                    </tr>
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="w-16 h-16 rounded-full bg-primary-light/10 flex items-center justify-center mb-4">
+                        <FontAwesomeIcon icon={faPlus} className="text-primary-light text-xl" />
+                      </div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">No workflows yet</p>
+                      <p className="text-gray-500 text-xs mb-4">Create your first workflow to get started</p>
+                      <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-4 py-2 bg-primary hover:bg-primary-light text-white rounded-lg transition-colors duration-150 text-sm font-medium">
+                        Create Workflow
+                      </button>
+                    </div>
                   ) : (
-                    workflows.map((workflow, index) => (
-                      <tr key={workflow.id} className="bg-primary-light/20 custom-rounded-table rounded-lg border-2 border-red-primary">
-                        <td className="py-2">{index + 1}</td>
-                        <td className="py-2 text-white">
-                          <Link to={`/editor?workflow=${workflow.id}`}>{workflow.name}</Link>
-                        </td>
-                        <td className="py-2 text-[#A0A0A0]">{formatRelativeTime(workflow.updated_at)}</td>
-                        <td className="py-2 text-[#A0A0A0]">{workflow.runs_count || 0}</td>
-                        <td className="py-2 text-[#A0A0A0]">{capitalize(user?.user?.user_metadata?.full_name)}</td>
-                        <td className="py-2 text-[#A0A0A0] flex gap-3 justify-center items-center">
+                    <div className="space-y-2">
+                      {/* Table Header */}
+                      <div className="grid grid-cols-[40px_1fr_120px_80px_120px_100px] gap-4 px-3 py-2 mb-2 border-b border-white/5">
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider"></div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Name</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Last Edited</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Runs</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Created by</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Actions</div>
+                      </div>
+                      
+                      {/* Table Rows */}
+                      {workflows.map((workflow, index) => {
+                        const daysSinceUpdate = (Date.now() - new Date(workflow.updated_at).getTime()) / (1000 * 60 * 60 * 24);
+                        const isRecent = daysSinceUpdate < 7;
+                        
+                        return (
+                          <div
+                            key={workflow.id}
+                            className="grid grid-cols-[40px_1fr_120px_80px_120px_100px] gap-4 px-3 py-2.5 rounded-lg border border-transparent hover:border-primary-light/20 hover:bg-primary-light/5 transition-all duration-150 group">
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {index + 1}
+                              </span>
+                            </div>
+                            <div className="flex items-center max-w-40">
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                className="text-white text-sm font-medium truncate hover:text-primary-light transition-colors duration-150">
+                                {workflow.name}
+                              </Link>
+                              {isRecent && (
+                                <span className="ml-2 w-1.5 h-1.5 rounded-full bg-primary-light opacity-60"></span>
+                              )}
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">
+                                {formatRelativeTime(workflow.updated_at)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {workflow.runs_count || 0}
+                              </span>
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">
+                                {capitalize(user?.user?.user_metadata?.full_name)}
+                              </span>
+                            </div>
+                            <div 
+                              className="flex items-center justify-center gap-3"
+                              onClick={(e) => e.preventDefault()}>
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="text-gray-500 hover:text-primary-light transition-colors duration-150 p-1.5 rounded hover:bg-primary-light/10">
+                                <FontAwesomeIcon icon={faPenToSquare} className="text-sm" />
+                              </Link>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleDeleteClick(workflow.id, workflow.name, e);
+                                }}
+                                className="text-gray-500 hover:text-red-400 transition-colors duration-150 p-1.5 rounded hover:bg-red-500/10">
+                                <FontAwesomeIcon icon={faTrash} className="text-sm" />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          {activeSec == "allRuns" && (
+            <div className="w-full min-h-full p-6 bg-[#060606] flex gap-6 overflow-auto">
+              <div className="w-full rounded-xl bg-[#0a0a0a] border border-primary-light/10 flex flex-col relative overflow-hidden">
+                {/* Subtle inner glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-light/5 via-transparent to-transparent pointer-events-none"></div>
+                
+                <div className="mt-6 mb-4 relative w-full px-6 z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h3 className="text-gray-200 text-base font-semibold">All Runs</h3>
+                      {totalRuns > 0 && (
+                        <p className="text-gray-500 text-xs mt-0.5">{totalRuns} {totalRuns === 1 ? 'run' : 'runs'} across {workflowsWithRuns.length} {workflowsWithRuns.length === 1 ? 'workflow' : 'workflows'}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10 scrollbar-light">
+                  {loading ? (
+                    <div className="flex flex-col items-center justify-center py-12 gap-3">
+                      <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
+                      <p className="text-gray-400 text-sm">Loading runs...</p>
+                    </div>
+                  ) : workflowsWithRuns.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="w-16 h-16 rounded-full bg-primary-light/10 flex items-center justify-center mb-4">
+                        <FontAwesomeIcon icon={faClock} className="text-primary-light text-xl" />
+                      </div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">No runs yet</p>
+                      <p className="text-gray-500 text-xs mb-4">Execute a workflow to see run history here</p>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setActiveSec("home")}
+                        className="px-4 py-2 bg-primary hover:bg-primary-light text-white rounded-lg transition-colors duration-150 text-sm font-medium">
+                        Go to Workflows
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {/* Table Header */}
+                      <div className="grid grid-cols-[40px_1fr_100px_80px_100px_80px] gap-4 px-3 py-2 mb-2 border-b border-white/5">
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider"></div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Workflow</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Last Run</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Total Runs</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">Status</div>
+                        <div className="text-gray-500 text-xs font-medium uppercase tracking-wider text-center">Actions</div>
+                      </div>
+                      
+                      {/* Table Rows */}
+                      {workflowsWithRuns.map((workflow, index) => {
+                        const daysSinceUpdate = (Date.now() - new Date(workflow.updated_at).getTime()) / (1000 * 60 * 60 * 24);
+                        const isRecent = daysSinceUpdate < 7;
+                        // Mock status - in a real app, this would come from a runs table
+                        const status = isRecent ? "completed" : "completed";
+                        
+                        return (
                           <Link
+                            key={workflow.id}
                             to={`/editor?workflow=${workflow.id}`}
-                            className="hover:text-white transition-colors">
-                            <FontAwesomeIcon icon={faPenToSquare} />
+                            className="grid grid-cols-[40px_1fr_100px_80px_100px_80px] gap-4 px-3 py-2.5 rounded-lg border border-transparent hover:border-primary-light/20 hover:bg-primary-light/5 transition-all duration-150 group">
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {index + 1}
+                              </span>
+                            </div>
+                            <div className="flex items-center max-w-40">
+                              <span className="text-white text-sm font-medium truncate group-hover:text-primary-light transition-colors duration-150">
+                                {workflow.name}
+                              </span>
+                              {isRecent && (
+                                <span className="ml-2 w-1.5 h-1.5 rounded-full bg-primary-light opacity-60"></span>
+                              )}
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">
+                                {formatRelativeTime(workflow.updated_at)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center">
+                              <span className="text-gray-500 text-xs font-medium group-hover:text-gray-400 transition-colors duration-150">
+                                {workflow.runs_count || 0}
+                              </span>
+                            </div>
+                            <div className="flex items-center">
+                              <div className="flex items-center gap-1.5">
+                                {status === "completed" && (
+                                  <>
+                                    <FontAwesomeIcon icon={faCheckCircle} className="text-xs text-green-500" />
+                                    <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">Completed</span>
+                                  </>
+                                )}
+                                {status === "running" && (
+                                  <>
+                                    <FontAwesomeIcon icon={faSpinner} className="text-xs text-primary-light animate-spin" />
+                                    <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">Running</span>
+                                  </>
+                                )}
+                                {status === "failed" && (
+                                  <>
+                                    <FontAwesomeIcon icon={faExclamationCircle} className="text-xs text-red-500" />
+                                    <span className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-150">Failed</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                            <div 
+                              className="flex items-center justify-center gap-3"
+                              onClick={(e) => e.preventDefault()}>
+                              <Link
+                                to={`/editor?workflow=${workflow.id}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="text-gray-500 hover:text-primary-light transition-colors duration-150 p-1.5 rounded hover:bg-primary-light/10">
+                                <FontAwesomeIcon icon={faPenToSquare} className="text-sm" />
+                              </Link>
+                            </div>
                           </Link>
-                          <button
-                            onClick={(e) => handleDeleteClick(workflow.id, workflow.name, e)}
-                            className="hover:text-red-500 transition-colors">
-                            <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                        );
+                      })}
+                    </div>
                   )}
-                </tbody>
-              </table>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
       <WorkflowNameModal
         isOpen={isModalOpen}
