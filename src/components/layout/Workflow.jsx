@@ -564,7 +564,7 @@ const MindNode = () => {
             <SyntaxHighlighter
               lineProps={{ style: { wordBreak: "break-all", whiteSpace: "pre-wrap" } }}
               wrapLines={true}
-              className=" w-full test1 overflow-x-hidden overflow-y-auto"
+              className=" w-full test1 overflow-x-hidden overflow-y-auto scrollbar"
               language="elixir"
               style={customStyle}>
               {command}

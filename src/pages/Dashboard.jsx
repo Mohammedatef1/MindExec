@@ -294,7 +294,7 @@ const Dashboard = () => {
             </ul> */}
           </div>
         </div>
-        <div className="flex-1 h-[calc(100vh-4rem)] overflow-auto">
+        <div className="flex-1 h-[calc(100vh-4rem)] overflow-auto scrollbar">
           {activeSec == "home" && (
             <div className="p-6 bg-[#060606] flex flex-col md:flex-row  gap-6 overflow-auto min-h-full">
               {/* Recent Workflows Card */}
@@ -318,7 +318,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10">
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10 scrollbar-light">
                   {loading ? (
                     <div className="flex flex-col items-center justify-center py-12 gap-3">
                       <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
@@ -456,7 +456,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10">
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10 scrollbar-light">
                   {loading ? (
                     <div className="flex flex-col items-center justify-center py-12 gap-3">
                       <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
@@ -570,7 +570,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10">
+                <div className="flex-1 px-6 pb-6 overflow-y-auto z-10 scrollbar-light">
                   {loading ? (
                     <div className="flex flex-col items-center justify-center py-12 gap-3">
                       <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-light text-xl" />
