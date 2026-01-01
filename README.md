@@ -2,6 +2,8 @@
 
 MindExec is a React application that provides a visual, graph-based editor for designing security tool workflows. The core value proposition is replacing manual, error-prone CLI command composition with a structured, visual workflow model that resolves into deterministic, executable command-line instructions.
 
+![Preview](./docs/images/preview.png)
+
 ---
 
 ## What is MindExec?
